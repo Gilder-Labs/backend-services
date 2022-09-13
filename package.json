@@ -1,9 +1,6 @@
 {
   "name": "@gilder/backend-services",
   "private": true,
-  "workspaces": [
-    "services/**/*"
-  ],
   "description": "",
   "main": "index.js",
   "scripts": {
