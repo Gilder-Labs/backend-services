@@ -1,12 +1,22 @@
 {
   "name": "@gilder/backend-services",
   "private": true,
+  "workspaces": [
+    "services/**/*"
+  ],
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preinstall": "npx only-allow pnpm"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "pnpm@7.11.0",
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.4.6",
+    "@changesets/cli": "^2.24.4",
+    "turbo": "^1.4.6",
+    "typescript": "^4.8.3"
+  }
 }
