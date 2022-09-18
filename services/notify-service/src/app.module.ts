@@ -3,13 +3,27 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { getDataConfig } from './data-source';
 import { RealmsModule } from './realms/realms.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from './health.controller';
+import { DialectSdk } from './dialect-sdk';
+import {
+  Dialect,
+  Environment,
+  NodeDialectWalletAdapter,
+  DialectWalletAdapterWrapper,
+  SolanaNetwork,
+  Backend,
+  TokenStore,
+  EncryptionKeysStore,
+} from '@dialectlabs/sdk';
+import { ScheduleModule } from '@nestjs/schedule';
+import { NewProposalsMonitoringService } from './monitors';
 
 @Module({
   imports: [
+    TerminusModule,
     HttpModule,
     LoggerModule.forRoot({
       pinoHttp: {
@@ -26,7 +40,8 @@ import { RealmsModule } from './realms/realms.module';
         },
       },
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
+    ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -35,7 +50,7 @@ import { RealmsModule } from './realms/realms.module';
     }),
     RealmsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [HealthController],
+  providers: [NewProposalsMonitoringService],
 })
 export class AppModule {}
