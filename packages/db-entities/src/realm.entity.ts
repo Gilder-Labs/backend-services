@@ -1,23 +1,40 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import {
+  Entity,
+  Column,
+  Unique,
+  PrimaryColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @Unique('constraint_name', ['pubkey'])
 export class Realm {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
-  @Column('text')
+  @PrimaryColumn('text')
   pubkey!: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  owner!: string;
+  governance!: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
   name!: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  created_at!: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at!: Date;
 }

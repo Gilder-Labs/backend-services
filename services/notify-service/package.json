@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "vite build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev": "vite",
+    "dev": "cross-env PORT=3001 vite",
     "dev:debug": "vite --debug",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

@@ -1,3 +1,4 @@
+import { NotificationSubscription } from '@gilder/db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -15,7 +16,7 @@ export const getDataConfig = (
     rejectUnauthorized: false,
   },
   synchronize: true,
-  entities: [],
+  entities: [NotificationSubscription],
   migrations: [],
   subscribers: [],
 });

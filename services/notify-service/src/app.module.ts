@@ -7,6 +7,7 @@ import { getDataConfig } from './data-source';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health.controller';
 import { ScheduleModule } from '@nestjs/schedule';
+import { NotificationsModule } from './notifications';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
+    NotificationsModule,
   ],
   controllers: [HealthController],
   providers: [],

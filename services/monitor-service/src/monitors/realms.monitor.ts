@@ -33,17 +33,20 @@ export class RealmsMonitorService {
     }
 
     this.logger.log(`Found ${realms.length} realms...`);
-    const dbRealms = realms.map<Partial<DbRealm>>((x) => ({
-      name: x.account.name,
-      owner: x.owner?.toBase58(),
-      pubkey: x.pubkey?.toBase58(),
-    }));
+    const dbRealms = realms
+      .filter((x) => !!x.pubkey && !!x.owner)
+      .map<Partial<DbRealm>>((x) => ({
+        name: x.account.name,
+        governance: x.owner?.toBase58(),
+        pubkey: x.pubkey?.toBase58(),
+      }));
+
     await this.realmRepository
       .createQueryBuilder()
       .insert()
       .into(DbRealm)
       .values(dbRealms)
-      .orUpdate(['name', 'owner'], ['pubkey'], {
+      .orUpdate(['name', 'governance'], ['pubkey'], {
         skipUpdateIfNoValuesChanged: true,
       })
       .execute();
