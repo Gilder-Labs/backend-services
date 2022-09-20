@@ -7,9 +7,8 @@ import { getDataConfig } from './data-source';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health.controller';
 import { ScheduleModule } from '@nestjs/schedule';
-import { RealmsMonitorService, ProposalsMonitorService } from './monitors';
-import { RealmsRestService } from './rest-services';
-import { NotificationSubscription, Proposal, Realm } from '@gilder/db-entities';
+import { ProposalsModule } from './proposals';
+import { RealmsModule } from './realms';
 
 @Module({
   imports: [
@@ -38,9 +37,10 @@ import { NotificationSubscription, Proposal, Realm } from '@gilder/db-entities';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    TypeOrmModule.forFeature([Realm, Proposal, NotificationSubscription]),
+    ProposalsModule,
+    RealmsModule,
   ],
   controllers: [HealthController],
-  providers: [RealmsRestService, RealmsMonitorService, ProposalsMonitorService],
+  providers: [],
 })
 export class AppModule {}

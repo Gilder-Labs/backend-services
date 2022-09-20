@@ -1,59 +1,69 @@
+import { Proposal, Realm } from '@gilder/db-entities';
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { PublicKey } from '@solana/web3.js';
-import { RealmsRestService } from 'src/rest-services';
-import { getRealms, ProgramAccount, Realm } from '@solana/spl-governance';
-import { getConnection } from 'src/utils';
-import { Repository } from 'typeorm';
-import { Realm as DbRealm } from '@gilder/db-entities';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  getRealms,
+  ProgramAccount,
+  Realm as SolanaRealm,
+} from '@solana/spl-governance';
+import { Connection, PublicKey } from '@solana/web3.js';
+import { RealmsRestService } from './realms.rest-service';
+import { getConnection } from 'src/utils';
+import { In, Repository } from 'typeorm';
 
 const mainSplGovernanceProgram = new PublicKey(
   'GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw',
 );
 
 @Injectable()
-export class RealmsMonitorService {
-  private readonly logger = new Logger(RealmsMonitorService.name);
+export class RealmsService {
+  private readonly logger = new Logger(RealmsService.name);
+  private readonly connection: Connection;
 
   constructor(
+    @InjectRepository(Realm)
+    private readonly realmRepo: Repository<Realm>,
     private readonly realmsRestService: RealmsRestService,
-    @InjectRepository(DbRealm)
-    private readonly realmRepository: Repository<DbRealm>,
-  ) {}
+  ) {
+    this.connection = getConnection();
+  }
 
-  @Cron(CronExpression.EVERY_10_MINUTES, { name: 'checkRealms' })
-  async addOrUpdateRealms() {
+  public async getAllRealmsFromSolana() {
     const governancePrograms = await this.getSplGovernancePrograms();
-
-    let realms: ProgramAccount<Realm>[] = [];
+    let realms: ProgramAccount<SolanaRealm>[] = [];
     for (const program of governancePrograms) {
-      const result = await this.getRealms(program);
+      const result = await getRealms(this.connection, program);
       realms = [...realms, ...result];
     }
+  }
 
-    this.logger.log(`Found ${realms.length} realms...`);
+  public getRealmsByRealmPubKey(pubKeys: string[]) {
+    return this.realmRepo.find({
+      select: ['pubkey', 'governance', 'name'],
+      where: {
+        pubkey: In(pubKeys),
+      },
+    });
+  }
+
+  public addOrUpdateRealms(realms: ProgramAccount<SolanaRealm>[]) {
     const dbRealms = realms
       .filter((x) => !!x.pubkey && !!x.owner)
-      .map<Partial<DbRealm>>((x) => ({
+      .map<Partial<Realm>>((x) => ({
         name: x.account.name,
         governance: x.owner?.toBase58(),
         pubkey: x.pubkey?.toBase58(),
       }));
 
-    await this.realmRepository
+    return this.realmRepo
       .createQueryBuilder()
       .insert()
-      .into(DbRealm)
+      .into(Realm)
       .values(dbRealms)
       .orUpdate(['name', 'governance'], ['pubkey'], {
         skipUpdateIfNoValuesChanged: true,
       })
       .execute();
-  }
-
-  private async getRealms(program: PublicKey) {
-    return await getRealms(getConnection(), program);
   }
 
   private async getSplGovernancePrograms(): Promise<PublicKey[]> {
