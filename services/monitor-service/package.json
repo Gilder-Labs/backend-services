@@ -1,5 +1,5 @@
 {
-  "name": "@gilder/notify-service",
+  "name": "@gilder/monitor-service",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "vite build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev": "vite",
+    "dev": "cross-env PORT=3000 vite",
     "dev:debug": "vite --debug",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -39,7 +39,6 @@
     "mongoose": "^6.6.1",
     "nestjs-pino": "^3.1.1",
     "node-fetch": "^3.2.10",
-    "p-limit": "^4.0.0",
     "pg": "^8.8.0",
     "pino": "^8.5.0",
     "pino-http": "^8.2.0",

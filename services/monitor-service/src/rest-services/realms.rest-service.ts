@@ -1,7 +1,7 @@
-import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { PublicKey } from '@solana/web3.js';
+import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { PublicKey } from '@solana/web3.js';
 
 const splGovInstancesUrl = 'https://app.realms.today/api/splGovernancePrograms';
 

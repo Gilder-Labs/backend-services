@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 
 @Entity()
+@Unique('constraint_name', ['pubkey'])
 export class Realm {
   @PrimaryGeneratedColumn()
   id!: number;
