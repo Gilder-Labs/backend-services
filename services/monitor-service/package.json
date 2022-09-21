@@ -1,5 +1,5 @@
 {
-  "name": "@gilder/notify-service",
+  "name": "@gilder/monitor-service",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -34,12 +34,12 @@
     "@solana/spl-token-registry": "^0.2.4574",
     "@solana/web3.js": "^1.62.0",
     "bn.js": "^5.2.1",
+    "cross-fetch": "^3.1.5",
+    "fast-sort": "^3.2.0",
     "lodash": "^4.17.21",
     "luxon": "^3.0.3",
     "mongoose": "^6.6.1",
     "nestjs-pino": "^3.1.1",
-    "node-fetch": "^3.2.10",
-    "p-limit": "^4.0.0",
     "pg": "^8.8.0",
     "pino": "^8.5.0",
     "pino-http": "^8.2.0",
@@ -70,7 +70,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
-    "tsconfig-paths": "4.1.0",
     "typescript": "4.9.0-dev.20220921"
   }
 }

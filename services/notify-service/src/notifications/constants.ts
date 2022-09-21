@@ -1,0 +1,1 @@
+export const MONITOR_SERVICE = 'MONITOR_SERVICE';

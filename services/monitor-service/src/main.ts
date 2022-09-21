@@ -1,15 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
-import { VersioningType } from '@nestjs/common';
+import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
-const setupApp = async () => {
-  const app = await NestFactory.create(AppModule);
-
-  app.setGlobalPrefix('api');
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
+const setupApp = async (host: string, port: number) => {
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        host: host,
+        port,
+      },
+    },
+  );
   const logger = app.get(Logger);
   app.useLogger(logger);
   console.trace = (message, ...context) => logger.verbose(message, context);
@@ -22,8 +26,10 @@ const setupApp = async () => {
 };
 
 async function bootstrap() {
-  const app = await setupApp();
-  await app.listen(process.env.PORT);
+  const host = process.env.HOST || '0.0.0.0';
+  const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+  const app = await setupApp(host, port);
+  console.log(`Microservice listening on ${host}:${port}`);
+  await app.listen();
 }
-
 bootstrap();

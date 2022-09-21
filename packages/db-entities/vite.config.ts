@@ -11,7 +11,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       fileName: () => 'index.js',
-      formats: ['es'],
+      formats: ['cjs'],
     },
     rollupOptions: {
       external: isExternal,
@@ -31,7 +31,6 @@ export default defineConfig({
         },
       },
     }),
-    ,
     {
       name: 'vite-plugin-dts',
       apply: 'build',
