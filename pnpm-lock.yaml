@@ -70,6 +70,7 @@ importers:
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
+      fast-sort: ^3.2.0
       lodash: ^4.17.21
       luxon: ^3.0.3
       mongoose: ^6.6.1
@@ -112,6 +113,7 @@ importers:
       '@solana/spl-token-registry': 0.2.4574
       '@solana/web3.js': 1.62.0
       bn.js: 5.2.1
+      fast-sort: 3.2.0
       lodash: 4.17.21
       luxon: 3.0.3
       mongoose: 6.6.1
@@ -3432,6 +3434,10 @@ packages:
 
   /fast-safe-stringify/2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
+
+  /fast-sort/3.2.0:
+    resolution: {integrity: sha512-EgQtkmWo2Icq6uei57fTrZAKayL9b4OISU1613737AuLcIbAZ57tcOtGaK2A7zO54kk97wOnSw6INDA++rjMAQ==}
+    dev: false
 
   /fast-stable-stringify/1.0.0:
     resolution: {integrity: sha512-wpYMUmFu5f00Sm0cj2pfivpmawLZ0NKdviQ4w9zJeR8JVtOpOxHmLaJuj0vxvGqMJQWyP/COUkF75/57OKyRag==}

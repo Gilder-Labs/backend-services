@@ -1,4 +1,4 @@
-import { Proposal, Realm } from '@gilder/db-entities';
+import { Realm } from '@gilder/db-entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -35,6 +35,7 @@ export class RealmsService {
       const result = await getRealms(this.connection, program);
       realms = [...realms, ...result];
     }
+    return realms;
   }
 
   public getRealmsByRealmPubKey(pubKeys: string[]) {

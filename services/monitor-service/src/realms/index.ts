@@ -1,1 +1,1 @@
-export * from './proposal.module';
+export * from './realms.module';

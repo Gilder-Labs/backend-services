@@ -9,5 +9,9 @@ export class RealmsMonitorService {
   constructor(private readonly realmsService: RealmsService) {}
 
   @Cron(CronExpression.EVERY_10_MINUTES)
-  async addOrUpdateRealms() {}
+  async addOrUpdateRealms() {
+    const realms = await this.realmsService.getAllRealmsFromSolana();
+    this.logger.log(`Discovered ${realms.length} realms...`);
+    await this.realmsService.addOrUpdateRealms(realms);
+  }
 }

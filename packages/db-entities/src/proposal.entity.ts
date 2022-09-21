@@ -17,6 +17,9 @@ export class Proposal {
   governanceKey!: string;
 
   @Column('text')
+  realmPubKey!: string;
+
+  @Column('text')
   name!: string;
 
   @Column('int')
