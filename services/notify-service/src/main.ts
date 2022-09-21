@@ -5,6 +5,7 @@ import { VersioningType } from '@nestjs/common';
 
 const setupApp = async () => {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix('api');
   app.enableVersioning({
     type: VersioningType.URI,
@@ -20,12 +21,9 @@ const setupApp = async () => {
   return app;
 };
 
-if (import.meta.env.PROD) {
-  async function bootstrap() {
-    const app = await setupApp();
-    await app.listen(process.env.PORT);
-  }
-  bootstrap();
+async function bootstrap() {
+  const app = await setupApp();
+  await app.listen(process.env.PORT);
 }
 
-export const viteNodeApp = setupApp();
+bootstrap();

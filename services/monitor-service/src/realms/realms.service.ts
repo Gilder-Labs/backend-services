@@ -38,6 +38,11 @@ export class RealmsService {
     return realms;
   }
 
+  public async getRealmByRealmPubKey(pubKey: string) {
+    const results = await this.getRealmsByRealmPubKey([pubKey]);
+    return results[0];
+  }
+
   public getRealmsByRealmPubKey(pubKeys: string[]) {
     return this.realmRepo.find({
       select: ['pubkey', 'governance', 'name'],

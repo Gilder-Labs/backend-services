@@ -1,15 +1,19 @@
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { MONITOR_SERVICE } from './constants';
 import { NotifyData } from './types';
 
 @Injectable()
 export class NotificationService {
+  private readonly logger = new Logger(NotificationService.name);
+
   constructor(
+    @Inject(MONITOR_SERVICE) private client: ClientProxy,
     @InjectRepository(NotificationSubscription)
     private notificationSubscriptionsRepository: Repository<NotificationSubscription>,
-    @InjectRepository(Realm) private realmsRepository: Repository<Realm>,
   ) {}
 
   getAll(): Promise<NotificationSubscription[]> {
@@ -20,7 +24,7 @@ export class NotificationService {
     return this.notificationSubscriptionsRepository.findOneByOrFail({ id });
   }
 
-  subscribe(body: NotifyData): Promise<NotificationSubscription> {
+  async subscribe(body: NotifyData): Promise<NotificationSubscription> {
     const newSubscription = this.notificationSubscriptionsRepository.create({
       type: body.type,
       realmPubKey: body.realm,
@@ -28,7 +32,17 @@ export class NotificationService {
       mobileToken: body.mobileToken,
     });
 
-    return this.notificationSubscriptionsRepository.save(newSubscription);
+    try {
+      const result = await this.notificationSubscriptionsRepository.save(
+        newSubscription,
+      );
+
+      this.client.emit('new_notification_subscription', result);
+
+      return result;
+    } catch (e) {
+      this.logger.error(`Something went wrong. Error: ${e}`);
+    }
   }
 
   getDeviceSubscriptions(

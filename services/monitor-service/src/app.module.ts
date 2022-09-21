@@ -14,12 +14,12 @@ import { ProposalsModule } from './proposals';
     TerminusModule,
     LoggerModule.forRoot({
       pinoHttp: {
-        autoLogging: !import.meta.env.PROD,
+        autoLogging: process.env.ENV !== 'production',
         redact: ['req.headers'],
         transport: {
           target: 'pino-pretty',
           options: {
-            colorize: import.meta.env.DEV,
+            colorize: process.env.ENV === 'development',
             translateTime: true,
             singleLine: true,
             ignore: 'pid,hostname',

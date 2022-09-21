@@ -12,6 +12,7 @@ module.exports = {
   ],
   root: true,
   env: {
+    module: 'nodenext',
     node: true,
     jest: true,
   },

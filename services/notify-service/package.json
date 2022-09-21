@@ -7,13 +7,12 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "vite build",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev": "cross-env PORT=3001 vite",
-    "dev:debug": "vite --debug",
+    "dev": "cross-env ENV=development nest start --watch",
+    "dev:debug": "cross-env ENV=development nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "start": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
@@ -23,6 +22,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/microservices": "^9.1.1",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/schedule": "^2.1.0",
@@ -70,12 +70,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
-    "ts-loader": "^9.2.3",
-    "ts-node": "10.7.0",
     "tsconfig-paths": "4.1.0",
-    "typescript": "4.5.2",
-    "vite": "^3.1.0",
-    "vite-plugin-node": "^1.0.0",
-    "vite-tsconfig-paths": "^3.5.0"
+    "typescript": "4.9.0-dev.20220921"
   }
 }

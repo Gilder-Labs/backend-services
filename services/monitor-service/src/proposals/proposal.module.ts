@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotifyModule } from 'src/notify';
 import { RealmsModule } from 'src/realms';
+import { ProposalController } from './proposal.controller';
 import { ProposalsMonitorService } from './proposals.monitor';
 import { ProposalService } from './proposals.service';
 
@@ -12,7 +13,7 @@ import { ProposalService } from './proposals.service';
     RealmsModule,
     NotifyModule,
   ],
-  controllers: [],
+  controllers: [ProposalController],
   providers: [ProposalService, ProposalsMonitorService],
   exports: [ProposalService],
 })

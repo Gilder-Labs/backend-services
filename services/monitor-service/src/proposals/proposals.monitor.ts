@@ -24,6 +24,8 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(ProposalsMonitorService.name);
   private connection: Connection;
 
+  private uniqueRealmKeys: Set<string> = new Set();
+
   private realmSubscriptionIds: number[] = [];
   private proposalSubscriptionIds: number[] = [];
 
@@ -45,51 +47,67 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     await this.cleanUpSubscriptions();
   }
 
-  public async listenForProposals() {
-    const subscriptions = await this.subscriptionRepo
-      .createQueryBuilder('ns')
-      .groupBy('ns.realmPubKey')
-      .addGroupBy('ns.id')
-      .getMany();
-
-    const realms = await this.realmsService.getRealmsByRealmPubKey(
-      subscriptions.map((x) => x.realmPubKey),
-    );
-
-    let activeProposals: ProposalWithRealm[] = [];
-
-    for (const realm of realms) {
-      const proposals =
-        await this.proposalService.getProposalsFromSolanaByRealm(realm);
-
-      this.logger.log(
-        `Found ${proposals.length} proposals associated to Realm: ${realm.name}`,
-      );
-      await this.proposalService.addOrUpdateProposals(realm, proposals);
-
-      activeProposals = [
-        ...activeProposals,
-        ...proposals
-          .filter((p) => !p.account.isVoteFinalized())
-          .map<ProposalWithRealm>((x) => ({ proposal: x, realm })),
-      ];
+  public async tryAddNewRealmListener(
+    subscription: NotificationSubscription,
+  ): Promise<void> {
+    if (this.uniqueRealmKeys.has(subscription.realmPubKey)) {
+      return;
     }
 
-    this.logger.log(`${activeProposals.length} proposals currently active...`);
+    this.uniqueRealmKeys.add(subscription.realmPubKey);
+    const realm = await this.realmsService.getRealmByRealmPubKey(
+      subscription.realmPubKey,
+    );
+    await this.addRealmListener(realm);
+  }
 
+  public async listenForProposals() {
     await this.cleanUpSubscriptions();
 
-    this.realmSubscriptionIds = await Promise.all(
-      realms.map((realm) => this.listenForNewProposals(realm)),
+    const subscriptions = await this.subscriptionRepo.find({
+      select: ['realmPubKey'],
+      where: {
+        isActive: true,
+      },
+    });
+
+    this.uniqueRealmKeys = new Set(subscriptions.map((x) => x.realmPubKey));
+
+    const realms = await this.realmsService.getRealmsByRealmPubKey(
+      Array.from(this.uniqueRealmKeys),
     );
 
-    this.proposalSubscriptionIds = await Promise.all(
-      activeProposals.map((proposal) =>
-        this.listenForProposalChanges(proposal),
-      ),
+    for (const realm of realms) {
+      this.addRealmListener(realm);
+    }
+  }
+
+  private async addRealmListener(realm: Realm) {
+    const proposals = await this.proposalService.getProposalsFromSolanaByRealm(
+      realm,
     );
 
-    this.logger.log('Finished setting up listeners!');
+    this.logger.log(
+      `Found ${proposals.length} proposals associated to Realm: ${realm.name}`,
+    );
+    await this.proposalService.addOrUpdateProposals(realm, proposals);
+
+    const activeProposals = proposals
+      .filter((p) => !p.account.isVoteFinalized())
+      .map<ProposalWithRealm>((x) => ({ proposal: x, realm }));
+
+    this.logger.log(
+      `${activeProposals.length} proposals currently active for Realm: ${realm.name}`,
+    );
+
+    const proposalSubscriptionIds = activeProposals.map((proposal) =>
+      this.listenForProposalChanges(proposal),
+    );
+
+    this.realmSubscriptionIds.push(this.listenForNewProposals(realm));
+    this.proposalSubscriptionIds = this.proposalSubscriptionIds.concat(
+      proposalSubscriptionIds,
+    );
   }
 
   private listenForProposalChanges({ proposal, realm }: ProposalWithRealm) {

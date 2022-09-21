@@ -1,6 +1,6 @@
 import { Connection } from '@solana/web3.js';
 import throttledQueue from 'throttled-queue';
-import fetch from 'node-fetch';
+import fetch from 'cross-fetch';
 
 const throttle = throttledQueue(24, 1000, true);
 
@@ -12,8 +12,8 @@ export const getConnection = () =>
     commitment: 'confirmed',
     fetch: async (input, init) => {
       const result = await throttle(async () => {
-        return await fetch(input, init);
+        return await fetch(input as any, init as any);
       });
-      return result;
+      return result as any;
     },
   }));

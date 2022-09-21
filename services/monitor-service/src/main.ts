@@ -3,11 +3,15 @@ import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
-const setupApp = async () => {
+const setupApp = async (host: string, port: number) => {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
       transport: Transport.TCP,
+      options: {
+        host: host,
+        port,
+      },
     },
   );
   const logger = app.get(Logger);
@@ -21,12 +25,11 @@ const setupApp = async () => {
   return app;
 };
 
-if (import.meta.env.PROD) {
-  async function bootstrap() {
-    const app = await setupApp();
-    await app.listen();
-  }
-  bootstrap();
+async function bootstrap() {
+  const host = process.env.HOST || '0.0.0.0';
+  const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+  const app = await setupApp(host, port);
+  console.log(`Microservice listening on ${host}:${port}`);
+  await app.listen();
 }
-
-export const viteNodeApp = setupApp();
+bootstrap();
