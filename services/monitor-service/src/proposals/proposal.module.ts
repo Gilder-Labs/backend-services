@@ -1,6 +1,7 @@
 import { NotificationSubscription, Proposal, Realm } from '@gilder/db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { NotifyModule } from 'src/notify';
 import { RealmsModule } from 'src/realms';
 import { ProposalsMonitorService } from './proposals.monitor';
 import { ProposalService } from './proposals.service';
@@ -9,6 +10,7 @@ import { ProposalService } from './proposals.service';
   imports: [
     TypeOrmModule.forFeature([Realm, Proposal, NotificationSubscription]),
     RealmsModule,
+    NotifyModule,
   ],
   controllers: [],
   providers: [ProposalService, ProposalsMonitorService],

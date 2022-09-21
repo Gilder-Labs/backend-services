@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
+import { NotifyService } from 'src/notify/notify.service';
 import { RealmsService } from 'src/realms/realms.service';
 import { getConnection } from 'src/utils';
 import { Repository } from 'typeorm';
@@ -31,6 +32,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     private readonly subscriptionRepo: Repository<NotificationSubscription>,
     private readonly realmsService: RealmsService,
     private readonly proposalService: ProposalService,
+    private readonly notifyService: NotifyService,
   ) {
     this.connection = getConnection();
   }
@@ -44,10 +46,11 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   }
 
   public async listenForProposals() {
-    this.logger.log('Listening for proposals...');
-    const subscriptions = await this.subscriptionRepo.find({
-      select: ['realmPubKey'],
-    });
+    const subscriptions = await this.subscriptionRepo
+      .createQueryBuilder('ns')
+      .groupBy('ns.realmPubKey')
+      .addGroupBy('ns.id')
+      .getMany();
 
     const realms = await this.realmsService.getRealmsByRealmPubKey(
       subscriptions.map((x) => x.realmPubKey),
@@ -146,6 +149,11 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
         if (found) {
           this.logger.log(`Found new proposals for Realm: ${realm.name}`);
           try {
+            await Promise.all(
+              newProposals.map((p) =>
+                this.notifyService.notifyNewProposals(realm, p),
+              ),
+            );
             const subscriptionIds = await Promise.all(
               newProposals.map((p) =>
                 this.listenForProposalChanges({ proposal: p, realm }),

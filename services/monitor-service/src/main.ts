@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
-import { VersioningType } from '@nestjs/common';
+import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 const setupApp = async () => {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+    },
+  );
   const logger = app.get(Logger);
   app.useLogger(logger);
   console.trace = (message, ...context) => logger.verbose(message, context);
@@ -23,7 +24,7 @@ const setupApp = async () => {
 if (import.meta.env.PROD) {
   async function bootstrap() {
     const app = await setupApp();
-    await app.listen(process.env.PORT);
+    await app.listen();
   }
   bootstrap();
 }

@@ -1,4 +1,4 @@
-export type NotificationType = 'newProposals';
+import type { NotificationType } from '@gilder/types';
 
 export interface NotifyData {
   type: NotificationType;

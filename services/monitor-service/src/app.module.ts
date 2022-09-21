@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
@@ -7,13 +6,12 @@ import { getDataConfig } from './data-source';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health.controller';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ProposalsModule } from './proposals';
 import { RealmsModule } from './realms';
+import { ProposalsModule } from './proposals';
 
 @Module({
   imports: [
     TerminusModule,
-    HttpModule,
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: !import.meta.env.PROD,
@@ -37,8 +35,8 @@ import { RealmsModule } from './realms';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    ProposalsModule,
     RealmsModule,
+    ProposalsModule,
   ],
   controllers: [HealthController],
   providers: [],

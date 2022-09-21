@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { NotificationType } from '@gilder/types';
 
 @Entity()
 export class NotificationSubscription {
@@ -15,7 +16,7 @@ export class NotificationSubscription {
   mobileToken!: string;
 
   @Column('text')
-  type!: string;
+  type!: NotificationType;
 
   @Column('text')
   realmPubKey!: string;

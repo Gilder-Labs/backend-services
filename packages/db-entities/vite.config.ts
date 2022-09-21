@@ -31,7 +31,6 @@ export default defineConfig({
         },
       },
     }),
-    ,
     {
       name: 'vite-plugin-dts',
       apply: 'build',
