@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "pnpm install",
-    "postinstall": "pnpm --filter \"./packages/**\" build",
+    "postinstall": "turbo run --filter=\"./packages/**\" build",
     "preinstall": "npx only-allow pnpm",
     "watch:libs": "pnpm --parallel --filter \"./packages/**\" watch",
     "dev": "pm2 start ecosystem.config.js && pm2 monit",
