@@ -15,12 +15,12 @@ import { NotificationsModule } from './notifications';
     HttpModule,
     LoggerModule.forRoot({
       pinoHttp: {
-        autoLogging: process.env.NODE_ENV !== 'production',
+        autoLogging: true,
         redact: ['req.headers'],
         transport: {
           target: 'pino-pretty',
           options: {
-            colorize: process.env.NODE_ENV === 'development',
+            colorize: true,
             translateTime: true,
             singleLine: true,
             ignore: 'pid,hostname',
