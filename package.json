@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "pnpm install",
-    "postinstall": "turbo run --filter=\"./packages/**\" build",
     "preinstall": "npx only-allow pnpm",
+    "build:libs": "turbo run --filter=\"./packages/**\" build",
     "watch:libs": "pnpm --parallel --filter \"./packages/**\" watch",
-    "dev": "pm2 start ecosystem.config.js && pm2 monit",
-    "build": "turbo run --filter=\"./packages/**\" build"
+    "dev": "pm2 start ecosystem.config.js && pm2 monit"
   },
   "keywords": [],
   "author": "",
