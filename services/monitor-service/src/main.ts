@@ -27,7 +27,9 @@ const setupApp = async (host: string, port: number) => {
 
 async function bootstrap() {
   const host = process.env.HOST || '0.0.0.0';
-  const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+  const port = process.env.SERVICE_PORT
+    ? Number(process.env.SERVICE_PORT)
+    : 8000;
   const app = await setupApp(host, port);
   console.log(`Microservice listening on ${host}:${port}`);
   await app.listen();
