@@ -4,14 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
-import { TerminusModule } from '@nestjs/terminus';
-import { HealthController } from './health.controller';
-import { ScheduleModule } from '@nestjs/schedule';
 import { NotificationsModule } from './notifications';
 
 @Module({
   imports: [
-    TerminusModule,
     HttpModule,
     LoggerModule.forRoot({
       pinoHttp: {
@@ -28,7 +24,6 @@ import { NotificationsModule } from './notifications';
         },
       },
     }),
-    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -38,7 +33,7 @@ import { NotificationsModule } from './notifications';
     }),
     NotificationsModule,
   ],
-  controllers: [HealthController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

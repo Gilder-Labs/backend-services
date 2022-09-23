@@ -1,6 +1,6 @@
 {
   "name": "@gilder/notify-service",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "author": "",
   "private": true,
@@ -24,9 +24,7 @@
     "@nestjs/microservices": "^9.1.1",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/schedule": "^2.1.0",
     "@nestjs/sequelize": "^9.0.0",
-    "@nestjs/terminus": "^9.1.1",
     "@nestjs/typeorm": "^9.0.1",
     "@solana/spl-governance": "^0.3.13",
     "@solana/spl-token": "^0.3.5",

@@ -7,13 +7,14 @@
     "preinstall": "npx only-allow pnpm",
     "build:libs": "turbo run --filter=\"./packages/**\" build",
     "watch:libs": "pnpm --parallel --filter \"./packages/**\" watch",
-    "dev": "pm2 start ecosystem.config.js && pm2 monit"
+    "dev": "pm2 kill && pm2 start ecosystem.config.js && pm2 monit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@7.11.0",
   "devDependencies": {
+    "@nestjs/cli": "^9.0.0",
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
     "cross-env": "^7.0.3",

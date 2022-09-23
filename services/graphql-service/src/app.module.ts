@@ -3,9 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
-import { ScheduleModule } from '@nestjs/schedule';
-import { RealmsModule } from './realms';
-import { ProposalsModule } from './proposals';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -24,7 +23,6 @@ import { ProposalsModule } from './proposals';
         },
       },
     }),
-    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,8 +30,14 @@ import { ProposalsModule } from './proposals';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    RealmsModule,
-    ProposalsModule,
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        debug: configService.getOrThrow<boolean>('NODE_ENV'),
+      }),
+    }),
   ],
   controllers: [],
   providers: [],

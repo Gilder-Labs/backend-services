@@ -15,7 +15,7 @@ module.exports = {
       cwd: './services/monitor-service',
       args: 'pnpm dev',
       env: {
-        PORT: 3000,
+        SERVICE_PORT: 8123,
       },
     },
   ],
