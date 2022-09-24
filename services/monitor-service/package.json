@@ -21,6 +21,7 @@
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.2",
     "@nestjs/microservices": "^9.1.2",
+    "@nestjs/platform-express": "^9.1.2",
     "@nestjs/schedule": "^2.1.0",
     "@nestjs/typeorm": "^9.0.1",
     "@solana/spl-governance": "^0.3.14",

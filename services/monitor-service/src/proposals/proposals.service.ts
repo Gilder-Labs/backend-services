@@ -11,7 +11,7 @@ import {
 } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { getConnection } from 'src/utils';
-import { Repository } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { sort } from 'fast-sort';
 
 @Injectable()
@@ -64,7 +64,7 @@ export class ProposalService {
   public async addOrUpdateProposals(
     realm: Realm,
     proposals: ProgramAccount<SolanaProposal>[],
-  ) {
+  ): Promise<InsertResult> {
     const dbProposals = await this.convertSolanaProposalToEntity(
       realm,
       proposals,

@@ -20,6 +20,7 @@
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.2",
     "@nestjs/microservices": "^9.1.2",
+    "@nestjs/platform-express": "^9.1.2",
     "@nestjs/typeorm": "^9.0.1",
     "@solana/spl-governance": "^0.3.14",
     "@solana/spl-token": "^0.3.5",

@@ -9,7 +9,7 @@ import {
 import { Connection, PublicKey } from '@solana/web3.js';
 import { RealmsRestService } from './realms.rest-service';
 import { getConnection } from 'src/utils';
-import { In, Repository } from 'typeorm';
+import { In, InsertResult, Repository } from 'typeorm';
 
 const mainSplGovernanceProgram = new PublicKey(
   'GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw',
@@ -52,7 +52,9 @@ export class RealmsService {
     });
   }
 
-  public addOrUpdateRealms(realms: ProgramAccount<SolanaRealm>[]) {
+  public addOrUpdateRealms(
+    realms: ProgramAccount<SolanaRealm>[],
+  ): Promise<InsertResult> {
     const dbRealms = realms
       .filter((x) => !!x.pubkey && !!x.owner)
       .map<Partial<Realm>>((x) => ({
