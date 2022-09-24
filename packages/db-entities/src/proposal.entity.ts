@@ -6,24 +6,25 @@ import {
   Unique,
   PrimaryColumn,
 } from 'typeorm';
+import type { Proposal as IProposal } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['pubkey'])
-export class Proposal {
+@Unique('constraint_name', ['proposalPk'])
+export class Proposal implements IProposal {
   @PrimaryColumn('text')
-  pubkey!: string;
+  proposalPk: string;
 
   @Column('text')
-  governanceKey!: string;
+  governancePk: string;
 
   @Column('text')
-  realmPubKey!: string;
+  realmPk: string;
 
   @Column('text')
-  name!: string;
+  name: string;
 
   @Column('int')
-  state!: number;
+  state: number;
 
   @Column({
     type: 'text',
@@ -32,7 +33,7 @@ export class Proposal {
   descriptionLink?: string;
 
   @Column('timestamp')
-  draftAt!: Date;
+  draftAt: Date;
 
   @Column({ type: 'timestamp', nullable: true })
   signingOffAt?: Date;
@@ -59,12 +60,12 @@ export class Proposal {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updated_at!: Date;
+  updated_at: Date;
 }

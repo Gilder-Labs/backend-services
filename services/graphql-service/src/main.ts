@@ -1,15 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
-import { VersioningType } from '@nestjs/common';
 
 const setupApp = async () => {
   const app = await NestFactory.create(AppModule);
-
-  app.setGlobalPrefix('api');
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
   const logger = app.get(Logger);
   app.useLogger(logger);
   console.trace = (message, ...context) => logger.verbose(message, context);

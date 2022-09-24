@@ -23,7 +23,7 @@ export class NotifyService {
 
   public getNotifySubscriptions(type: NotificationType, realm: Realm) {
     return this.subscriptionRepo.find({
-      where: { type: type, realmPubKey: realm.pubkey },
+      where: { type: type, realmPk: realm.realmPk },
     });
   }
 
@@ -40,7 +40,7 @@ export class NotifyService {
         body: proposal.account.name,
         data: {
           proposalId: proposal.pubkey.toBase58(),
-          realmId: realm.pubkey,
+          realmId: realm.realmPk,
         },
       }),
     );

@@ -5,37 +5,40 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import type { NotificationType } from '@gilder/types';
+import type {
+  NotificationType,
+  NotificationSubscription as INotificationSubscription,
+} from '@gilder/types';
 
 @Entity()
-export class NotificationSubscription {
+export class NotificationSubscription implements INotificationSubscription {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column('text')
-  mobileToken!: string;
+  mobileToken: string;
 
   @Column('text')
-  type!: NotificationType;
+  type: NotificationType;
 
   @Column('text')
-  realmPubKey!: string;
+  realmPk: string;
 
   @Column({
     default: true,
   })
-  isActive!: boolean;
+  isActive: boolean;
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updated_at!: Date;
+  updated_at: Date;
 }

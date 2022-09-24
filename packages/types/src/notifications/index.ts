@@ -9,3 +9,11 @@ export interface ExpoNotification<T = any> {
   body: string;
   data: T;
 }
+
+export interface NotificationSubscription {
+  id: string;
+  mobileToken: string;
+  type: NotificationType;
+  realmPk: string;
+  isActive: boolean;
+}

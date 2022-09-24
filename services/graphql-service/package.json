@@ -16,12 +16,16 @@
   },
   "dependencies": {
     "@gilder/db-entities": "workspace:*",
+    "@nestjs/apollo": "^10.1.0",
     "@nestjs/common": "^9.1.2",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.2",
+    "@nestjs/graphql": "^10.1.2",
     "@nestjs/microservices": "^9.1.2",
     "@nestjs/platform-express": "^9.1.2",
     "@nestjs/typeorm": "^9.0.1",
+    "apollo-server-express": "^3.10.2",
+    "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "nestjs-pino": "^3.1.1",
     "pg": "^8.8.0",
@@ -31,7 +35,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.6",
-    "throttled-queue": "^2.1.4",
     "typeorm": "^0.3.10"
   },
   "devDependencies": {

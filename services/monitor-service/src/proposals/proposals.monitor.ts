@@ -50,13 +50,13 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   public async tryAddNewRealmListener(
     subscription: NotificationSubscription,
   ): Promise<void> {
-    if (this.uniqueRealmKeys.has(subscription.realmPubKey)) {
+    if (this.uniqueRealmKeys.has(subscription.realmPk)) {
       return;
     }
 
-    this.uniqueRealmKeys.add(subscription.realmPubKey);
+    this.uniqueRealmKeys.add(subscription.realmPk);
     const realm = await this.realmsService.getRealmByRealmPubKey(
-      subscription.realmPubKey,
+      subscription.realmPk,
     );
     await this.addRealmListener(realm);
   }
@@ -65,13 +65,13 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     await this.cleanUpSubscriptions();
 
     const subscriptions = await this.subscriptionRepo.find({
-      select: ['realmPubKey'],
+      select: ['realmPk'],
       where: {
         isActive: true,
       },
     });
 
-    this.uniqueRealmKeys = new Set(subscriptions.map((x) => x.realmPubKey));
+    this.uniqueRealmKeys = new Set(subscriptions.map((x) => x.realmPk));
 
     const realms = await this.realmsService.getRealmsByRealmPubKey(
       Array.from(this.uniqueRealmKeys),
@@ -157,7 +157,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   private listenForNewProposals(realm: Realm) {
     this.logger.log(`Listening to changes for Realm: ${realm.name}`);
     return this.connection.onAccountChange(
-      new PublicKey(realm.pubkey),
+      new PublicKey(realm.realmPk),
       async () => {
         this.logger.log(`Detected change for Realm: ${realm.name}`);
         const allProposals =
