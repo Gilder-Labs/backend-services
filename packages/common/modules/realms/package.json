@@ -17,21 +17,23 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@gilder/types": "workspace:*",
     "@gilder/db-entities": "workspace:*",
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/core": "^9.0.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.5.6",
-    "typeorm": "^0.3.9",
+    "@gilder/types": "workspace:*",
+    "@nestjs/common": "^9.1.2",
+    "@nestjs/core": "^9.1.2",
+    "@nestjs/platform-express": "^9.1.2",
+    "@nestjs/typeorm": "9.0.1",
     "@swc/core": "^1.3.0",
+    "reflect-metadata": "^0.1.13",
     "rollup": "^2.79.1",
     "rollup-plugin-swc": "^0.2.1",
+    "rxjs": "^7.5.6",
+    "typeorm": "^0.3.10",
     "typescript": "^4.8.2",
     "vite": "^3.1.0"
   },
   "peerDependencies": {
     "@nestjs/typeorm": "^9.0.1",
-    "typeorm": "^0.3.9"
+    "typeorm": "^0.3.10"
   }
 }
