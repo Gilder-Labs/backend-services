@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
@@ -8,7 +7,6 @@ import { NotificationsModule } from './notifications';
 
 @Module({
   imports: [
-    HttpModule,
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
