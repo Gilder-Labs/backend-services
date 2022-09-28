@@ -5,7 +5,10 @@ import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { RealmsGraphQLModule } from '@gilder/graphql-resolvers';
+import {
+  ProposalsGraphQLModule,
+  RealmsGraphQLModule,
+} from '@gilder/graphql-resolvers';
 
 @Module({
   imports: [
@@ -31,13 +34,14 @@ import { RealmsGraphQLModule } from '@gilder/graphql-resolvers';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
+    RealmsGraphQLModule,
+    ProposalsGraphQLModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         autoSchemaFile: true,
-        include: [RealmsGraphQLModule],
         debug: configService.getOrThrow<boolean>('NODE_ENV'),
         subscriptions: {
           'graphql-ws': true,

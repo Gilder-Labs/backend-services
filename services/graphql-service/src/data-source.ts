@@ -2,6 +2,7 @@
 import { ConfigService } from '@nestjs/config';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import 'reflect-metadata';
+import { Proposal, Realm } from '@gilder/db-entities';
 
 export const getDataConfig = (
   configService: ConfigService,
@@ -16,7 +17,7 @@ export const getDataConfig = (
     rejectUnauthorized: false,
   },
   synchronize: true,
-  entities: [],
+  entities: [Realm, Proposal],
   migrations: [],
   subscribers: [],
 });

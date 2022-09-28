@@ -27,7 +27,7 @@ export class NotificationService {
   async subscribe(body: NotifyData): Promise<NotificationSubscription> {
     const newSubscription = this.notificationSubscriptionsRepository.create({
       type: body.type,
-      realmPk: body.realm,
+      realmPk: body.realmPk,
       isActive: true,
       mobileToken: body.mobileToken,
     });

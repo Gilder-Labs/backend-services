@@ -9,17 +9,25 @@ export class RealmsService {
     @InjectRepository(Realm) private readonly realmRepo: Repository<Realm>,
   ) {}
 
-  public async getRealmByRealmPubKey(pubKey: string) {
-    const results = await this.getRealmsByRealmPubKey([pubKey]);
-    return results[0];
+  public async getRealmByName(name: string) {
+    return this.realmRepo.findOneBy({
+      name,
+    });
   }
 
-  public getRealmsByRealmPubKey(pubKeys: string[]) {
+  public async getRealmByPubKey(pubKey: string) {
+    return this.realmRepo.findOneBy({ realmPk: pubKey });
+  }
+
+  public getRealmsByPubKey(pubKeys: string[]) {
     return this.realmRepo.find({
-      select: ['realmPk', 'governancePk', 'name'],
       where: {
         realmPk: In(pubKeys),
       },
     });
+  }
+
+  public getAllRealms() {
+    return this.realmRepo.find();
   }
 }
