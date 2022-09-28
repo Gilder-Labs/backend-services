@@ -11,7 +11,7 @@ import {
 } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { getConnection } from 'src/utils';
-import { Repository } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { sort } from 'fast-sort';
 
 @Injectable()
@@ -33,8 +33,8 @@ export class ProposalService {
   public getProposalsFromSolanaByRealm(realm: Realm) {
     return getAllProposals(
       this.connection,
-      new PublicKey(realm.governance),
-      new PublicKey(realm.pubkey),
+      new PublicKey(realm.governancePk),
+      new PublicKey(realm.realmPk),
     ).then((x) => x.flatMap((x) => x));
   }
 
@@ -46,7 +46,7 @@ export class ProposalService {
     newProposals: ProgramAccount<SolanaProposal>[];
   }> {
     const mostRecentProposal = await this.proposalRepo.findOne({
-      where: { realmPubKey: realm.pubkey },
+      where: { realmPk: realm.realmPk },
       order: { draftAt: 'DESC' },
     });
 
@@ -64,7 +64,7 @@ export class ProposalService {
   public async addOrUpdateProposals(
     realm: Realm,
     proposals: ProgramAccount<SolanaProposal>[],
-  ) {
+  ): Promise<InsertResult> {
     const dbProposals = await this.convertSolanaProposalToEntity(
       realm,
       proposals,
@@ -88,7 +88,7 @@ export class ProposalService {
           'closedAt',
           'executingAt',
         ],
-        ['pubkey'],
+        ['proposalPk'],
         {
           skipUpdateIfNoValuesChanged: true,
         },
@@ -118,9 +118,9 @@ export class ProposalService {
         }
 
         return {
-          governanceKey: x.account.governance.toBase58(),
-          realmPubKey: realm.pubkey,
-          pubkey: x.pubkey.toBase58(),
+          governancePk: x.account.governance.toBase58(),
+          realmPk: realm.realmPk,
+          proposalPk: x.pubkey.toBase58(),
           descriptionLink: x.account.descriptionLink,
           name: x.account.name,
           state: x.account.state,

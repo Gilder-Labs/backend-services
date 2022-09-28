@@ -3,15 +3,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
-import { TerminusModule } from '@nestjs/terminus';
-import { HealthController } from './health.controller';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RealmsModule } from './realms';
 import { ProposalsModule } from './proposals';
 
 @Module({
   imports: [
-    TerminusModule,
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -38,7 +35,7 @@ import { ProposalsModule } from './proposals';
     RealmsModule,
     ProposalsModule,
   ],
-  controllers: [HealthController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

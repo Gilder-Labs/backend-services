@@ -1,4 +1,4 @@
-import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/db-entities';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,7 +27,7 @@ export class NotificationService {
   async subscribe(body: NotifyData): Promise<NotificationSubscription> {
     const newSubscription = this.notificationSubscriptionsRepository.create({
       type: body.type,
-      realmPubKey: body.realm,
+      realmPk: body.realmPk,
       isActive: true,
       mobileToken: body.mobileToken,
     });
@@ -49,7 +49,7 @@ export class NotificationService {
     body: NotifyData,
   ): Promise<NotificationSubscription[]> {
     return this.notificationSubscriptionsRepository.find({
-      select: ['type', 'realmPubKey'],
+      select: ['type', 'realmPk'],
       where: { mobileToken: body.mobileToken },
     });
   }

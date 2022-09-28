@@ -9,7 +9,7 @@ import {
 import { Connection, PublicKey } from '@solana/web3.js';
 import { RealmsRestService } from './realms.rest-service';
 import { getConnection } from 'src/utils';
-import { In, Repository } from 'typeorm';
+import { In, InsertResult, Repository } from 'typeorm';
 
 const mainSplGovernanceProgram = new PublicKey(
   'GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw',
@@ -45,20 +45,22 @@ export class RealmsService {
 
   public getRealmsByRealmPubKey(pubKeys: string[]) {
     return this.realmRepo.find({
-      select: ['pubkey', 'governance', 'name'],
+      select: ['realmPk', 'governancePk', 'name'],
       where: {
-        pubkey: In(pubKeys),
+        realmPk: In(pubKeys),
       },
     });
   }
 
-  public addOrUpdateRealms(realms: ProgramAccount<SolanaRealm>[]) {
+  public addOrUpdateRealms(
+    realms: ProgramAccount<SolanaRealm>[],
+  ): Promise<InsertResult> {
     const dbRealms = realms
       .filter((x) => !!x.pubkey && !!x.owner)
       .map<Partial<Realm>>((x) => ({
         name: x.account.name,
-        governance: x.owner?.toBase58(),
-        pubkey: x.pubkey?.toBase58(),
+        governancePk: x.owner?.toBase58(),
+        realmPk: x.pubkey?.toBase58(),
       }));
 
     return this.realmRepo
@@ -66,7 +68,7 @@ export class RealmsService {
       .insert()
       .into(Realm)
       .values(dbRealms)
-      .orUpdate(['name', 'governance'], ['pubkey'], {
+      .orUpdate(['name'], ['realmPk'], {
         skipUpdateIfNoValuesChanged: true,
       })
       .execute();

@@ -6,35 +6,36 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { Realm as IRealm } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['pubkey'])
-export class Realm {
+@Unique('constraint_name', ['realmPk'])
+export class Realm implements IRealm {
   @PrimaryColumn('text')
-  pubkey!: string;
+  realmPk: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  governance!: string;
+  governancePk: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  name!: string;
+  name: string;
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updated_at!: Date;
+  updated_at: Date;
 }
