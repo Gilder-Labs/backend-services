@@ -15,7 +15,7 @@ export class Proposal implements IProposal {
   proposalPk: string;
 
   @Column('text')
-  governancePk: string;
+  programPk: string;
 
   @Column('text')
   realmPk: string;

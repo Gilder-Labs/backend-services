@@ -1,7 +1,7 @@
 export interface Realm {
   realmPk: string;
 
-  governancePk: string;
+  programPk: string;
 
   name: string;
 }

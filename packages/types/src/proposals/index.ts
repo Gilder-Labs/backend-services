@@ -1,7 +1,7 @@
 export interface Proposal {
   proposalPk: string;
 
-  governancePk: string;
+  programPk: string;
 
   realmPk: string;
 

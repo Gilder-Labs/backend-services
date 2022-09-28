@@ -33,7 +33,7 @@ export class ProposalService {
   public getProposalsFromSolanaByRealm(realm: Realm) {
     return getAllProposals(
       this.connection,
-      new PublicKey(realm.governancePk),
+      new PublicKey(realm.programPk),
       new PublicKey(realm.realmPk),
     ).then((x) => x.flatMap((x) => x));
   }
@@ -118,7 +118,7 @@ export class ProposalService {
         }
 
         return {
-          governancePk: x.account.governance.toBase58(),
+          programPk: x.account.governance.toBase58(),
           realmPk: realm.realmPk,
           proposalPk: x.pubkey.toBase58(),
           descriptionLink: x.account.descriptionLink,

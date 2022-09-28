@@ -18,7 +18,7 @@ export class Realm implements IRealm {
     type: 'text',
     nullable: true,
   })
-  governancePk: string;
+  programPk: string;
 
   @Column({
     type: 'text',

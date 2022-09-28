@@ -7,7 +7,7 @@ export class Proposal implements IProposal {
   proposalPk: string;
 
   @Field()
-  governancePk: string;
+  programPk: string;
 
   @Field()
   realmPk: string;

@@ -45,7 +45,7 @@ export class RealmsService {
 
   public getRealmsByRealmPubKey(pubKeys: string[]) {
     return this.realmRepo.find({
-      select: ['realmPk', 'governancePk', 'name'],
+      select: ['realmPk', 'programPk', 'name'],
       where: {
         realmPk: In(pubKeys),
       },
@@ -59,7 +59,7 @@ export class RealmsService {
       .filter((x) => !!x.pubkey && !!x.owner)
       .map<Partial<Realm>>((x) => ({
         name: x.account.name,
-        governancePk: x.owner?.toBase58(),
+        programPk: x.owner?.toBase58(),
         realmPk: x.pubkey?.toBase58(),
       }));
 

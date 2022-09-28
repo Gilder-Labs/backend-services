@@ -7,7 +7,7 @@ export class Realm implements IRealm {
   realmPk: string;
 
   @Field()
-  governancePk: string;
+  programPk: string;
 
   @Field()
   name: string;
