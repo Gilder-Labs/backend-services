@@ -5,18 +5,24 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 
 export const getDataConfig = (
   configService: ConfigService,
-): PostgresConnectionOptions => ({
-  type: 'postgres',
-  host: configService.getOrThrow('DB_HOST'),
-  username: configService.getOrThrow('DB_USERNAME'),
-  password: configService.getOrThrow('DB_PASSWORD'),
-  database: configService.getOrThrow('DB_NAME'),
-  port: configService.getOrThrow<number>('DB_PORT'),
-  ssl: {
-    rejectUnauthorized: false,
-  },
-  synchronize: true,
-  entities: [NotificationSubscription],
-  migrations: [],
-  subscribers: [],
-});
+): PostgresConnectionOptions => {
+  const host = configService.getOrThrow<string>('DB_HOST');
+  const isLocalhost = host.includes('localhost');
+  return {
+    type: 'postgres',
+    host,
+    username: configService.getOrThrow('DB_USERNAME'),
+    password: configService.getOrThrow('DB_PASSWORD'),
+    database: configService.getOrThrow('DB_NAME'),
+    port: configService.getOrThrow<number>('DB_PORT'),
+    ssl: isLocalhost
+      ? false
+      : {
+          rejectUnauthorized: false,
+        },
+    synchronize: true,
+    entities: [NotificationSubscription],
+    migrations: [],
+    subscribers: [],
+  };
+};

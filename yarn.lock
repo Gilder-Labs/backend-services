@@ -565,9 +565,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/db-entities@workspace:*, @gilder/db-entities@workspace:packages/db-entities":
+"@gilder/db-entities@workspace:*, @gilder/db-entities@workspace:libs/db-entities":
   version: 0.0.0-use.local
-  resolution: "@gilder/db-entities@workspace:packages/db-entities"
+  resolution: "@gilder/db-entities@workspace:libs/db-entities"
   dependencies:
     "@gilder/types": "workspace:*"
     "@swc/core": ^1.3.3
@@ -583,9 +583,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-models@workspace:*, @gilder/graphql-models@workspace:packages/graphql/models":
+"@gilder/graphql-models@workspace:*, @gilder/graphql-models@workspace:libs/graphql/models":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-models@workspace:packages/graphql/models"
+  resolution: "@gilder/graphql-models@workspace:libs/graphql/models"
   dependencies:
     "@gilder/types": "workspace:*"
     "@nestjs/common": ^9.0.0
@@ -610,9 +610,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-resolvers@workspace:*, @gilder/graphql-resolvers@workspace:packages/graphql/resolvers":
+"@gilder/graphql-resolvers@workspace:*, @gilder/graphql-resolvers@workspace:libs/graphql/resolvers":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-resolvers@workspace:packages/graphql/resolvers"
+  resolution: "@gilder/graphql-resolvers@workspace:libs/graphql/resolvers"
   dependencies:
     "@gilder/db-entities": "workspace:*"
     "@gilder/graphql-models": "workspace:*"
@@ -692,9 +692,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/health-module@workspace:packages/common/modules/health":
+"@gilder/health-module@workspace:libs/common/modules/health":
   version: 0.0.0-use.local
-  resolution: "@gilder/health-module@workspace:packages/common/modules/health"
+  resolution: "@gilder/health-module@workspace:libs/common/modules/health"
   dependencies:
     "@gilder/types": "workspace:*"
     "@swc/core": ^1.3.0
@@ -758,9 +758,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/notification-subscriptions-module@workspace:*, @gilder/notification-subscriptions-module@workspace:packages/common/modules/notification-subscriptions":
+"@gilder/notification-subscriptions-module@workspace:*, @gilder/notification-subscriptions-module@workspace:libs/common/modules/notification-subscriptions":
   version: 0.0.0-use.local
-  resolution: "@gilder/notification-subscriptions-module@workspace:packages/common/modules/notification-subscriptions"
+  resolution: "@gilder/notification-subscriptions-module@workspace:libs/common/modules/notification-subscriptions"
   dependencies:
     "@gilder/db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
@@ -829,9 +829,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/proposals-module@workspace:*, @gilder/proposals-module@workspace:packages/common/modules/proposals":
+"@gilder/proposals-module@workspace:*, @gilder/proposals-module@workspace:libs/common/modules/proposals":
   version: 0.0.0-use.local
-  resolution: "@gilder/proposals-module@workspace:packages/common/modules/proposals"
+  resolution: "@gilder/proposals-module@workspace:libs/common/modules/proposals"
   dependencies:
     "@gilder/db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
@@ -853,9 +853,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/realms-module@workspace:*, @gilder/realms-module@workspace:packages/common/modules/realms":
+"@gilder/realms-module@workspace:*, @gilder/realms-module@workspace:libs/common/modules/realms":
   version: 0.0.0-use.local
-  resolution: "@gilder/realms-module@workspace:packages/common/modules/realms"
+  resolution: "@gilder/realms-module@workspace:libs/common/modules/realms"
   dependencies:
     "@gilder/db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
@@ -877,17 +877,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/types@workspace:*, @gilder/types@workspace:packages/types":
+"@gilder/types@workspace:*, @gilder/types@workspace:libs/types":
   version: 0.0.0-use.local
-  resolution: "@gilder/types@workspace:packages/types"
+  resolution: "@gilder/types@workspace:libs/types"
   dependencies:
     typescript: ^4.8.3
   languageName: unknown
   linkType: soft
 
-"@gilder/utilities@workspace:*, @gilder/utilities@workspace:packages/utilities":
+"@gilder/utilities@workspace:*, @gilder/utilities@workspace:libs/utilities":
   version: 0.0.0-use.local
-  resolution: "@gilder/utilities@workspace:packages/utilities"
+  resolution: "@gilder/utilities@workspace:libs/utilities"
   dependencies:
     "@originjs/vite-plugin-commonjs": ^1.0.3
     node-fetch: ^3.2.10
