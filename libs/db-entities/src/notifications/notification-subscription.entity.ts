@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Unique,
 } from 'typeorm';
 import type {
   NotificationType,
@@ -11,6 +12,7 @@ import type {
 } from '@gilder/types';
 
 @Entity()
+@Unique('constraint_name', ['mobileToken', 'realmPk'])
 export class NotificationSubscription implements INotificationSubscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;

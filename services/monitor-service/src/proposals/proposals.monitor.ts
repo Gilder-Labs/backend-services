@@ -1,4 +1,6 @@
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
+import { RealmsService } from '@gilder/realms-module';
 import { getConnection } from '@gilder/utilities';
 import {
   Injectable,
@@ -10,9 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { NotifyService } from 'src/notify/notify.service';
-import { RealmsService } from 'src/realms/realms.service';
 import { Repository } from 'typeorm';
-import { ProposalService } from './proposals.service';
 
 interface ProposalWithRealm {
   proposal: ProgramAccount<Proposal>;
@@ -33,7 +33,8 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     @InjectRepository(NotificationSubscription)
     private readonly subscriptionRepo: Repository<NotificationSubscription>,
     private readonly realmsService: RealmsService,
-    private readonly proposalService: ProposalService,
+    private readonly proposalsService: ProposalsService,
+    private readonly proposalRpcService: ProposalRPCService,
     private readonly notifyService: NotifyService,
   ) {
     this.connection = getConnection();
@@ -83,14 +84,13 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async addRealmListener(realm: Realm) {
-    const proposals = await this.proposalService.getProposalsFromSolanaByRealm(
-      realm,
-    );
+    const proposals =
+      await this.proposalRpcService.getProposalsFromSolanaByRealm(realm);
 
     this.logger.log(
       `Found ${proposals.length} proposals associated to Realm: ${realm.name}`,
     );
-    await this.proposalService.addOrUpdateProposals(realm, proposals);
+    await this.proposalsService.addOrUpdateProposals(realm, proposals);
 
     const activeProposals = proposals
       .filter((p) => !p.account.isVoteFinalized())
@@ -120,7 +120,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
         );
 
         const updatedProposal =
-          await this.proposalService.getProposalFromSolana(
+          await this.proposalRpcService.getProposalFromSolana(
             proposal.pubkey.toBase58(),
           );
         try {
@@ -143,7 +143,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
         } catch (e) {
           this.logger.error(`Something went wrong. Error: ${e}`);
         } finally {
-          await this.proposalService.addOrUpdateProposals(realm, [
+          await this.proposalsService.addOrUpdateProposals(realm, [
             updatedProposal,
           ]);
         }
@@ -161,9 +161,9 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
       async () => {
         this.logger.log(`Detected change for Realm: ${realm.name}`);
         const allProposals =
-          await this.proposalService.getProposalsFromSolanaByRealm(realm);
+          await this.proposalRpcService.getProposalsFromSolanaByRealm(realm);
         const { found, newProposals } =
-          await this.proposalService.foundNewProposals(realm, allProposals);
+          await this.proposalsService.foundNewProposals(realm, allProposals);
         if (found) {
           this.logger.log(`Found new proposals for Realm: ${realm.name}`);
           try {
@@ -189,7 +189,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
               `Something went wrong when trying to add new proposal listeners. Error: ${e}`,
             );
           } finally {
-            await this.proposalService.addOrUpdateProposals(
+            await this.proposalsService.addOrUpdateProposals(
               realm,
               newProposals,
             );

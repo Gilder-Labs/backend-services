@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { ScheduleModule } from '@nestjs/schedule';
-import { RealmsModule } from './realms';
-import { ProposalsModule } from './proposals';
+import { RealmsMonitorModule } from './realms';
+import { ProposalsMonitorModule } from './proposals';
 
 @Module({
   imports: [
@@ -32,8 +32,8 @@ import { ProposalsModule } from './proposals';
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    RealmsModule,
-    ProposalsModule,
+    RealmsMonitorModule,
+    ProposalsMonitorModule,
   ],
   controllers: [],
   providers: [],

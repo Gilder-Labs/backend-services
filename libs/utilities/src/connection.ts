@@ -17,3 +17,5 @@ export const getConnection = (rpcUrl: string = process.env.SOLANA_RPC_URL!) =>
       return result;
     },
   }));
+
+export type { Connection };

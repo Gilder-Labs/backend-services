@@ -19,10 +19,13 @@
   "devDependencies": {
     "@gilder/db-entities": "workspace:*",
     "@gilder/types": "workspace:*",
+    "@gilder/utilities": "workspace:*",
+    "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",
     "@nestjs/platform-express": "^9.1.2",
     "@nestjs/typeorm": "9.0.1",
+    "@solana/spl-governance": "^0.3.14",
     "@swc/core": "^1.3.0",
     "reflect-metadata": "^0.1.13",
     "rollup": "^2.79.1",

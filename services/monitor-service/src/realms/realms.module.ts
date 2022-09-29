@@ -1,15 +1,13 @@
 import { Realm } from '@gilder/db-entities';
+import { RealmsModule } from '@gilder/realms-module';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RealmsMonitorService } from './realms.monitor';
-import { RealmsRestService } from './realms.rest-service';
-import { RealmsService } from './realms.service';
 
 @Module({
-  imports: [HttpModule, TypeOrmModule.forFeature([Realm])],
+  imports: [HttpModule, RealmsModule, TypeOrmModule.forFeature([Realm])],
   controllers: [],
-  providers: [RealmsService, RealmsRestService, RealmsMonitorService],
-  exports: [RealmsService],
+  providers: [RealmsMonitorService],
 })
-export class RealmsModule {}
+export class RealmsMonitorModule {}

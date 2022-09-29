@@ -2,7 +2,7 @@ import { NotificationSubscription } from '@gilder/db-entities';
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { MONITOR_SERVICE } from './constants';
 import { NotifyData } from './types';
 
@@ -33,26 +33,52 @@ export class NotificationSubscriptionsService {
   }
 
   async subscribe(body: NotifyData): Promise<NotificationSubscription | null> {
-    const newSubscription = this.notificationSubscriptionsRepository.create({
-      type: body.type,
-      realmPk: body.realmPk,
-      isActive: true,
-      mobileToken: body.mobileToken,
-    });
-
     try {
-      const result = await this.notificationSubscriptionsRepository.save(
-        newSubscription,
-      );
+      const newSubscription =
+        await this.notificationSubscriptionsRepository.upsert(
+          {
+            type: body.type,
+            realmPk: body.realmPk,
+            isActive: true,
+            mobileToken: body.mobileToken,
+          },
+          {
+            conflictPaths: ['realmPk', 'mobileToken'],
+            skipUpdateIfNoValuesChanged: true,
+          },
+        );
+      const subscription =
+        await this.notificationSubscriptionsRepository.findOne({
+          where: { id: newSubscription.identifiers[0].id },
+        });
 
-      this.client?.emit('new_notification_subscription', result);
+      this.client?.emit('new_notification_subscription', subscription);
 
-      return result;
+      return subscription;
     } catch (e) {
       this.logger.error(`Something went wrong. Error: ${e}`);
     }
 
     return null;
+  }
+
+  async unsubscribe(body: NotifyData): Promise<boolean> {
+    try {
+      await this.notificationSubscriptionsRepository.update(
+        {
+          mobileToken: body.mobileToken,
+          realmPk: body.realmPk,
+          type: body.type,
+        },
+        { isActive: false },
+      );
+
+      return true;
+    } catch (e) {
+      this.logger.error(`Something went wrong. Error: ${e}`);
+    }
+
+    return false;
   }
 
   getDeviceSubscriptions(

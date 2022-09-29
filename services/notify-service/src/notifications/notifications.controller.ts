@@ -18,8 +18,13 @@ export class NotificationsController {
     return this.notificationService.subscribe(data);
   }
 
-  @Get('listSubscriptions/:mobileToken')
-  getDeviceSubscriptions(@Param('mobileToken') mobileToken: string) {
-    return this.notificationService.getByMobileToken(mobileToken);
+  @Post('unsubscribe')
+  unsubscribe(@Body() data: NotifyData) {
+    return this.notificationService.unsubscribe(data);
+  }
+
+  @Post('listSubscriptions')
+  getDeviceSubscriptions(@Body() data: { mobileToken: string }) {
+    return this.notificationService.getByMobileToken(data.mobileToken);
   }
 }
