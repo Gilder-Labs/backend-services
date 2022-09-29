@@ -1,19 +1,23 @@
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { NotificationService } from './notification.service';
 import { NotificationsController } from './notifications.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import { MONITOR_SERVICE } from './constants';
+import {
+  MONITOR_SERVICE,
+  NotificationSubscriptionsModule,
+  NotificationSubscriptionsService,
+} from '@gilder/notification-subscriptions-module';
 
 @Module({
   imports: [
     ConfigModule,
     TypeOrmModule.forFeature([Realm, NotificationSubscription]),
+    NotificationSubscriptionsModule,
   ],
   providers: [
-    NotificationService,
+    NotificationSubscriptionsService,
     {
       provide: MONITOR_SERVICE,
       useFactory: (configService: ConfigService) => {

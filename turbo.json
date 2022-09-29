@@ -9,13 +9,6 @@
       "outputs": ["coverage/**"],
       "dependsOn": []
     },
-    "lint": {
-      "outputs": []
-    },
-    "deploy": {
-      "dependsOn": ["build", "test"],
-      "outputs": [""]
-    },
     "dev": {
       "cache": false
     }

@@ -8,8 +8,8 @@ import {
 } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { RealmsRestService } from './realms.rest-service';
-import { getConnection } from 'src/utils';
 import { In, InsertResult, Repository } from 'typeorm';
+import { getConnection } from '@gilder/utilities';
 
 const mainSplGovernanceProgram = new PublicKey(
   'GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw',

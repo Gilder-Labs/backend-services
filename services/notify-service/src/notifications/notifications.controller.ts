@@ -1,13 +1,17 @@
+import {
+  NotificationSubscriptionsService,
+  NotifyData,
+} from '@gilder/notification-subscriptions-module';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { NotificationService } from './notification.service';
-import { NotifyData } from './types';
 
 @Controller({
   path: 'notifications',
   version: '1',
 })
 export class NotificationsController {
-  constructor(private readonly notificationService: NotificationService) {}
+  constructor(
+    private readonly notificationService: NotificationSubscriptionsService,
+  ) {}
 
   @Post('subscribe')
   subscribe(@Body() data: NotifyData) {
@@ -16,6 +20,6 @@ export class NotificationsController {
 
   @Get('listSubscriptions/:mobileToken')
   getDeviceSubscriptions(@Param('mobileToken') mobileToken: string) {
-    return mobileToken;
+    return this.notificationService.getByMobileToken(mobileToken);
   }
 }

@@ -1,13 +1,11 @@
 import { defineConfig } from 'vite';
-import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
+import swc from 'rollup-plugin-swc';
 import path from 'path';
 
 const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
 export default defineConfig({
-  optimizeDeps: {
-    exclude: ['node-fetch'],
-  },
+  esbuild: false,
   build: {
     target: 'esnext',
     lib: {
@@ -16,10 +14,23 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['@solana/web3.js', 'throttled-queue', /node:.*/],
+      external: isExternal,
     },
   },
   plugins: [
+    swc({
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          dynamicImport: true,
+          decorators: true,
+        },
+        target: 'es2022',
+        transform: {
+          decoratorMetadata: true,
+        },
+      },
+    }),
     {
       name: 'vite-plugin-dts',
       apply: 'build',
@@ -31,6 +42,5 @@ export default defineConfig({
         });
       },
     },
-    viteCommonjs(),
   ],
 });

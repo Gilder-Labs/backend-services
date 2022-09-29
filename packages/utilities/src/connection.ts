@@ -1,19 +1,19 @@
 import { Connection } from '@solana/web3.js';
 import throttledQueue from 'throttled-queue';
-import fetch from 'cross-fetch';
+import fetch from 'node-fetch';
 
 const throttle = throttledQueue(24, 1000, true);
 
 let connection: Connection;
 
-export const getConnection = () =>
+export const getConnection = (rpcUrl: string = process.env.SOLANA_RPC_URL!) =>
   connection ??
-  (connection = new Connection(process.env.SOLANA_RPC_URL, {
+  (connection = new Connection(rpcUrl, {
     commitment: 'confirmed',
     fetch: async (input, init) => {
       const result = await throttle(async () => {
-        return await fetch(input as any, init as any);
+        return await fetch(input, init);
       });
-      return result as any;
+      return result;
     },
   }));

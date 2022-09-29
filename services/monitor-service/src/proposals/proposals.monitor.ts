@@ -1,4 +1,5 @@
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import { getConnection } from '@gilder/utilities';
 import {
   Injectable,
   Logger,
@@ -10,7 +11,6 @@ import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { NotifyService } from 'src/notify/notify.service';
 import { RealmsService } from 'src/realms/realms.service';
-import { getConnection } from 'src/utils';
 import { Repository } from 'typeorm';
 import { ProposalService } from './proposals.service';
 

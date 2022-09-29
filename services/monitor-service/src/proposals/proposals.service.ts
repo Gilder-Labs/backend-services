@@ -10,9 +10,9 @@ import {
   ProposalState,
 } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { getConnection } from 'src/utils';
 import { InsertResult, Repository } from 'typeorm';
 import { sort } from 'fast-sort';
+import { getConnection } from '@gilder/utilities';
 
 @Injectable()
 export class ProposalService {

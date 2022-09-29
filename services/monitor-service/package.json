@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@gilder/db-entities": "workspace:*",
+    "@gilder/proposals-module": "workspace:*",
+    "@gilder/realms-module": "workspace:*",
+    "@gilder/utilities": "workspace:*",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.1.2",
     "@nestjs/config": "^2.2.0",
