@@ -10,11 +10,14 @@ export default defineConfig({
     target: 'esnext',
     lib: {
       entry: 'src/index.ts',
-      fileName: () => 'index.js',
+      fileName: () => '[name].js',
       formats: ['cjs'],
     },
     rollupOptions: {
       external: isExternal,
+      output: {
+        preserveModules: true,
+      },
     },
   },
   plugins: [

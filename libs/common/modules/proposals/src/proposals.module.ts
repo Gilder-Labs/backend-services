@@ -1,7 +1,7 @@
 import { Proposal } from '@gilder/db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProposalRPCService } from './proposal.rpc-service';
+import { ProposalRPCService } from './proposals.rpc-service';
 import { ProposalsService } from './proposals.service';
 
 @Module({

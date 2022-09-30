@@ -9,6 +9,12 @@
     "dist",
     "src"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./module": "./dist/notification-subscriptions.module.js",
+    "./service": "./dist/notification-subscriptions.service.js",
+    "./constants": "./dist/constants.js"
+  },
   "scripts": {
     "build": "vite build",
     "watch": "vite build -w"

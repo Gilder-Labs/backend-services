@@ -9,6 +9,12 @@
     "dist",
     "src"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./module": "./dist/proposals.module.js",
+    "./rpc-service": "./dist/proposals.rpc-service.js",
+    "./service": "./dist/proposals.service.js"
+  },
   "scripts": {
     "build": "vite build",
     "watch": "vite build -w"

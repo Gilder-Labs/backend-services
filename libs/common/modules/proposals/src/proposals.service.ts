@@ -5,10 +5,9 @@ import { Proposal, Realm } from '@gilder/db-entities';
 import {
   ProgramAccount,
   Proposal as SolanaProposal,
-  ProposalState,
 } from '@solana/spl-governance';
 import { sort } from 'fast-sort';
-import { ProposalRPCService } from './proposal.rpc-service';
+import { ProposalRPCService } from './proposals.rpc-service';
 
 @Injectable()
 export class ProposalsService {

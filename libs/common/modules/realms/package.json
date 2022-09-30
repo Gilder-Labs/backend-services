@@ -9,6 +9,13 @@
     "dist",
     "src"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./module": "./dist/realms.module.js",
+    "./rest-service": "./dist/realms.rest-service.js",
+    "./rpc-service": "./dist/realms.rpc-service.js",
+    "./service": "./dist/realms.service.js"
+  },
   "scripts": {
     "build": "vite build",
     "watch": "vite build -w"

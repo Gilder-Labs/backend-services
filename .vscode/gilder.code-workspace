@@ -22,7 +22,6 @@
       "**/.DS_Store": true,
       "**/Thumbs.db": true,
       "**/.turbo": true,
-      "**/dist": true,
       "services": true,
       "libs": true,
       "node_modules": true
