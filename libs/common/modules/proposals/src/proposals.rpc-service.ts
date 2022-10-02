@@ -35,9 +35,9 @@ export class ProposalRPCService {
   public convertSolanaProposalToEntity(
     realm: Realm,
     proposals: ProgramAccount<Proposal>[],
-  ) {
+  ): Promise<DbProposal[]> {
     return Promise.all(
-      proposals.map<Promise<Partial<DbProposal>>>(async (x) => {
+      proposals.map<Promise<DbProposal>>(async (x) => {
         let estimatedVoteCompletionAt: number | undefined = undefined;
 
         if (x.account.state === ProposalState.Voting) {
