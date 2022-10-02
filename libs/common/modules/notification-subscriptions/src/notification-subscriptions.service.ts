@@ -43,42 +43,52 @@ export class NotificationSubscriptionsService {
             mobileToken: body.mobileToken,
           },
           {
-            conflictPaths: ['realmPk', 'mobileToken'],
+            conflictPaths: ['type', 'mobileToken'],
             skipUpdateIfNoValuesChanged: true,
           },
         );
+
+      if (!newSubscription.identifiers[0]) {
+        this.logger.log(
+          `No subscription needed to be updated for ${JSON.stringify(body)}`,
+        );
+      }
+
       const subscription =
         await this.notificationSubscriptionsRepository.findOne({
-          where: { id: newSubscription.identifiers[0].id },
+          where: {
+            mobileToken: body.mobileToken,
+            type: body.type,
+            realmPk: body.realmPk,
+          },
         });
 
       this.client?.emit('new_notification_subscription', subscription);
 
       return subscription;
     } catch (e) {
-      this.logger.error(`Something went wrong. Error: ${e}`);
+      this.logger.error(
+        `Unable to create/update subscription for ${JSON.stringify(
+          body,
+          undefined,
+          4,
+        )}\nError: ${e}}`,
+      );
+      throw e;
     }
-
-    return null;
   }
 
   async unsubscribe(body: NotifyData): Promise<boolean> {
-    try {
-      await this.notificationSubscriptionsRepository.update(
-        {
-          mobileToken: body.mobileToken,
-          realmPk: body.realmPk,
-          type: body.type,
-        },
-        { isActive: false },
-      );
+    await this.notificationSubscriptionsRepository.update(
+      {
+        mobileToken: body.mobileToken,
+        realmPk: body.realmPk,
+        type: body.type,
+      },
+      { isActive: false },
+    );
 
-      return true;
-    } catch (e) {
-      this.logger.error(`Something went wrong. Error: ${e}`);
-    }
-
-    return false;
+    return true;
   }
 
   getDeviceSubscriptions(
