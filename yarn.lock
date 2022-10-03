@@ -558,9 +558,9 @@ __metadata:
     "@nestjs/cli": ^9.1.3
     concurrently: ^7.4.0
     cross-env: ^7.0.3
-    turbo: ^1.5.3
-    typescript: ^4.8.3
-    vite: ^3.1.3
+    turbo: ^1.5.5
+    typescript: ^4.8.4
+    vite: ^3.1.4
     zx: ^7.0.8
   languageName: unknown
   linkType: soft
@@ -574,10 +574,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     typeorm: ^0.3.10
-    typescript: ^4.8.3
-    vite: ^3.1.3
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     typeorm: ^0.3.10
   languageName: unknown
@@ -596,10 +596,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
-    typeorm: ^0.3.9
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     "@nestjs/graphql": ^10.1.2
     "@nestjs/typeorm": ^9.0.1
@@ -628,10 +628,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
-    typeorm: ^0.3.9
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     "@nestjs/graphql": ^10.1.2
     "@nestjs/typeorm": ^9.0.1
@@ -668,8 +668,8 @@ __metadata:
     "@types/node": ^18.7.19
     "@typescript-eslint/eslint-plugin": ^5.38.0
     "@typescript-eslint/parser": ^5.38.0
-    apollo-server: 3.9.0
-    apollo-server-express: 3.9.0
+    apollo-server: ^3.10.2
+    apollo-server-express: ^3.10.2
     class-transformer: ^0.5.1
     class-validator: ^0.13.2
     cross-env: ^7.0.3
@@ -680,15 +680,15 @@ __metadata:
     lodash: ^4.17.21
     nestjs-pino: ^3.1.1
     pg: ^8.8.0
-    pino-http: ^8.2.0
+    pino-http: ^8.2.1
     pino-pretty: ^9.1.0
     prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     source-map-support: ^0.5.21
     typeorm: ^0.3.10
-    typescript: 4.8.3
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -700,8 +700,8 @@ __metadata:
     "@swc/core": ^1.3.0
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
   languageName: unknown
   linkType: soft
 
@@ -745,16 +745,16 @@ __metadata:
     lodash: ^4.17.21
     nestjs-pino: ^3.1.1
     pg: ^8.8.0
-    pino-http: ^8.2.0
+    pino-http: ^8.2.1
     pino-pretty: ^9.1.0
     prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     source-map-support: ^0.5.21
     throttled-queue: ^2.1.4
     typeorm: ^0.3.10
-    typescript: 4.8.3
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -773,10 +773,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     typeorm: ^0.3.10
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     "@nestjs/microservices": ^9.1.2
     "@nestjs/typeorm": ^9.0.1
@@ -816,16 +816,16 @@ __metadata:
     lodash: ^4.17.21
     nestjs-pino: ^3.1.1
     pg: ^8.8.0
-    pino-http: ^8.2.0
+    pino-http: ^8.2.1
     pino-pretty: ^9.1.0
     prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     source-map-support: ^0.5.21
-    tsconfig-paths: 4.1.0
+    tsconfig-paths: ^4.1.0
     typeorm: ^0.3.10
-    typescript: 4.8.3
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -847,10 +847,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     typeorm: ^0.3.10
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     "@nestjs/typeorm": ^9.0.1
     typeorm: ^0.3.10
@@ -874,10 +874,10 @@ __metadata:
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.6
+    rxjs: ^7.5.7
     typeorm: ^0.3.10
-    typescript: ^4.8.2
-    vite: ^3.1.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
   peerDependencies:
     "@nestjs/typeorm": ^9.0.1
     typeorm: ^0.3.10
@@ -888,7 +888,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gilder/types@workspace:libs/types"
   dependencies:
-    typescript: ^4.8.3
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -899,8 +899,8 @@ __metadata:
     "@originjs/vite-plugin-commonjs": ^1.0.3
     node-fetch: ^3.2.10
     throttled-queue: ^2.1.4
-    typescript: ^4.8.3
-    vite: ^3.1.3
+    typescript: ^4.8.4
+    vite: ^3.1.4
   languageName: unknown
   linkType: soft
 
@@ -2017,17 +2017,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-serve-static-core@npm:4.17.29":
-  version: 4.17.29
-  resolution: "@types/express-serve-static-core@npm:4.17.29"
-  dependencies:
-    "@types/node": "*"
-    "@types/qs": "*"
-    "@types/range-parser": "*"
-  checksum: ec4194dc59276ec6dd906887fc377be0cadf4aaa4d535d9052ab9624937ef2b984a8d9da2c11c96979e21f3d9f78f1da93e767dbcec637f7f13d2e3003151145
-  languageName: node
-  linkType: hard
-
 "@types/express-serve-static-core@npm:4.17.30":
   version: 4.17.30
   resolution: "@types/express-serve-static-core@npm:4.17.30"
@@ -2717,7 +2706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-core@npm:^3.10.2, apollo-server-core@npm:^3.9.0":
+"apollo-server-core@npm:^3.10.2":
   version: 3.10.2
   resolution: "apollo-server-core@npm:3.10.2"
   dependencies:
@@ -2767,29 +2756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-express@npm:3.9.0":
-  version: 3.9.0
-  resolution: "apollo-server-express@npm:3.9.0"
-  dependencies:
-    "@types/accepts": ^1.3.5
-    "@types/body-parser": 1.19.2
-    "@types/cors": 2.8.12
-    "@types/express": 4.17.13
-    "@types/express-serve-static-core": 4.17.29
-    accepts: ^1.3.5
-    apollo-server-core: ^3.9.0
-    apollo-server-types: ^3.6.1
-    body-parser: ^1.19.0
-    cors: ^2.8.5
-    parseurl: ^1.3.3
-  peerDependencies:
-    express: ^4.17.1
-    graphql: ^15.3.0 || ^16.0.0
-  checksum: 04219816fe72e0852281765766e12393161e514c2b11f2b001dd53a3f238998477511d06229988c7804dcd073eda0702bf9f2c72b555f530d32722cbf56fb687
-  languageName: node
-  linkType: hard
-
-"apollo-server-express@npm:^3.9.0":
+"apollo-server-express@npm:^3.10.2":
   version: 3.10.2
   resolution: "apollo-server-express@npm:3.10.2"
   dependencies:
@@ -2822,7 +2789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-types@npm:^3.6.1, apollo-server-types@npm:^3.6.2":
+"apollo-server-types@npm:^3.6.2":
   version: 3.6.2
   resolution: "apollo-server-types@npm:3.6.2"
   dependencies:
@@ -2836,17 +2803,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server@npm:3.9.0":
-  version: 3.9.0
-  resolution: "apollo-server@npm:3.9.0"
+"apollo-server@npm:^3.10.2":
+  version: 3.10.2
+  resolution: "apollo-server@npm:3.10.2"
   dependencies:
     "@types/express": 4.17.13
-    apollo-server-core: ^3.9.0
-    apollo-server-express: ^3.9.0
+    apollo-server-core: ^3.10.2
+    apollo-server-express: ^3.10.2
     express: ^4.17.1
   peerDependencies:
     graphql: ^15.3.0 || ^16.0.0
-  checksum: 11fb36801800da2284857f3fb490eb141536a9cf3b6a3e0506a8f46f062d4384f951652c4b4229fb85c06c108ee9b68328ff55cd74b9f3254a4359551a2ef1b4
+  checksum: 9f3c22ed1d4275a8bd5559b276dadab26758c3b4ae90b454d86aeccfa1a0da90d1201f627676e36ec84b8d581f767f24037d682a58615247b393930aca850324
   languageName: node
   linkType: hard
 
@@ -7354,16 +7321,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-http@npm:^8.2.0":
-  version: 8.2.0
-  resolution: "pino-http@npm:8.2.0"
+"pino-http@npm:^8.2.1":
+  version: 8.2.1
+  resolution: "pino-http@npm:8.2.1"
   dependencies:
     fast-url-parser: ^1.1.3
     get-caller-file: ^2.0.5
     pino: ^8.0.0
     pino-std-serializers: ^6.0.0
     process-warning: ^2.0.0
-  checksum: 4dc138f2cd038237d5661c7aa7e96e7a4713d125d79061eccbc399d39fe73bdc132fa279a2b2644288087ac235d4ff6d9c67a5ee431262098bc0f73d702506a7
+  checksum: 7eb0d72a1986c16ab7ca22f193f9a5d1b26dc6614fddd4f7859065a410d86ab9cbb96a70a5758fa432dd1dd01c02a6e5774bba90f9a2e08ea0c1ac242af7ea0d
   languageName: node
   linkType: hard
 
@@ -7974,7 +7941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.0.0, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6":
+"rxjs@npm:^7.0.0, rxjs@npm:^7.5.5, rxjs@npm:^7.5.7":
   version: 7.5.7
   resolution: "rxjs@npm:7.5.7"
   dependencies:
@@ -8770,7 +8737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:4.1.0, tsconfig-paths@npm:^4.0.0":
+"tsconfig-paths@npm:4.1.0, tsconfig-paths@npm:^4.0.0, tsconfig-paths@npm:^4.1.0":
   version: 4.1.0
   resolution: "tsconfig-paths@npm:4.1.0"
   dependencies:
@@ -8823,58 +8790,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-darwin-64@npm:1.5.4"
+"turbo-darwin-64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-darwin-64@npm:1.5.5"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-darwin-arm64@npm:1.5.4"
+"turbo-darwin-arm64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-darwin-arm64@npm:1.5.5"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-linux-64@npm:1.5.4"
+"turbo-linux-64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-linux-64@npm:1.5.5"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-linux-arm64@npm:1.5.4"
+"turbo-linux-arm64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-linux-arm64@npm:1.5.5"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-windows-64@npm:1.5.4"
+"turbo-windows-64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-windows-64@npm:1.5.5"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:1.5.4":
-  version: 1.5.4
-  resolution: "turbo-windows-arm64@npm:1.5.4"
+"turbo-windows-arm64@npm:1.5.5":
+  version: 1.5.5
+  resolution: "turbo-windows-arm64@npm:1.5.5"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.5.3":
-  version: 1.5.4
-  resolution: "turbo@npm:1.5.4"
+"turbo@npm:^1.5.5":
+  version: 1.5.5
+  resolution: "turbo@npm:1.5.5"
   dependencies:
-    turbo-darwin-64: 1.5.4
-    turbo-darwin-arm64: 1.5.4
-    turbo-linux-64: 1.5.4
-    turbo-linux-arm64: 1.5.4
-    turbo-windows-64: 1.5.4
-    turbo-windows-arm64: 1.5.4
+    turbo-darwin-64: 1.5.5
+    turbo-darwin-arm64: 1.5.5
+    turbo-linux-64: 1.5.5
+    turbo-linux-arm64: 1.5.5
+    turbo-windows-64: 1.5.5
+    turbo-windows-arm64: 1.5.5
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -8890,7 +8857,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 37f16e8a3e30c032d3fe250fff4a3c781702b3cd9e634855196a97aca2b4c7d3efeffbbd305affc0a4f677e1dfe3007a7d1953781f31f767f1a2a3ff71cf134d
+  checksum: d804a624ea07277bbd0e9fb5af20538f184a1beefe8d6a9483b24dabc784d3a4ce526430d2ff47cfcc7cd1cfc66f80eef89ea289889c95036c3669c171ffee14
   languageName: node
   linkType: hard
 
@@ -8955,7 +8922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:^0.3.10, typeorm@npm:^0.3.9":
+"typeorm@npm:^0.3.10":
   version: 0.3.10
   resolution: "typeorm@npm:0.3.10"
   dependencies:
@@ -9047,7 +9014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.8.2, typescript@npm:^4.8.3":
+"typescript@npm:^4.8.4":
   version: 4.8.4
   resolution: "typescript@npm:4.8.4"
   bin:
@@ -9067,7 +9034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.8.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.8.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
   resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=a1c5e5"
   bin:
@@ -9224,9 +9191,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.1.0, vite@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "vite@npm:3.1.3"
+"vite@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "vite@npm:3.1.4"
   dependencies:
     esbuild: ^0.15.6
     fsevents: ~2.3.2
@@ -9252,7 +9219,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: af13c9820c292792f02d0a25fd46d8557e627b93f95bc05b5f7f1261e9565e9e69fda2df0c0898f248edb811ebcac5400a85a81625ef29749f50b18273439d91
+  checksum: f3e532952b896ca7f746de0e51fc8c98ac482b2a5f0b89538ec89ac615f6edbfe45628fe4fbabab4c5fe07f6e4c2e624360af00d8c5c454af31771952b8c6e72
   languageName: node
   linkType: hard
 
