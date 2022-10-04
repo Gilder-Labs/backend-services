@@ -1,6 +1,7 @@
 import { Proposal } from '@gilder/graphql-models';
-import { ProposalsService } from '@gilder/proposals-module';
-import { Query, Resolver } from '@nestjs/graphql';
+import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
+import { Realm } from '@gilder/types';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 
 @Resolver('Proposal')
 export class ProposalsResolver {

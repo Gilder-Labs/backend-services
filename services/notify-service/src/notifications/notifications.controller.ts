@@ -2,29 +2,52 @@ import {
   NotificationSubscriptionsService,
   NotifyData,
 } from '@gilder/notification-subscriptions-module';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Logger,
+  Post,
+} from '@nestjs/common';
 
 @Controller({
   path: 'notifications',
   version: '1',
 })
 export class NotificationsController {
+  private readonly logger = new Logger(NotificationsController.name);
+
   constructor(
     private readonly notificationService: NotificationSubscriptionsService,
   ) {}
 
   @Post('subscribe')
-  subscribe(@Body() data: NotifyData) {
-    return this.notificationService.subscribe(data);
+  async subscribe(@Body() data: NotifyData) {
+    try {
+      return await this.notificationService.subscribe(data);
+    } catch (e) {
+      this.logger.error(`Something went wrong. Error: ${e}`);
+      throw new BadRequestException();
+    }
   }
 
   @Post('unsubscribe')
-  unsubscribe(@Body() data: NotifyData) {
-    return this.notificationService.unsubscribe(data);
+  async unsubscribe(@Body() data: NotifyData) {
+    try {
+      return await this.notificationService.unsubscribe(data);
+    } catch (e) {
+      this.logger.error(`Something went wrong. Error: ${e}`);
+      throw new BadRequestException();
+    }
   }
 
   @Post('listSubscriptions')
-  getDeviceSubscriptions(@Body() data: { mobileToken: string }) {
-    return this.notificationService.getByMobileToken(data.mobileToken);
+  async getDeviceSubscriptions(@Body() data: { mobileToken: string }) {
+    try {
+      return await this.notificationService.getByMobileToken(data.mobileToken);
+    } catch (e) {
+      this.logger.error(`Something went wrong. Error: ${e}`);
+      throw new BadRequestException();
+    }
   }
 }

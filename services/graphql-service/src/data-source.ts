@@ -20,7 +20,8 @@ export const getDataConfig = (
       : {
           rejectUnauthorized: false,
         },
-    synchronize: true,
+    synchronize:
+      configService.getOrThrow<Environment>('NODE_ENV') === 'development',
     entities: [Realm, Proposal],
     migrations: [],
     subscribers: [],
