@@ -16,7 +16,7 @@
   "scripts": {
     "build:libs": "turbo run --filter=\"./libs/**\" build",
     "watch:libs": "pnpm --parallel --filter \"./libs/**\" watch",
-    "dev": "pm2 kill && pm2 start ecosystem.config.js && pm2 monit"
+    "dev": "pm2 kill && pm2 start ecosystem.config.js"
   },
   "keywords": [],
   "author": "",
