@@ -2,10 +2,10 @@
   "name": "@gilder/backend-services",
   "private": true,
   "description": "",
-  "main": "index.js",
   "workspaces": {
     "packages": [
       "libs/**",
+      "packages/**",
       "services/*"
     ],
     "nohoist": [
@@ -14,12 +14,15 @@
     ]
   },
   "scripts": {
+    "dev": "concurrently -c \"bgGreen.bold,bgMagenta.bold,bgBlue.bold,bgCyan.bold\" \"yarn:watch:*\"",
     "build:libs": "turbo run --filter=\"./libs/**\" build",
     "watch:libs": "pnpm --parallel --filter \"./libs/**\" watch",
     "watch:monitor-service": "yarn workspace @gilder/monitor-service dev",
     "watch:notify-service": "yarn workspace @gilder/notify-service dev",
     "watch:graphql-service": "yarn workspace @gilder/graphql-service dev",
-    "dev": "concurrently -c \"bgGreen.bold,bgMagenta.bold,bgBlue.bold,bgCyan.bold\" \"yarn:watch:*\""
+    "ci:version": "changeset version",
+    "ci:publish": "changeset publish",
+    "nuke": "rimraf ./**/{node_modules,dist,.turbo} ./.yarn/cache"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +33,7 @@
     "@nestjs/cli": "^9.1.3",
     "concurrently": "^7.4.0",
     "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2",
     "turbo": "^1.5.5",
     "typescript": "^4.8.4",
     "vite": "^3.1.4",
