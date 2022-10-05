@@ -7,17 +7,19 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import {
   MONITOR_SERVICE,
   NotificationSubscriptionsModule,
-  NotificationSubscriptionsService,
 } from '@gilder/notification-subscriptions-module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
     ConfigModule,
     TypeOrmModule.forFeature([Realm, NotificationSubscription]),
+    BullModule.registerQueue({
+      name: 'notification',
+    }),
     NotificationSubscriptionsModule,
   ],
   providers: [
-    NotificationSubscriptionsService,
     {
       provide: MONITOR_SERVICE,
       useFactory: (configService: ConfigService) => {

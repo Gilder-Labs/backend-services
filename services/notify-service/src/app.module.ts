@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -28,6 +29,16 @@ import { NotificationsModule } from './notifications';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.getOrThrow('QUEUE_HOST'),
+          port: configService.get<number>('QUEUE_PORT') ?? 6379,
+        },
+      }),
+      inject: [ConfigService],
     }),
     NotificationsModule,
   ],
