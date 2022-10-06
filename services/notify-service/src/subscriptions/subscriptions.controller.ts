@@ -14,8 +14,8 @@ import {
   path: 'notifications',
   version: '1',
 })
-export class NotificationsController {
-  private readonly logger = new Logger(NotificationsController.name);
+export class SubscriptionsController {
+  private readonly logger = new Logger(SubscriptionsController.name);
 
   constructor(
     private readonly notificationService: NotificationSubscriptionsService,

@@ -12,8 +12,8 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
-export class NotifyService {
-  private readonly logger = new Logger(NotifyService.name);
+export class NotificationsService {
+  private readonly logger = new Logger(NotificationsService.name);
 
   constructor(
     private readonly httpService: HttpService,
@@ -51,17 +51,19 @@ export class NotifyService {
   public async pushExpoNotifications(
     notifications: ExpoNotification[],
   ): Promise<void> {
-    notifications.forEach(async (notification: ExpoNotification) => {
-      try {
-        await firstValueFrom(
-          this.httpService.post(
-            'https://api.expo.dev/v2/push/send',
-            notification,
-          ),
-        );
-      } catch (e) {
-        this.logger.error(`Something went wrong. Error: ${e}`);
-      }
-    });
+    await Promise.all(
+      notifications.map(async (notification: ExpoNotification) => {
+        try {
+          await firstValueFrom(
+            this.httpService.post(
+              'https://api.expo.dev/v2/push/send',
+              notification,
+            ),
+          );
+        } catch (e) {
+          this.logger.error(`Something went wrong. Error: ${e}`);
+        }
+      }),
+    );
   }
 }

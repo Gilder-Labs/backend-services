@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@gilder/constants": "workspace:*",
     "@gilder/db-entities": "workspace:*",
     "@gilder/types": "workspace:*",
     "@nestjs/common": "^9.1.2",

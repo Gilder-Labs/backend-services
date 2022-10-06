@@ -2,8 +2,8 @@ import { NotificationSubscription } from '@gilder/db-entities';
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
-import { MONITOR_SERVICE } from './constants';
+import { Repository } from 'typeorm';
+import { MONITOR_SERVICE } from '@gilder/constants';
 import { NotifyData } from './types';
 
 @Injectable()

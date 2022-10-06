@@ -1,7 +1,9 @@
+import { NOTIFICATION_QUEUE, PROPOSAL_NOTIFICATION } from '@gilder/constants';
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
 import { getConnection } from '@gilder/utilities';
+import { InjectQueue } from '@nestjs/bull';
 import {
   Injectable,
   Logger,
@@ -11,8 +13,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { NotifyService } from 'src/notify/notify.service';
 import { Repository } from 'typeorm';
+import { Queue } from 'bull';
 
 interface ProposalWithRealm {
   proposal: ProgramAccount<Proposal>;
@@ -30,12 +32,13 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   private proposalSubscriptionIds: number[] = [];
 
   constructor(
+    @InjectQueue(NOTIFICATION_QUEUE)
+    private readonly notificationQueue: Queue,
     @InjectRepository(NotificationSubscription)
     private readonly subscriptionRepo: Repository<NotificationSubscription>,
     private readonly realmsService: RealmsService,
     private readonly proposalsService: ProposalsService,
     private readonly proposalRpcService: ProposalRPCService,
-    private readonly notifyService: NotifyService,
   ) {
     this.connection = getConnection();
   }
@@ -169,7 +172,10 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
           try {
             await Promise.all(
               newProposals.map((p) =>
-                this.notifyService.notifyNewProposals(realm, p),
+                this.notificationQueue.add(PROPOSAL_NOTIFICATION, {
+                  realm,
+                  proposal: p,
+                }),
               ),
             );
             const subscriptionIds = await Promise.all(

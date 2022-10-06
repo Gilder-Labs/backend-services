@@ -15,11 +15,13 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
+    "@gilder/constants": "workspace:*",
     "@gilder/db-entities": "workspace:*",
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",
     "@gilder/utilities": "workspace:*",
     "@nestjs/axios": "^0.1.0",
+    "@nestjs/bull": "^0.6.1",
     "@nestjs/common": "^9.1.2",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.2",
@@ -33,7 +35,7 @@
     "@solana/spl-token-registry": "^0.2.4574",
     "@solana/web3.js": "^1.63.0",
     "bn.js": "^5.2.1",
-    "cross-fetch": "^3.1.5",
+    "bull": "^4.10.0",
     "fast-sort": "^3.2.0",
     "lodash": "^4.17.21",
     "nestjs-pino": "^3.1.1",

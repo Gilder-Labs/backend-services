@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
-import { NotificationsModule } from './notifications';
+import { SubscriptionsModule } from './subscriptions';
 
 @Module({
   imports: [
@@ -40,7 +40,7 @@ import { NotificationsModule } from './notifications';
       }),
       inject: [ConfigService],
     }),
-    NotificationsModule,
+    SubscriptionsModule,
   ],
   controllers: [],
   providers: [],
