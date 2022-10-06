@@ -15,6 +15,7 @@ import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
+import { NewProposalData } from '@gilder/types';
 
 interface ProposalWithRealm {
   proposal: ProgramAccount<Proposal>;
@@ -171,12 +172,14 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
           this.logger.log(`Found new proposals for Realm: ${realm.name}`);
           try {
             await Promise.all(
-              newProposals.map((p) =>
-                this.notificationQueue.add(PROPOSAL_NOTIFICATION, {
-                  realm,
-                  proposal: p,
-                }),
-              ),
+              newProposals.map((p) => {
+                return this.notificationQueue.add(PROPOSAL_NOTIFICATION, {
+                  proposalPk: p.pubkey.toBase58(),
+                  proposalName: p.account.name,
+                  realmName: realm.name,
+                  realmPk: realm.realmPk,
+                } as NewProposalData);
+              }),
             );
             const subscriptionIds = await Promise.all(
               newProposals.map((p) =>

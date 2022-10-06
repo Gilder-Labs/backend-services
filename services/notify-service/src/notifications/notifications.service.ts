@@ -1,10 +1,10 @@
-import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/db-entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Repository } from 'typeorm';
 import type {
   ExpoNotification,
+  NewProposalData,
   NotificationType,
   NotifyProposalData,
 } from '@gilder/types';
@@ -21,26 +21,28 @@ export class NotificationsService {
     private readonly subscriptionRepo: Repository<NotificationSubscription>,
   ) {}
 
-  public getNotifySubscriptions(type: NotificationType, realm: Realm) {
+  public getNotifySubscriptions(type: NotificationType, realmPk: string) {
     return this.subscriptionRepo.find({
-      where: { type: type, realmPk: realm.realmPk },
+      where: { type: type, realmPk: realmPk },
     });
   }
 
-  public async notifyNewProposals(
-    realm: Realm,
-    proposal: ProgramAccount<Proposal>,
-  ) {
-    const subs = await this.getNotifySubscriptions('newProposals', realm);
+  public async notifyNewProposals({
+    realmPk,
+    proposalPk,
+    proposalName,
+    realmName,
+  }: NewProposalData) {
+    const subs = await this.getNotifySubscriptions('newProposals', realmPk);
     const expoNotifications = subs.map<ExpoNotification<NotifyProposalData>>(
       (x) => ({
         to: x.mobileToken,
-        title: `New proposal on ${realm.name}`,
+        title: `New proposal on ${realmName}`,
         sound: 'default',
-        body: proposal.account.name,
+        body: proposalName,
         data: {
-          proposalId: proposal.pubkey.toBase58(),
-          realmId: realm.realmPk,
+          proposalId: proposalPk,
+          realmId: realmPk,
         },
       }),
     );

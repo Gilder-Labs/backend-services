@@ -1,3 +1,4 @@
 export * from './service-names';
-export * from './event-patterns';
+export * from './microservice-events';
 export * from './queues';
+export * from './event-emitter-events';
