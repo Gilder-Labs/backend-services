@@ -1,13 +1,7 @@
 import { defineConfig } from 'vite';
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
-import path from 'path';
-
-const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
 export default defineConfig({
-  optimizeDeps: {
-    exclude: ['node-fetch'],
-  },
   build: {
     target: 'esnext',
     lib: {

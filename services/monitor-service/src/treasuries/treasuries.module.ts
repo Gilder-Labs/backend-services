@@ -2,7 +2,7 @@ import { TOKEN_OWNER_QUEUE } from '@gilder/constants';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TokenOwnersProcessor } from './token-owners.processor';
+import { TokenOwnersProcessor } from './treasuries.processor';
 
 @Module({
   imports: [
@@ -13,4 +13,4 @@ import { TokenOwnersProcessor } from './token-owners.processor';
   ],
   providers: [TokenOwnersProcessor],
 })
-export class TokenOwnersModule {}
+export class TreasuriesModule {}

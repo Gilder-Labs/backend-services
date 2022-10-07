@@ -8,8 +8,8 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ProcessRealmProposals, QueueProcessTypes } from '@gilder/types';
-import { chunkArray } from '@gilder/utilities';
-import { Queue, Job } from 'bull';
+import { chunkArray, getConnection } from '@gilder/utilities';
+import { Queue } from 'bull';
 
 @Injectable()
 export class RealmsMonitorService {
@@ -55,18 +55,18 @@ export class RealmsMonitorService {
   }
 
   private async addTokenOwnerQueue(processData: ProcessRealmProposals[]) {
-    const messages = processData.map((data) => ({
-      name: QueueProcessTypes.UPDATE_PROCESS,
-      data,
-    }));
-    await this.tokenOwnerQueue.addBulk(messages);
+    // const messages = processData.map((data) => ({
+    //   name: QueueProcessTypes.UPDATE_PROCESS,
+    //   data,
+    // }));
+    // await this.tokenOwnerQueue.addBulk(messages);
   }
 
   private async addToGovernanceQueue(processData: ProcessRealmProposals[]) {
-    const messages = processData.map((data) => ({
-      name: QueueProcessTypes.UPDATE_PROCESS,
-      data,
-    }));
-    await this.governanceQueue.addBulk(messages);
+    // const messages = processData.map((data) => ({
+    //   name: QueueProcessTypes.UPDATE_PROCESS,
+    //   data,
+    // }));
+    // await this.governanceQueue.addBulk(messages);
   }
 }

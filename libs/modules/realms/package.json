@@ -45,5 +45,8 @@
   "peerDependencies": {
     "@nestjs/typeorm": "^9.0.1",
     "typeorm": "^0.3.10"
+  },
+  "dependencies": {
+    "@solworks/soltoolkit-sdk": "^0.0.10"
   }
 }
