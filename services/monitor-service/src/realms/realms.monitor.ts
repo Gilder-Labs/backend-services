@@ -5,11 +5,12 @@ import {
 } from '@gilder/constants';
 import { RealmsRPCService, RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { ProcessRealmProposals, QueueProcessTypes } from '@gilder/types';
+import { ProcessRealmData, QueueProcessTypes } from '@gilder/types';
 import { chunkArray, getConnection } from '@gilder/utilities';
 import { Queue } from 'bull';
+import { PublicKey } from '@solana/web3.js';
 
 @Injectable()
 export class RealmsMonitorService {
@@ -31,42 +32,26 @@ export class RealmsMonitorService {
     const realms = await this.realmsRpcService.getAllRealmsFromSolana();
     this.logger.log(`Discovered ${realms.length} realms...`);
 
-    const processData = realms.map<ProcessRealmProposals>((x) => ({
+    const processData = realms.map<ProcessRealmData>((x) => ({
       realmPk: x.pubkey.toBase58(),
       programPk: x.owner.toBase58(),
     }));
     await this.realmsService.addOrUpdateRealms(realms);
 
     await Promise.all([
-      this.addToProposalQueue(processData),
-      this.addToGovernanceQueue(processData),
-      this.addTokenOwnerQueue(processData),
+      // this.addToQueue(this.proposalQueue, processData),
+      // this.addToQueue(this.governanceQueue, processData),
+      // this.addToQueue(this.tokenOwnerQueue, processData),
     ]);
   }
 
-  private async addToProposalQueue(processData: ProcessRealmProposals[]) {
+  private async addToQueue(queue: Queue, processData: ProcessRealmData[]) {
     const messages = chunkArray(processData, 100).map((data) => ({
       name: QueueProcessTypes.UPDATE_PROCESS,
       data: {
-        realms: data,
+        entities: data,
       },
     }));
-    await this.proposalQueue.addBulk(messages);
-  }
-
-  private async addTokenOwnerQueue(processData: ProcessRealmProposals[]) {
-    // const messages = processData.map((data) => ({
-    //   name: QueueProcessTypes.UPDATE_PROCESS,
-    //   data,
-    // }));
-    // await this.tokenOwnerQueue.addBulk(messages);
-  }
-
-  private async addToGovernanceQueue(processData: ProcessRealmProposals[]) {
-    // const messages = processData.map((data) => ({
-    //   name: QueueProcessTypes.UPDATE_PROCESS,
-    //   data,
-    // }));
-    // await this.governanceQueue.addBulk(messages);
+    await queue.addBulk(messages);
   }
 }

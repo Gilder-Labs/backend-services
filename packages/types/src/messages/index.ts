@@ -5,11 +5,11 @@ export type ProcessNewProposalData = {
   realmName: string;
 };
 
-export type BulkProcessRealmProposals = {
-  realms: ProcessRealmProposals[];
+export type BulkProcessUpdates<T> = {
+  entities: T[];
 };
 
-export type ProcessRealmProposals = {
+export type ProcessRealmData = {
   programPk: string;
   realmPk: string;
 };

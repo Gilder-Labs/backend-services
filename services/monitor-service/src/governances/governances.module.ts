@@ -1,16 +1,16 @@
-import { TOKEN_OWNER_QUEUE } from '@gilder/constants';
+import { GOVERNANCE_QUEUE } from '@gilder/constants';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TreasuriesProcessor } from './treasuries.processor';
+import { GovernanceProcessor } from './governances.processor';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([]),
     BullModule.registerQueue({
-      name: TOKEN_OWNER_QUEUE,
+      name: GOVERNANCE_QUEUE,
     }),
   ],
-  providers: [TreasuriesProcessor],
+  providers: [GovernanceProcessor],
 })
-export class TreasuriesModule {}
+export class GovernanceModule {}
