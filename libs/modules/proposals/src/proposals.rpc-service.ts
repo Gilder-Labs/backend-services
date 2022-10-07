@@ -24,7 +24,7 @@ export class ProposalRPCService {
     return getProposal(this.connection, new PublicKey(pubKey));
   }
 
-  public getProposalsFromSolanaByRealm(realm: Realm) {
+  public getProposalsFromSolanaByRealm(realm: Omit<Realm, 'name'>) {
     return getAllProposals(
       this.connection,
       new PublicKey(realm.programPk),
@@ -33,7 +33,7 @@ export class ProposalRPCService {
   }
 
   public convertSolanaProposalToEntity(
-    realm: Realm,
+    realm: Pick<Realm, 'programPk' | 'realmPk'>,
     proposals: ProgramAccount<Proposal>[],
   ): Promise<DbProposal[]> {
     return Promise.all(

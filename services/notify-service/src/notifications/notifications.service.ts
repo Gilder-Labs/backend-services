@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import type {
   ExpoNotification,
-  NewProposalData,
+  ProcessNewProposalData,
   NotificationType,
   NotifyProposalData,
 } from '@gilder/types';
@@ -32,7 +32,7 @@ export class NotificationsService {
     proposalPk,
     proposalName,
     realmName,
-  }: NewProposalData) {
+  }: ProcessNewProposalData) {
     const subs = await this.getNotifySubscriptions('newProposals', realmPk);
     const expoNotifications = subs.map<ExpoNotification<NotifyProposalData>>(
       (x) => ({

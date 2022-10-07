@@ -6,19 +6,24 @@ import { ProposalController } from './proposal.controller';
 import { ProposalsMonitorService } from './proposals.monitor';
 import { ProposalsModule } from '@gilder/proposals-module';
 import { BullModule } from '@nestjs/bull';
-import { NOTIFICATION_QUEUE } from '@gilder/constants';
+import { NOTIFICATION_QUEUE, PROPOSAL_QUEUE } from '@gilder/constants';
+import { ProposalProcessor } from './proposal.processor';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Realm, Proposal, NotificationSubscription]),
-    BullModule.registerQueue({
-      name: NOTIFICATION_QUEUE,
-    }),
+    BullModule.registerQueue(
+      {
+        name: NOTIFICATION_QUEUE,
+      },
+      {
+        name: PROPOSAL_QUEUE,
+      },
+    ),
     RealmsModule,
     ProposalsModule,
   ],
   controllers: [ProposalController],
-  providers: [ProposalsMonitorService],
-  exports: [],
+  providers: [ProposalProcessor, ProposalsMonitorService],
 })
 export class ProposalsMonitorModule {}

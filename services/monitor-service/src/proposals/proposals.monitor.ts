@@ -1,4 +1,4 @@
-import { NOTIFICATION_QUEUE, PROPOSAL_NOTIFICATION } from '@gilder/constants';
+import { NOTIFICATION_QUEUE } from '@gilder/constants';
 import { NotificationSubscription, Realm } from '@gilder/db-entities';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
@@ -15,7 +15,7 @@ import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
-import { NewProposalData } from '@gilder/types';
+import { ProcessNewProposalData, NotificationTypes } from '@gilder/types';
 
 interface ProposalWithRealm {
   proposal: ProgramAccount<Proposal>;
@@ -173,12 +173,15 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
           try {
             await Promise.all(
               newProposals.map((p) => {
-                return this.notificationQueue.add(PROPOSAL_NOTIFICATION, {
-                  proposalPk: p.pubkey.toBase58(),
-                  proposalName: p.account.name,
-                  realmName: realm.name,
-                  realmPk: realm.realmPk,
-                } as NewProposalData);
+                return this.notificationQueue.add(
+                  NotificationTypes.NEW_PROPOSALS,
+                  {
+                    proposalPk: p.pubkey.toBase58(),
+                    proposalName: p.account.name,
+                    realmName: realm.name,
+                    realmPk: realm.realmPk,
+                  } as ProcessNewProposalData,
+                );
               }),
             );
             const subscriptionIds = await Promise.all(

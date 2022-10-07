@@ -1,5 +1,5 @@
-import { NOTIFICATION_QUEUE, PROPOSAL_NOTIFICATION } from '@gilder/constants';
-import { NewProposalData } from '@gilder/types';
+import { NOTIFICATION_QUEUE } from '@gilder/constants';
+import { ProcessNewProposalData, NotificationTypes } from '@gilder/types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
@@ -11,9 +11,11 @@ export class NotificationProcessor {
 
   constructor(private readonly notificationService: NotificationsService) {}
 
-  @Process(PROPOSAL_NOTIFICATION)
-  async processProposalNotification(job: Job<NewProposalData>) {
-    this.logger.log("Processing 'New Proposal' message in queue...");
+  @Process(NotificationTypes.NEW_PROPOSALS)
+  async processProposalNotification(job: Job<ProcessNewProposalData>) {
+    this.logger.log(
+      `Processing '${NotificationTypes.NEW_PROPOSALS}' message in queue...`,
+    );
     await this.notificationService.notifyNewProposals(job.data);
   }
 }
