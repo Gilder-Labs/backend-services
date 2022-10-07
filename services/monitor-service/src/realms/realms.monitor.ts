@@ -7,11 +7,7 @@ import { RealmsRPCService, RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import {
-  BulkProcessRealmProposals,
-  ProcessRealmProposals,
-  QueueProcessTypes,
-} from '@gilder/types';
+import { ProcessRealmProposals, QueueProcessTypes } from '@gilder/types';
 import { chunkArray } from '@gilder/utilities';
 import { Queue, Job } from 'bull';
 
