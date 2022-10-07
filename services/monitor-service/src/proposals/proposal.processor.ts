@@ -1,10 +1,6 @@
 import { PROPOSAL_QUEUE } from '@gilder/constants';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
-import {
-  BulkProcessRealmProposals,
-  ProcessRealmProposals,
-  QueueProcessTypes,
-} from '@gilder/types';
+import { BulkProcessRealmProposals, QueueProcessTypes } from '@gilder/types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';

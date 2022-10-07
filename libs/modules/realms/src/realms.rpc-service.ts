@@ -26,7 +26,6 @@ export class RealmsRPCService {
     const governancePrograms = await this.getSplGovernancePrograms();
     let realms: ProgramAccount<SolanaRealm>[] = [];
     for (const program of governancePrograms) {
-      this.connection;
       const result = await getRealms(this.connection, program);
       realms = [...realms, ...result];
     }
