@@ -6,13 +6,11 @@ import { getDataConfig } from './data-source';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RealmsMonitorModule } from './realms';
 import { ProposalsMonitorModule } from './proposals';
-import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
-    EventEmitterModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,

@@ -49,7 +49,7 @@ export class ProposalsService {
   }
 
   public async addOrUpdateProposals(
-    realm: Realm,
+    realm: Pick<Realm, 'programPk' | 'realmPk'>,
     proposals: ProgramAccount<SolanaProposal>[],
   ): Promise<InsertResult> {
     const dbProposals =

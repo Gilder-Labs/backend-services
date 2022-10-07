@@ -1,10 +1,10 @@
 {
-  "name": "@gilder/types",
+  "name": "@gilder/rpc-fetch",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -16,7 +16,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.63.1",
+    "axios": "^1.1.0",
+    "throttled-queue": "^2.1.4"
+  },
   "devDependencies": {
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4"
   }
 }

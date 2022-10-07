@@ -10,7 +10,7 @@ let connection: Connection;
  */
 export const getConnection = (
   rpcUrl: string = process.env.SOLANA_RPC_URL!,
-  rps = 25,
+  rps = 100,
 ) => {
   const throttle = throttledQueue(rps, 1000, true);
   return (

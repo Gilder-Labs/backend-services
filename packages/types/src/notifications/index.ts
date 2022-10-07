@@ -1,4 +1,8 @@
-export type NotificationType = 'newProposals';
+export enum NotificationTypes {
+  NEW_PROPOSALS = 'newProposals',
+}
+
+export type NotificationType = `${NotificationTypes}`;
 
 export type NotifyProposalData = { realmId: string; proposalId: string };
 
