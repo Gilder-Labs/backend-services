@@ -20,13 +20,16 @@ export class ProposalRPCService {
     this.connection = getConnection();
   }
 
-  public getProposalFromSolana(pubKey: string) {
-    return getProposal(this.connection, new PublicKey(pubKey));
+  public getProposalFromSolana(pubKey: string, connection?: Connection) {
+    return getProposal(connection ?? this.connection, new PublicKey(pubKey));
   }
 
-  public getProposalsFromSolanaByRealm(realm: Omit<Realm, 'name'>) {
+  public getProposalsFromSolanaByRealm(
+    realm: Omit<Realm, 'name'>,
+    connection?: Connection,
+  ) {
     return getAllProposals(
-      this.connection,
+      connection ?? this.connection,
       new PublicKey(realm.programPk),
       new PublicKey(realm.realmPk),
     ).then((x) => x.flatMap((x) => x));

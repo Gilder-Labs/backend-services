@@ -22,11 +22,11 @@ export class RealmsRPCService {
     this.connection = getConnection();
   }
 
-  public async getAllRealmsFromSolana() {
+  public async getAllRealmsFromSolana(connection?: Connection) {
     const governancePrograms = await this.getSplGovernancePrograms();
     let realms: ProgramAccount<SolanaRealm>[] = [];
     for (const program of governancePrograms) {
-      const result = await getRealms(this.connection, program);
+      const result = await getRealms(connection ?? this.connection, program);
       realms = [...realms, ...result];
     }
     return realms;

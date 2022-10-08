@@ -727,6 +727,8 @@ __metadata:
     "@gilder/db-entities": "workspace:*"
     "@gilder/proposals-module": "workspace:*"
     "@gilder/realms-module": "workspace:*"
+    "@gilder/rpc-manager": "workspace:*"
+    "@gilder/rpc-manager-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
     "@nestjs/axios": ^0.1.0
@@ -745,7 +747,6 @@ __metadata:
     "@solana/spl-token": ^0.3.5
     "@solana/spl-token-registry": ^0.2.4574
     "@solana/web3.js": ^1.63.0
-    "@solworks/soltoolkit-sdk": ^0.0.10
     "@types/bn.js": ^5.1.1
     "@types/express": ^4.17.14
     "@types/lodash": ^4.14.185
@@ -905,6 +906,38 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/rpc-manager-module@workspace:*, @gilder/rpc-manager-module@workspace:libs/modules/rpc-manager":
+  version: 0.0.0-use.local
+  resolution: "@gilder/rpc-manager-module@workspace:libs/modules/rpc-manager"
+  dependencies:
+    "@gilder/rpc-manager": "workspace:*"
+    "@nestjs/common": ^9.1.2
+    "@nestjs/core": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@solana/web3.js": ^1.63.1
+    "@swc/core": ^1.3.0
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  languageName: unknown
+  linkType: soft
+
+"@gilder/rpc-manager@workspace:*, @gilder/rpc-manager@workspace:packages/rpc-manager":
+  version: 0.0.0-use.local
+  resolution: "@gilder/rpc-manager@workspace:packages/rpc-manager"
+  dependencies:
+    "@solana/web3.js": ^1.63.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@solana/web3.js": ^1.63.0
+  languageName: unknown
+  linkType: soft
+
 "@gilder/types@workspace:*, @gilder/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@gilder/types@workspace:packages/types"
@@ -917,7 +950,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gilder/utilities@workspace:libs/utilities"
   dependencies:
-    "@originjs/vite-plugin-commonjs": ^1.0.3
     node-fetch: ^3.2.10
     throttled-queue: ^2.1.4
     typescript: ^4.8.4

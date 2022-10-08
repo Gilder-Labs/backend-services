@@ -9,7 +9,7 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['@solana/web3.js', 'throttled-queue', /node:.*/],
+      external: ['@solana/web3.js', /node:.*/],
     },
   },
   plugins: [

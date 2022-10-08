@@ -5,12 +5,12 @@ import {
 } from '@gilder/constants';
 import { RealmsRPCService, RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ProcessRealmData, QueueProcessTypes } from '@gilder/types';
-import { chunkArray, getConnection } from '@gilder/utilities';
+import { chunkArray } from '@gilder/utilities';
 import { Queue } from 'bull';
-import { PublicKey } from '@solana/web3.js';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
 
 @Injectable()
 export class RealmsMonitorService {
@@ -19,6 +19,7 @@ export class RealmsMonitorService {
   constructor(
     private readonly realmsService: RealmsService,
     private readonly realmsRpcService: RealmsRPCService,
+    private readonly rpcManager: RpcManagerService,
     @InjectQueue(GOVERNANCE_QUEUE)
     private readonly governanceQueue: Queue,
     @InjectQueue(PROPOSAL_QUEUE)
@@ -29,7 +30,9 @@ export class RealmsMonitorService {
 
   @Cron(CronExpression.EVERY_10_MINUTES)
   async addOrUpdateRealms() {
-    const realms = await this.realmsRpcService.getAllRealmsFromSolana();
+    const realms = await this.realmsRpcService.getAllRealmsFromSolana(
+      this.rpcManager.connection,
+    );
     this.logger.log(`Discovered ${realms.length} realms...`);
 
     const processData = realms.map<ProcessRealmData>((x) => ({
@@ -39,7 +42,7 @@ export class RealmsMonitorService {
     await this.realmsService.addOrUpdateRealms(realms);
 
     await Promise.all([
-      // this.addToQueue(this.proposalQueue, processData),
+      this.addToQueue(this.proposalQueue, processData),
       // this.addToQueue(this.governanceQueue, processData),
       // this.addToQueue(this.tokenOwnerQueue, processData),
     ]);

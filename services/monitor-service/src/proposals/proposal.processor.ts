@@ -1,5 +1,6 @@
 import { PROPOSAL_QUEUE } from '@gilder/constants';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
 import {
   BulkProcessUpdates,
   ProcessRealmData,
@@ -13,6 +14,7 @@ export class ProposalProcessor {
   constructor(
     private readonly proposalRpcService: ProposalRPCService,
     private readonly proposalService: ProposalsService,
+    private readonly rpcManager: RpcManagerService,
   ) {}
 
   @Process(QueueProcessTypes.UPDATE_PROCESS)
@@ -21,10 +23,13 @@ export class ProposalProcessor {
     await Promise.all(
       entities.map(async ({ realmPk, programPk }) => {
         const proposals =
-          await this.proposalRpcService.getProposalsFromSolanaByRealm({
-            realmPk,
-            programPk,
-          });
+          await this.proposalRpcService.getProposalsFromSolanaByRealm(
+            {
+              realmPk,
+              programPk,
+            },
+            this.rpcManager.connection,
+          );
 
         await this.proposalService.addOrUpdateProposals(
           { realmPk, programPk },
