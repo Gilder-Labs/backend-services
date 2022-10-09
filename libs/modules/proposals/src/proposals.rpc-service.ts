@@ -30,8 +30,8 @@ export class ProposalRPCService {
   ) {
     return getAllProposals(
       connection ?? this.connection,
-      new PublicKey(realm.programPk),
-      new PublicKey(realm.realmPk),
+      realm.programPk,
+      realm.realmPk,
     ).then((x) => x.flatMap((x) => x));
   }
 
@@ -57,9 +57,9 @@ export class ProposalRPCService {
         }
 
         return {
-          programPk: x.account.governance.toBase58(),
+          programPk: x.account.governance,
           realmPk: realm.realmPk,
-          proposalPk: x.pubkey.toBase58(),
+          proposalPk: x.pubkey,
           descriptionLink: x.account.descriptionLink,
           name: x.account.name,
           state: x.account.state,

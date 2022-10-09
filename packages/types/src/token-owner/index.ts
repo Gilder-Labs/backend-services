@@ -1,14 +1,17 @@
+import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
+
 export interface TokenOwner {
-  ownerPk: string;
+  ownerPk: PublicKey;
   governanceAccountType: number;
-  realmPk: string;
-  governingTokenMintPk: string;
-  governingTokenOwnerPk: string;
-  governingTokenDespositAmount: number;
+  realmPk: PublicKey;
+  governingTokenMintPk: PublicKey;
+  governingTokenOwnerPk: PublicKey;
+  governingTokenDespositAmount: BN;
   unrelinquishedVotesCount: number;
   totalVotesCount: number;
   outstandingProposalCount: number;
-  governanceDelegatePk: string;
+  governanceDelegatePk?: PublicKey;
 }
 
 export type Member = TokenOwner;

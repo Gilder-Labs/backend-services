@@ -7,27 +7,43 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import type { TokenOwner as ITokenOwner } from '@gilder/types';
+import BN from 'bn.js';
+import { PublicKey } from '@solana/web3.js';
+import { PublicKeyTransformer } from './transformer/public-key.transformer';
 
 @Entity()
-@Unique('constraint_name', ['ownerPk', 'realmPk'])
+@Unique('constraint_name', ['ownerPk'])
 export class TokenOwner implements ITokenOwner {
-  @PrimaryColumn('text')
-  ownerPk: string;
-
-  @Column('text')
-  governanceAccountType: number;
-
-  @Column('text')
-  realmPk: string;
-
-  @Column('text')
-  governingTokenMintPk: string;
-
-  @Column('text')
-  governingTokenOwnerPk: string;
+  @PrimaryColumn('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  ownerPk: PublicKey;
 
   @Column('int')
-  governingTokenDespositAmount: number;
+  governanceAccountType: number;
+
+  @Column('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  realmPk: PublicKey;
+
+  @Column('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  governingTokenMintPk: PublicKey;
+
+  @Column('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  governingTokenOwnerPk: PublicKey;
+
+  @Column('text', {
+    transformer: {
+      from: (value: string) => new BN(value),
+      to: (value: BN) => value.toString(),
+    },
+  })
+  governingTokenDespositAmount: BN;
 
   @Column('int')
   unrelinquishedVotesCount: number;
@@ -38,8 +54,11 @@ export class TokenOwner implements ITokenOwner {
   @Column('int')
   outstandingProposalCount: number;
 
-  @Column('text')
-  governanceDelegatePk: string;
+  @Column('text', {
+    nullable: true,
+    transformer: new PublicKeyTransformer(),
+  })
+  governanceDelegatePk?: PublicKey;
 
   @CreateDateColumn({
     type: 'timestamp',

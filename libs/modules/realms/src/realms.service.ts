@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, InsertResult, Repository } from 'typeorm';
 import { Realm } from '@gilder/db-entities';
@@ -32,8 +32,8 @@ export class RealmsService {
       .filter((x) => !!x.pubkey && !!x.owner)
       .map<Partial<Realm>>((x) => ({
         name: x.account.name,
-        programPk: x.owner?.toBase58(),
-        realmPk: x.pubkey?.toBase58(),
+        programPk: x.owner,
+        realmPk: x.pubkey,
       }));
 
     return this.realmRepo

@@ -42,9 +42,9 @@ export class RealmsMonitorService {
     await this.realmsService.addOrUpdateRealms(realms);
 
     await Promise.all([
-      this.addToQueue(this.proposalQueue, processData),
+      // this.addToQueue(this.proposalQueue, processData),
       // this.addToQueue(this.governanceQueue, processData),
-      // this.addToQueue(this.tokenOwnerQueue, processData),
+      this.addToQueue(this.tokenOwnerQueue, processData),
     ]);
   }
 

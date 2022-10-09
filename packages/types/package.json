@@ -17,6 +17,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@solana/web3.js": "^1.63.1",
+    "bn.js": "^5.2.1",
     "typescript": "^4.8.4"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.63.1",
+    "bn.js": "^5.21.1"
   }
 }

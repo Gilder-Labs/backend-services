@@ -81,6 +81,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     const realms = await this.realmsService.getRealmsByRealmPubKey(
       Array.from(this.uniqueRealmKeys),
     );
+    console.log(`Hello ${JSON.stringify(realms)}`);
 
     for (const realm of realms) {
       this.addRealmListener(realm);
@@ -179,7 +180,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
                     proposalPk: p.pubkey.toBase58(),
                     proposalName: p.account.name,
                     realmName: realm.name,
-                    realmPk: realm.realmPk,
+                    realmPk: realm.realmPk.toBase58(),
                   } as ProcessNewProposalData,
                 );
               }),

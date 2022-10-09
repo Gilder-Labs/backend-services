@@ -7,21 +7,24 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import type { Realm as IRealm } from '@gilder/types';
+import { PublicKey } from '@solana/web3.js';
+import { PublicKeyTransformer } from './transformer/public-key.transformer';
 
 @Entity()
 @Unique('constraint_name', ['realmPk'])
 export class Realm implements IRealm {
-  @PrimaryColumn('text')
-  realmPk: string;
-
-  @Column({
-    type: 'text',
-    nullable: true,
+  @PrimaryColumn('text', {
+    transformer: new PublicKeyTransformer(),
   })
-  programPk: string;
+  realmPk: PublicKey;
 
-  @Column({
-    type: 'text',
+  @Column('text', {
+    nullable: true,
+    transformer: new PublicKeyTransformer(),
+  })
+  programPk: PublicKey;
+
+  @Column('text', {
     nullable: true,
   })
   name: string;

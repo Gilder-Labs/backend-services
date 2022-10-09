@@ -10,21 +10,29 @@ import type {
   Governance as IGovernance,
   GovernanceConfig,
 } from '@gilder/types';
+import { PublicKey } from '@solana/web3.js';
+import { PublicKeyTransformer } from './transformer/public-key.transformer';
 
 @Entity()
-@Unique('constraint_name', ['governancePk', 'realmPk'])
+@Unique('constraint_name', ['governancePk'])
 export class Governance implements IGovernance {
-  @PrimaryColumn('text')
-  governancePk: string;
+  @PrimaryColumn('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  governancePk: PublicKey;
 
   @Column('int')
   accountType: number;
 
-  @Column('text')
-  realmPk: string;
+  @Column('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  realmPk: PublicKey;
 
-  @Column('text')
-  governedAccountPk: string;
+  @Column('text', {
+    transformer: new PublicKeyTransformer(),
+  })
+  governedAccountPk: PublicKey;
 
   @Column('jsonb')
   config: GovernanceConfig;

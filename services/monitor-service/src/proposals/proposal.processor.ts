@@ -7,6 +7,7 @@ import {
   QueueProcessTypes,
 } from '@gilder/types';
 import { Processor, Process } from '@nestjs/bull';
+import { PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
 
 @Processor(PROPOSAL_QUEUE)
@@ -22,19 +23,17 @@ export class ProposalProcessor {
     const { entities } = job.data;
     await Promise.all(
       entities.map(async ({ realmPk, programPk }) => {
+        const realm = {
+          realmPk: new PublicKey(realmPk),
+          programPk: new PublicKey(programPk),
+        };
         const proposals =
           await this.proposalRpcService.getProposalsFromSolanaByRealm(
-            {
-              realmPk,
-              programPk,
-            },
+            realm,
             this.rpcManager.connection,
           );
 
-        await this.proposalService.addOrUpdateProposals(
-          { realmPk, programPk },
-          proposals,
-        );
+        await this.proposalService.addOrUpdateProposals(realm, proposals);
       }),
     );
   }

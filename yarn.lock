@@ -583,7 +583,9 @@ __metadata:
   resolution: "@gilder/db-entities@workspace:libs/db-entities"
   dependencies:
     "@gilder/types": "workspace:*"
+    "@solana/web3.js": ^1.63.1
     "@swc/core": ^1.3.3
+    bn.js: ^5.2.1
     reflect-metadata: ^0.1.13
     rollup: ^2.79.1
     rollup-plugin-swc: ^0.2.1
@@ -592,6 +594,8 @@ __metadata:
     typescript: ^4.8.4
     vite: ^3.1.4
   peerDependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.21.1
     typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
@@ -729,6 +733,7 @@ __metadata:
     "@gilder/realms-module": "workspace:*"
     "@gilder/rpc-manager": "workspace:*"
     "@gilder/rpc-manager-module": "workspace:*"
+    "@gilder/token-owners-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
     "@nestjs/axios": ^0.1.0
@@ -743,10 +748,10 @@ __metadata:
     "@nestjs/schematics": ^9.0.3
     "@nestjs/testing": ^9.1.2
     "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.14
+    "@solana/spl-governance": ^0.3.15
     "@solana/spl-token": ^0.3.5
     "@solana/spl-token-registry": ^0.2.4574
-    "@solana/web3.js": ^1.63.0
+    "@solana/web3.js": ^1.63.1
     "@types/bn.js": ^5.1.1
     "@types/express": ^4.17.14
     "@types/lodash": ^4.14.185
@@ -861,7 +866,7 @@ __metadata:
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
     "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.14
+    "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
     "@swc/core": ^1.3.0
     fast-sort: ^3.2.0
@@ -890,7 +895,7 @@ __metadata:
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
     "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.14
+    "@solana/spl-governance": ^0.3.15
     "@solworks/soltoolkit-sdk": ^0.0.10
     "@swc/core": ^1.3.0
     reflect-metadata: ^0.1.13
@@ -930,7 +935,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gilder/rpc-manager@workspace:packages/rpc-manager"
   dependencies:
-    "@solana/web3.js": ^1.63.0
+    "@solana/web3.js": ^1.63.1
     typescript: ^4.8.4
     vite: ^3.1.4
   peerDependencies:
@@ -938,11 +943,44 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/token-owners-module@workspace:*, @gilder/token-owners-module@workspace:libs/modules/token-owners":
+  version: 0.0.0-use.local
+  resolution: "@gilder/token-owners-module@workspace:libs/modules/token-owners"
+  dependencies:
+    "@gilder/db-entities": "workspace:*"
+    "@gilder/types": "workspace:*"
+    "@gilder/utilities": "workspace:^"
+    "@nestjs/common": ^9.1.2
+    "@nestjs/core": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@nestjs/typeorm": 9.0.1
+    "@solana/spl-governance": ^0.3.15
+    "@solana/web3.js": ^1.63.1
+    "@swc/core": ^1.3.0
+    bn.js: ^5.2.1
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@nestjs/typeorm": ^9.0.1
+    typeorm: ^0.3.10
+  languageName: unknown
+  linkType: soft
+
 "@gilder/types@workspace:*, @gilder/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@gilder/types@workspace:packages/types"
   dependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.2.1
     typescript: ^4.8.4
+  peerDependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.21.1
   languageName: unknown
   linkType: soft
 
@@ -1811,9 +1849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/spl-governance@npm:^0.3.14":
-  version: 0.3.14
-  resolution: "@solana/spl-governance@npm:0.3.14"
+"@solana/spl-governance@npm:^0.3.15":
+  version: 0.3.15
+  resolution: "@solana/spl-governance@npm:0.3.15"
   dependencies:
     "@solana/web3.js": ^1.22.0
     bignumber.js: ^9.0.1
@@ -1821,7 +1859,7 @@ __metadata:
     borsh: ^0.3.1
     bs58: ^4.0.1
     superstruct: ^0.15.2
-  checksum: cb8b9643deb6dcb5e496731da57b3ff676ba1f97461d86eb9b07f3b9e137c19dc7cb3b42d56dc25d4dfc272cd8dd24460577c93fcc562dd326d01c27210c14fc
+  checksum: e4c9ca1f36a2ad820cfc524755171fc330c0a1bd8bcf425ff82752a9875063fc15f04fd83ffed3c24f4468d7f5c0bb44b1ac25336ffa1dfd7b1797cb90f3d398
   languageName: node
   linkType: hard
 
@@ -1847,7 +1885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.22.0, @solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.54.0, @solana/web3.js@npm:^1.63.0, @solana/web3.js@npm:^1.63.1":
+"@solana/web3.js@npm:^1.22.0, @solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.54.0, @solana/web3.js@npm:^1.63.1":
   version: 1.63.1
   resolution: "@solana/web3.js@npm:1.63.1"
   dependencies:

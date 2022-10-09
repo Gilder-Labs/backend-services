@@ -29,7 +29,7 @@ export class ProposalsService {
     newProposals: ProgramAccount<SolanaProposal>[];
   }> {
     const mostRecentProposal = await this.proposalRepo.findOne({
-      where: { realmPk: realm.realmPk },
+      where: { realmPk: realm.realmPk.toBase58() },
       order: { draftAt: 'DESC' },
     });
 

@@ -1,7 +1,9 @@
+import { PublicKey } from '@solana/web3.js';
+
 export interface Proposal {
-  proposalPk: string;
-  programPk: string;
-  realmPk: string;
+  proposalPk: PublicKey;
+  programPk: PublicKey;
+  realmPk: PublicKey;
   name: string;
   state: number;
   descriptionLink?: string;
