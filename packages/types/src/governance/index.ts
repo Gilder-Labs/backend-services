@@ -1,10 +1,10 @@
 import { PublicKey } from '@solana/web3.js';
 
-export interface Governance {
-  governancePk: PublicKey;
+export interface Governance<TKey = PublicKey> {
+  governancePk: TKey;
   accountType: number;
-  realmPk: PublicKey;
-  governedAccountPk: PublicKey;
+  realmPk: TKey;
+  governedAccountPk: TKey;
   config: GovernanceConfig;
   proposalCount: number;
   votingProposalCount: number;

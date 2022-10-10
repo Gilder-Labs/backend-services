@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import type { Connection } from '@gilder/utilities';
-import { getConnection } from '@gilder/utilities';
 import type { Realm, Proposal as DbProposal } from '@gilder/types';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import {
   getProposal,
   getAllProposals,
@@ -14,30 +12,25 @@ import {
 
 @Injectable()
 export class ProposalRPCService {
-  private readonly connection: Connection;
+  constructor() {}
 
-  constructor() {
-    this.connection = getConnection();
-  }
-
-  public getProposalFromSolana(pubKey: string, connection?: Connection) {
-    return getProposal(connection ?? this.connection, new PublicKey(pubKey));
+  public getProposalFromSolana(pubKey: string, connection: Connection) {
+    return getProposal(connection, new PublicKey(pubKey));
   }
 
   public getProposalsFromSolanaByRealm(
     realm: Omit<Realm, 'name'>,
-    connection?: Connection,
+    connection: Connection,
   ) {
-    return getAllProposals(
-      connection ?? this.connection,
-      realm.programPk,
-      realm.realmPk,
-    ).then((x) => x.flatMap((x) => x));
+    return getAllProposals(connection, realm.programPk, realm.realmPk).then(
+      (x) => x.flatMap((x) => x),
+    );
   }
 
   public convertSolanaProposalToEntity(
     realm: Pick<Realm, 'programPk' | 'realmPk'>,
     proposals: ProgramAccount<Proposal>[],
+    connection: Connection,
   ): Promise<DbProposal[]> {
     return Promise.all(
       proposals.map<Promise<DbProposal>>(async (x) => {
@@ -45,7 +38,7 @@ export class ProposalRPCService {
 
         if (x.account.state === ProposalState.Voting) {
           const governance = await getGovernance(
-            this.connection,
+            connection,
             new PublicKey(x.account.governance),
           );
 

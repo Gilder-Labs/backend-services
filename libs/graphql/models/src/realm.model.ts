@@ -1,8 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import type { Realm as IRealm } from '@gilder/types';
+import { TokenOwner } from './token-owner.model';
+import { Proposal } from './proposal.model';
 
 @ObjectType()
-export class Realm implements IRealm {
+export class Realm implements IRealm<string> {
   @Field()
   realmPk: string;
 
@@ -11,4 +13,10 @@ export class Realm implements IRealm {
 
   @Field()
   name: string;
+
+  @Field(() => [Proposal], { nullable: true })
+  proposals?: Proposal[];
+
+  @Field(() => [TokenOwner], { nullable: true })
+  members?: TokenOwner[];
 }

@@ -5,6 +5,7 @@ import { TokenOwner } from '@gilder/db-entities';
 import { ProgramAccount, TokenOwnerRecord } from '@solana/spl-governance';
 import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
+import { distinctBy } from '@gilder/utilities';
 
 @Injectable()
 export class TokenOwnersService {
@@ -15,6 +16,19 @@ export class TokenOwnersService {
 
   public getAllTokenOwners() {
     return this.tokenOwnerRepo.find();
+  }
+
+  public async getUniqueTokenOwners() {
+    const tokenOwners = await this.tokenOwnerRepo.find();
+    return distinctBy(tokenOwners, (x) => x.governingTokenOwnerPk);
+  }
+
+  public async getAllTokenOwnersInRealm(realmPk: string) {
+    return this.tokenOwnerRepo.find({
+      where: {
+        realmPk: realmPk,
+      },
+    });
   }
 
   public async addOrUpdateTokenOwners(

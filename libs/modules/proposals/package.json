@@ -46,6 +46,8 @@
   },
   "peerDependencies": {
     "@nestjs/typeorm": "^9.0.1",
+    "@solana/spl-governance": "^0.3.15",
+    "@solana/web3.js": "^1.63.1",
     "typeorm": "^0.3.10"
   }
 }

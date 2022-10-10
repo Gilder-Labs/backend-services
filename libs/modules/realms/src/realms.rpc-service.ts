@@ -1,7 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { PublicKey } from '@solana/web3.js';
-import type { Connection } from '@gilder/utilities';
-import { getConnection } from '@gilder/utilities';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { RealmsRestService } from './realms.rest-service';
 import {
   getRealms,
@@ -16,17 +14,14 @@ const mainSplGovernanceProgram = new PublicKey(
 @Injectable()
 export class RealmsRPCService {
   private readonly logger = new Logger(RealmsRPCService.name);
-  private readonly connection: Connection;
 
-  constructor(private readonly realmsRestService: RealmsRestService) {
-    this.connection = getConnection();
-  }
+  constructor(private readonly realmsRestService: RealmsRestService) {}
 
-  public async getAllRealmsFromSolana(connection?: Connection) {
+  public async getAllRealmsFromSolana(connection: Connection) {
     const governancePrograms = await this.getSplGovernancePrograms();
     let realms: ProgramAccount<SolanaRealm>[] = [];
     for (const program of governancePrograms) {
-      const result = await getRealms(connection ?? this.connection, program);
+      const result = await getRealms(connection, program);
       realms = [...realms, ...result];
     }
     return realms;

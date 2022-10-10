@@ -8,6 +8,7 @@ import {
 } from '@solana/spl-governance';
 import { sort } from 'fast-sort';
 import { ProposalRPCService } from './proposals.rpc-service';
+import { Connection } from '@solana/web3.js';
 
 @Injectable()
 export class ProposalsService {
@@ -19,6 +20,14 @@ export class ProposalsService {
 
   public getAllProposals() {
     return this.proposalRepo.find();
+  }
+
+  public getAllProposalsInRealm(realmPk: string) {
+    return this.proposalRepo.find({
+      where: {
+        realmPk: realmPk,
+      },
+    });
   }
 
   public async foundNewProposals(
@@ -51,11 +60,13 @@ export class ProposalsService {
   public async addOrUpdateProposals(
     realm: Pick<Realm, 'programPk' | 'realmPk'>,
     proposals: ProgramAccount<SolanaProposal>[],
+    connection: Connection,
   ): Promise<InsertResult> {
     const dbProposals =
       await this.proposalRPCService.convertSolanaProposalToEntity(
         realm,
         proposals,
+        connection,
       );
     return this.proposalRepo
       .createQueryBuilder()

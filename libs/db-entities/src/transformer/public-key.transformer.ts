@@ -10,6 +10,6 @@ export class PublicKeyTransformer implements ValueTransformer {
   }
 
   from(value: any) {
-    return new PublicKey(value);
+    return value && new PublicKey(value);
   }
 }

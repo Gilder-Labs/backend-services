@@ -9,6 +9,7 @@ import {
   ProposalsGraphQLModule,
   RealmsGraphQLModule,
   GovernanceProgramsGraphQLModule,
+  TokenOwnersGraphQLModule,
 } from '@gilder/graphql-resolvers';
 
 @Module({
@@ -38,6 +39,7 @@ import {
     RealmsGraphQLModule,
     ProposalsGraphQLModule,
     GovernanceProgramsGraphQLModule,
+    TokenOwnersGraphQLModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],

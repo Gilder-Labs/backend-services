@@ -10,6 +10,7 @@ import type { TokenOwner as ITokenOwner } from '@gilder/types';
 import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
 import { PublicKeyTransformer } from './transformer/public-key.transformer';
+import { BNTransformer } from './transformer/bn.transformer';
 
 @Entity()
 @Unique('constraint_name', ['ownerPk'])
@@ -38,10 +39,7 @@ export class TokenOwner implements ITokenOwner {
   governingTokenOwnerPk: PublicKey;
 
   @Column('text', {
-    transformer: {
-      from: (value: string) => new BN(value),
-      to: (value: BN) => value.toString(),
-    },
+    transformer: new BNTransformer(),
   })
   governingTokenDespositAmount: BN;
 

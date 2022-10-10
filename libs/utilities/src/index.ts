@@ -1,2 +1,2 @@
 export * from './collections';
-export * from './connection';
+export * from './buffer-helpers';

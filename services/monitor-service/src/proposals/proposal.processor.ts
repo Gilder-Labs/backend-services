@@ -33,7 +33,11 @@ export class ProposalProcessor {
             this.rpcManager.connection,
           );
 
-        await this.proposalService.addOrUpdateProposals(realm, proposals);
+        await this.proposalService.addOrUpdateProposals(
+          realm,
+          proposals,
+          this.rpcManager.connection,
+        );
       }),
     );
   }

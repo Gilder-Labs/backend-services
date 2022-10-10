@@ -21,6 +21,7 @@
     "@gilder/graphql-models": "workspace:*",
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",
+    "@gilder/token-owners-module": "workspace:*",
     "@gilder/types": "workspace:*",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
