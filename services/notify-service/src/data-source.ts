@@ -19,6 +19,7 @@ export const getDataConfig = (
         : {
             rejectUnauthorized: false,
           },
+    synchronize: true,
     entities: [NotificationSubscription],
     migrations: [],
     subscribers: [],

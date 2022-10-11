@@ -25,6 +25,7 @@ export const getDataConfig = (
         : {
             rejectUnauthorized: false,
           },
+    synchronize: true,
     entities: [
       Realm,
       Proposal,
