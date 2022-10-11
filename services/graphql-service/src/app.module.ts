@@ -50,7 +50,7 @@ import {
         autoSchemaFile: true,
         cache: 'bounded',
         installSubscriptionHandlers: true,
-        debug: configService.get<string>('DEBUG') === 'true' ?? false,
+        debug: configService.get<boolean>('DEBUG'),
         subscriptions: {
           'graphql-ws': true,
         },
