@@ -37,6 +37,8 @@ import { SubscriptionsModule } from './subscriptions';
         redis: {
           host: configService.getOrThrow('QUEUE_HOST'),
           port: configService.get<number>('QUEUE_PORT') ?? 6379,
+          username: configService.get<string>('QUEUE_USER'),
+          password: configService.get<string>('QUEUE_PASS'),
         },
       }),
       inject: [ConfigService],
