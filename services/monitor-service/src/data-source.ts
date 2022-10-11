@@ -20,7 +20,7 @@ export const getDataConfig = (
     database: configService.getOrThrow('DB_NAME'),
     port: configService.getOrThrow<number>('DB_PORT'),
     ssl:
-      configService.getOrThrow<Environment>('NODE_ENV') === 'production'
+      configService.getOrThrow<Environment>('NODE_ENV') !== 'production'
         ? false
         : {
             rejectUnauthorized: false,
