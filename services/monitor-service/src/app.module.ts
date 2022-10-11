@@ -50,6 +50,10 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
           port: configService.get<number>('QUEUE_PORT') ?? 6379,
           username: configService.get<string>('QUEUE_USER'),
           password: configService.get<string>('QUEUE_PASS'),
+          tls:
+            configService.get<Environment>('NODE_ENV') === 'production'
+              ? { rejectUnauthorized: false }
+              : undefined,
         },
       }),
       inject: [ConfigService],
