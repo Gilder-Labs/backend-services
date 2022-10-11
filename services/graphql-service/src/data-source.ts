@@ -1,4 +1,4 @@
-import { Proposal, Realm, TokenOwner } from '@gilder/db-entities';
+import { Governance, Proposal, Realm, TokenOwner } from '@gilder/db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -22,7 +22,7 @@ export const getDataConfig = (
         },
     synchronize:
       configService.getOrThrow<Environment>('NODE_ENV') === 'development',
-    entities: [Realm, Proposal, TokenOwner],
+    entities: [Realm, Proposal, TokenOwner, Governance],
     migrations: [],
     subscribers: [],
   };

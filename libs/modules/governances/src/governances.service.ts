@@ -16,6 +16,18 @@ export class GovernancesService {
     private readonly governanceRepo: Repository<Governance>,
   ) {}
 
+  public async getAllGovernances() {
+    return this.governanceRepo.find();
+  }
+
+  public async getAllGovernancesByRealm(realmPk: string) {
+    return this.governanceRepo.find({
+      where: {
+        realmPk: realmPk,
+      },
+    });
+  }
+
   public async addOrUpdateGovernances(
     realmPk: string,
     governances: ProgramAccount<SolanaGovernance>[],

@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@gilder/db-entities": "workspace:*",
+    "@gilder/governances-module": "workspace:*",
     "@gilder/graphql-models": "workspace:*",
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",

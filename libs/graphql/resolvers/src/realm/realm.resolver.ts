@@ -1,4 +1,10 @@
-import { Proposal, Realm, TokenOwner } from '@gilder/graphql-models';
+import { GovernancesService } from '@gilder/governances-module';
+import {
+  Governance,
+  Proposal,
+  Realm,
+  TokenOwner,
+} from '@gilder/graphql-models';
 import { ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
 import { TokenOwnersService } from '@gilder/token-owners-module';
@@ -11,6 +17,7 @@ export class RealmsResolver {
     private readonly realmsService: RealmsService,
     private readonly tokenOwnerService: TokenOwnersService,
     private readonly proposalService: ProposalsService,
+    private readonly governancesService: GovernancesService,
   ) {}
 
   @Query(() => [Realm])
@@ -44,6 +51,26 @@ export class RealmsResolver {
         proposalPk: x.proposalPk.toBase58(),
       }),
     );
+  }
+
+  @ResolveField('governances', () => [Governance])
+  async governances(@Parent() realm: Realm): Promise<Governance[]> {
+    const { realmPk } = realm;
+    return (
+      await this.governancesService.getAllGovernancesByRealm(realmPk)
+    ).map((x) => ({
+      ...x,
+      realmPk: x.realmPk.toBase58(),
+      governancePk: x.governancePk.toBase58(),
+      governedAccountPk: x.governedAccountPk.toBase58(),
+      config: {
+        ...x.config,
+        minCommunityTokensToCreateProposal:
+          x.config.minCommunityTokensToCreateProposal.toString(),
+        minCouncilTokensToCreateProposal:
+          x.config.minCouncilTokensToCreateProposal.toString(),
+      },
+    }));
   }
 
   @ResolveField('tokenOwners', () => [TokenOwner])
