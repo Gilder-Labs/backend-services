@@ -8,6 +8,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import {
   ProposalsGraphQLModule,
   RealmsGraphQLModule,
+  GovernanceProgramsGraphQLModule,
+  TokenOwnersGraphQLModule,
+  GovernancesGraphQLModule,
 } from '@gilder/graphql-resolvers';
 
 @Module({
@@ -36,6 +39,9 @@ import {
     }),
     RealmsGraphQLModule,
     ProposalsGraphQLModule,
+    GovernanceProgramsGraphQLModule,
+    TokenOwnersGraphQLModule,
+    GovernancesGraphQLModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],

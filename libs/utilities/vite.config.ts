@@ -1,22 +1,20 @@
 import { defineConfig } from 'vite';
-import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
-import path from 'path';
-
-const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
 export default defineConfig({
-  optimizeDeps: {
-    exclude: ['node-fetch'],
-  },
   build: {
-    target: 'esnext',
+    target: 'node16',
     lib: {
       entry: 'src/index.ts',
       fileName: () => 'index.js',
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['@solana/web3.js', 'throttled-queue', /node:.*/],
+      external: [
+        '@solana/web3.js',
+        '@solana/spl-governance',
+        'throttled-queue',
+        /node:.*/,
+      ],
     },
   },
   plugins: [
@@ -31,6 +29,5 @@ export default defineConfig({
         });
       },
     },
-    viteCommonjs(),
   ],
 });

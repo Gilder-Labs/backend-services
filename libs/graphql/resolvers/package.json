@@ -18,10 +18,13 @@
   "license": "ISC",
   "devDependencies": {
     "@gilder/db-entities": "workspace:*",
+    "@gilder/governances-module": "workspace:*",
     "@gilder/graphql-models": "workspace:*",
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",
+    "@gilder/token-owners-module": "workspace:*",
     "@gilder/types": "workspace:*",
+    "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^10.1.2",
@@ -31,10 +34,10 @@
     "reflect-metadata": "^0.1.13",
     "rollup": "^2.79.1",
     "rollup-plugin-swc": "^0.2.1",
-    "rxjs": "^7.5.6",
-    "typeorm": "^0.3.9",
-    "typescript": "^4.8.2",
-    "vite": "^3.1.0"
+    "rxjs": "^7.5.7",
+    "typeorm": "^0.3.10",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4"
   },
   "peerDependencies": {
     "@nestjs/graphql": "^10.1.2",

@@ -1,37 +1,20 @@
-import { NotificationSubscription, Realm } from '@gilder/db-entities';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { NOTIFICATION_QUEUE } from '@gilder/constants';
+import { NotificationSubscription } from '@gilder/db-entities';
+import { HttpModule } from '@nestjs/axios';
+import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
-import { NotificationsController } from './notifications.controller';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import {
-  MONITOR_SERVICE,
-  NotificationSubscriptionsModule,
-  NotificationSubscriptionsService,
-} from '@gilder/notification-subscriptions-module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { NotificationProcessor } from './notifications.processor';
+import { NotificationsService } from './notifications.service';
 
 @Module({
   imports: [
-    ConfigModule,
-    TypeOrmModule.forFeature([Realm, NotificationSubscription]),
-    NotificationSubscriptionsModule,
+    HttpModule,
+    TypeOrmModule.forFeature([NotificationSubscription]),
+    BullModule.registerQueue({
+      name: NOTIFICATION_QUEUE,
+    }),
   ],
-  providers: [
-    NotificationSubscriptionsService,
-    {
-      provide: MONITOR_SERVICE,
-      useFactory: (configService: ConfigService) => {
-        return ClientProxyFactory.create({
-          transport: Transport.TCP,
-          options: {
-            host: configService.getOrThrow('MONITOR_SERVICE_HOST'),
-            port: configService.getOrThrow<number>('MONITOR_SERVICE_PORT'),
-          },
-        });
-      },
-      inject: [ConfigService],
-    },
-  ],
-  controllers: [NotificationsController],
+  providers: [NotificationsService, NotificationProcessor],
 })
 export class NotificationsModule {}
