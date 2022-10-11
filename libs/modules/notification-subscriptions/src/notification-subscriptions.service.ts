@@ -43,7 +43,7 @@ export class NotificationSubscriptionsService {
             mobileToken: body.mobileToken,
           },
           {
-            conflictPaths: ['type', 'mobileToken'],
+            conflictPaths: ['type', 'mobileToken', 'realmPk'],
             skipUpdateIfNoValuesChanged: true,
           },
         );

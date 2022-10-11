@@ -12,7 +12,7 @@ import type {
 } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['mobileToken', 'type'])
+@Unique('constraint_name', ['mobileToken', 'type', 'realmPk'])
 export class NotificationSubscription implements INotificationSubscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;
