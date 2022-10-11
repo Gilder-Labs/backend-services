@@ -1,4 +1,5 @@
 import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
 
 export interface Governance<TKey = PublicKey> {
   governancePk: TKey;
@@ -16,13 +17,13 @@ export interface Governance<TKey = PublicKey> {
 
 export interface GovernanceConfig {
   communityVoteThreshold: VoteThreshold;
-  minCommunityTokensToCreateProposal: number;
+  minCommunityTokensToCreateProposal: BN;
   minInstructionHoldUpTime: number;
   maxVotingTime: number;
   communityVoteTipping: number;
-  minCouncilTokensToCreateProposal: number;
+  minCouncilTokensToCreateProposal: BN;
   councilVoteThreshold: VoteThreshold;
-  councilVetoThreshold: VoteThreshold;
+  councilVetoVoteThreshold: VoteThreshold;
   communityVetoVoteThreshold: VoteThreshold;
   councilVoteTipping: number;
 }

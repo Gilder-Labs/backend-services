@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProgramAccount, Proposal } from '@solana/spl-governance';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
 import { ProcessNewProposalData, NotificationTypes } from '@gilder/types';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { ConnectionManager } from '@gilder/rpc-manager';
 
 interface ProposalWithRealm {
   proposal: ProgramAccount<Proposal>;
@@ -30,6 +30,12 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
 
   private realmSubscriptionIds: number[] = [];
   private proposalSubscriptionIds: number[] = [];
+  private connectionManager = new ConnectionManager([
+    {
+      rps: 100,
+      uri: 'https://evocative-maximum-grass.solana-mainnet.quiknode.pro/56a0c5c00550838a2d9666ee379415ca076420f8/',
+    },
+  ]);
 
   constructor(
     @InjectQueue(NOTIFICATION_QUEUE)
@@ -39,7 +45,6 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     private readonly realmsService: RealmsService,
     private readonly proposalsService: ProposalsService,
     private readonly proposalRpcService: ProposalRPCService,
-    private readonly rpcManager: RpcManagerService,
   ) {}
 
   async onModuleInit() {
@@ -79,7 +84,6 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     const realms = await this.realmsService.getRealmsByRealmPubKey(
       Array.from(this.uniqueRealmKeys),
     );
-    console.log(`Hello ${JSON.stringify(realms)}`);
 
     for (const realm of realms) {
       this.addRealmListener(realm);
@@ -90,7 +94,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     const proposals =
       await this.proposalRpcService.getProposalsFromSolanaByRealm(
         realm,
-        this.rpcManager.connection,
+        this.connectionManager.connection,
       );
 
     this.logger.log(
@@ -99,7 +103,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
     await this.proposalsService.addOrUpdateProposals(
       realm,
       proposals,
-      this.rpcManager.connection,
+      this.connectionManager.connection,
     );
 
     const activeProposals = proposals
@@ -122,7 +126,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
 
   private listenForProposalChanges({ proposal, realm }: ProposalWithRealm) {
     let currentState = proposal.account.state;
-    const subscriptionId = this.rpcManager.connection.onAccountChange(
+    const subscriptionId = this.connectionManager.connection.onAccountChange(
       new PublicKey(proposal.pubkey),
       async () => {
         this.logger.log(
@@ -132,7 +136,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
         const updatedProposal =
           await this.proposalRpcService.getProposalFromSolana(
             proposal.pubkey.toBase58(),
-            this.rpcManager.connection,
+            this.connectionManager.connection,
           );
         try {
           if (currentState !== updatedProposal.account.state) {
@@ -146,7 +150,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
             this.logger.log(
               `Voting was finalized. Removing ${updatedProposal.account.name} listener...`,
             );
-            await this.rpcManager.connection.removeAccountChangeListener(
+            await this.connectionManager.connection.removeAccountChangeListener(
               subscriptionId,
             );
             this.proposalSubscriptionIds = this.proposalSubscriptionIds.filter(
@@ -159,7 +163,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
           await this.proposalsService.addOrUpdateProposals(
             realm,
             [updatedProposal],
-            this.rpcManager.connection,
+            this.connectionManager.connection,
           );
         }
       },
@@ -171,14 +175,14 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
 
   private listenForNewProposals(realm: Realm) {
     this.logger.log(`Listening to changes for Realm: ${realm.name}`);
-    return this.rpcManager.connection.onAccountChange(
+    return this.connectionManager.connection.onAccountChange(
       new PublicKey(realm.realmPk),
       async () => {
         this.logger.log(`Detected change for Realm: ${realm.name}`);
         const allProposals =
           await this.proposalRpcService.getProposalsFromSolanaByRealm(
             realm,
-            this.rpcManager.connection,
+            this.connectionManager.connection,
           );
         const { found, newProposals } =
           await this.proposalsService.foundNewProposals(realm, allProposals);
@@ -218,7 +222,7 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
             await this.proposalsService.addOrUpdateProposals(
               realm,
               newProposals,
-              this.rpcManager.connection,
+              this.connectionManager.connection,
             );
           }
         }
@@ -230,11 +234,11 @@ export class ProposalsMonitorService implements OnModuleInit, OnModuleDestroy {
   async cleanUpSubscriptions() {
     this.logger.log('Cleaning up any remaining subscriptions...');
     for (const id of this.realmSubscriptionIds) {
-      await this.rpcManager.connection.removeAccountChangeListener(id);
+      await this.connectionManager.connection.removeAccountChangeListener(id);
     }
 
     for (const id of this.proposalSubscriptionIds) {
-      await this.rpcManager.connection.removeAccountChangeListener(id);
+      await this.connectionManager.connection.removeAccountChangeListener(id);
     }
   }
 }

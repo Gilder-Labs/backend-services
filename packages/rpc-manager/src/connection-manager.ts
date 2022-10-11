@@ -1,4 +1,6 @@
 import { Connection } from '@solana/web3.js';
+import fetch from 'node-fetch';
+import throttledQueue from 'throttled-queue';
 
 type Endpoint = {
   rps: number;
@@ -39,10 +41,18 @@ class ConnectionManager {
   private _currentIndex = 0;
   private _limiters: Limiter[];
   private _connection: Connection;
+  private _throttle: <Return = unknown>(
+    fn: () => Return | Promise<Return>,
+  ) => Promise<Return>;
 
   constructor(endpoints: Endpoint[]) {
     this._limiters = endpoints.map((e) => new Limiter(e));
     this._connection = this.createConnection(endpoints[0]);
+    this._throttle = throttledQueue(
+      endpoints.reduce((prev, cur) => prev + cur.rps, 0),
+      1000,
+      true,
+    );
   }
 
   get connection() {
@@ -62,9 +72,9 @@ class ConnectionManager {
   private createConnection(endpoint: Endpoint) {
     return new Connection(endpoint.uri, {
       commitment: 'confirmed',
-      fetchMiddleware: async (_, init, fetch) => {
+      fetch: async (_, init) => {
         const rpcEndpoint = this._limiter.rpcEndpoint;
-        return fetch(rpcEndpoint, init);
+        return await this._throttle(() => fetch(rpcEndpoint, init));
       },
     });
   }

@@ -28,7 +28,7 @@ export class RealmsMonitorService {
     private readonly tokenOwnerQueue: Queue,
   ) {}
 
-  @Cron(CronExpression.EVERY_10_MINUTES)
+  @Cron(CronExpression.EVERY_30_MINUTES)
   async addOrUpdateRealms() {
     const realms = await this.realmsRpcService.getAllRealmsFromSolana(
       this.rpcManager.connection,
@@ -43,7 +43,7 @@ export class RealmsMonitorService {
 
     await Promise.all([
       // this.addToQueue(this.proposalQueue, processData),
-      // this.addToQueue(this.governanceQueue, processData),
+      this.addToQueue(this.governanceQueue, processData),
       this.addToQueue(this.tokenOwnerQueue, processData),
     ]);
   }

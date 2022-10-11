@@ -8,9 +8,17 @@ import { RealmsMonitorModule } from './realms';
 import { ProposalsMonitorModule } from './proposals';
 import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
+import { GovernanceModule } from './governances';
+import { RpcManagerModule } from '@gilder/rpc-manager-module';
 
 @Module({
   imports: [
+    RpcManagerModule.forRoot([
+      {
+        rps: 25,
+        uri: 'https://necessary-winter-county.solana-mainnet.discover.quiknode.pro/7ea512375c985ba68369cc9526c64a88ee27992a/',
+      },
+    ]),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -47,6 +55,7 @@ import { BullModule } from '@nestjs/bull';
     RealmsMonitorModule,
     ProposalsMonitorModule,
     TokenOwnersModule,
+    GovernanceModule,
   ],
   controllers: [],
   providers: [],
