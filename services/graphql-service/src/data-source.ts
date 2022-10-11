@@ -6,22 +6,20 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 export const getDataConfig = (
   configService: ConfigService,
 ): PostgresConnectionOptions => {
-  const host = configService.getOrThrow<string>('DB_HOST');
-  const isLocalhost = host.includes('localhost');
   return {
     type: 'postgres',
-    host,
+    host: configService.getOrThrow<string>('DB_HOST'),
     username: configService.getOrThrow('DB_USERNAME'),
     password: configService.getOrThrow('DB_PASSWORD'),
     database: configService.getOrThrow('DB_NAME'),
     port: configService.getOrThrow<number>('DB_PORT'),
-    ssl: isLocalhost
-      ? false
-      : {
-          rejectUnauthorized: false,
-        },
-    synchronize:
-      configService.getOrThrow<Environment>('NODE_ENV') === 'development',
+    ssl:
+      configService.getOrThrow<Environment>('NODE_ENV') === 'production'
+        ? false
+        : {
+            rejectUnauthorized: false,
+          },
+    synchronize: true, //configService.getOrThrow<Environment>('NODE_ENV') === 'development',
     entities: [Realm, Proposal, TokenOwner, Governance],
     migrations: [],
     subscribers: [],

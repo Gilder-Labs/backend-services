@@ -48,7 +48,10 @@ import {
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         autoSchemaFile: true,
-        debug: configService.get<boolean>('NODE_ENV') ?? false,
+        cache: 'bounded',
+        installSubscriptionHandlers: true,
+        debug:
+          configService.get<Environment>('NODE_ENV') !== 'production' ?? false,
         subscriptions: {
           'graphql-ws': true,
         },
