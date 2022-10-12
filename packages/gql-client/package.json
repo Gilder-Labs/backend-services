@@ -1,5 +1,5 @@
 {
-  "name": "@gilder/rpc-manager",
+  "name": "@gilder/gql-client",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -7,7 +7,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "README.md"
   ],
   "scripts": {
     "build": "vite build",
@@ -16,14 +17,27 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.7.0",
+    "@gilder/types": "workspace:*",
+    "cross-fetch": "^3.1.5",
+    "graphql": "^16.6.0"
+  },
   "devDependencies": {
     "@solana/web3.js": "^1.63.1",
-    "node-fetch": "^3.2.10",
-    "throttled-queue": "^2.1.4",
+    "bn.js": "^5.2.1",
+    "react": "^18.2.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.4"
   },
   "peerDependencies": {
-    "@solana/web3.js": "^1.63.0"
+    "@solana/web3.js": "^1.63.0",
+    "react": "^18.2.0",
+    "bn.js": "^5.2.1"
+  },
+  "peerDependenciesMeta": {
+    "bn.js": {
+      "optional": true
+    }
   }
 }
