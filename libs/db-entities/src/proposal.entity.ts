@@ -7,26 +7,18 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import type { Proposal as IProposal } from '@gilder/types';
-import { PublicKey } from '@solana/web3.js';
-import { PublicKeyTransformer } from './transformer/public-key.transformer';
 
 @Entity()
 @Unique('constraint_name', ['proposalPk'])
-export class Proposal implements IProposal {
-  @PrimaryColumn('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  proposalPk: PublicKey;
+export class Proposal implements IProposal<string> {
+  @PrimaryColumn('text')
+  proposalPk: string;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  programPk: PublicKey;
+  @Column('text')
+  programPk: string;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  realmPk: PublicKey;
+  @Column('text')
+  realmPk: string;
 
   @Column('text')
   name: string;

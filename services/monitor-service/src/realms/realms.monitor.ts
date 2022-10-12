@@ -11,27 +11,30 @@ import { ProcessRealmData, QueueProcessTypes } from '@gilder/types';
 import { chunkArray } from '@gilder/utilities';
 import { Queue } from 'bull';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { Connection } from '@solana/web3.js';
+import { DEFAULT_CONNECTION } from 'src/utils/constants';
 
 @Injectable()
 export class RealmsMonitorService {
   private readonly logger = new Logger(RealmsMonitorService.name);
+  private readonly connection: Connection;
 
   constructor(
     private readonly realmsService: RealmsService,
     private readonly realmsRpcService: RealmsRPCService,
-    private readonly rpcManager: RpcManagerService,
+    rpcManager: RpcManagerService,
     @InjectQueue(GOVERNANCE_QUEUE)
     private readonly governanceQueue: Queue,
-    @InjectQueue(PROPOSAL_QUEUE)
-    private readonly proposalQueue: Queue,
     @InjectQueue(TOKEN_OWNER_QUEUE)
     private readonly tokenOwnerQueue: Queue,
-  ) {}
+  ) {
+    this.connection = rpcManager.getConnection(DEFAULT_CONNECTION);
+  }
 
   @Cron(CronExpression.EVERY_30_MINUTES)
   async addOrUpdateRealms() {
     const realms = await this.realmsRpcService.getAllRealmsFromSolana(
-      this.rpcManager.connection,
+      this.connection,
     );
     this.logger.log(`Discovered ${realms.length} realms...`);
 
@@ -42,7 +45,6 @@ export class RealmsMonitorService {
     await this.realmsService.addOrUpdateRealms(realms);
 
     await Promise.all([
-      // this.addToQueue(this.proposalQueue, processData),
       this.addToQueue(this.governanceQueue, processData),
       this.addToQueue(this.tokenOwnerQueue, processData),
     ]);

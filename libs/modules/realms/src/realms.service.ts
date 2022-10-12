@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, InsertResult, Repository } from 'typeorm';
+import { FindManyOptions, In, InsertResult, Repository } from 'typeorm';
 import { Realm } from '@gilder/db-entities';
 import { ProgramAccount, Realm as SolanaRealm } from '@solana/spl-governance';
 
@@ -32,8 +32,8 @@ export class RealmsService {
       .filter((x) => !!x.pubkey && !!x.owner)
       .map<Partial<Realm>>((x) => ({
         name: x.account.name,
-        programPk: x.owner,
-        realmPk: x.pubkey,
+        programPk: x.owner.toBase58(),
+        realmPk: x.pubkey.toBase58(),
       }));
 
     return this.realmRepo
@@ -65,7 +65,7 @@ export class RealmsService {
     });
   }
 
-  public getAllRealms() {
-    return this.realmRepo.find();
+  public getAllRealms(select?: Pick<FindManyOptions<Realm>, 'select'>) {
+    return this.realmRepo.find({ ...select });
   }
 }

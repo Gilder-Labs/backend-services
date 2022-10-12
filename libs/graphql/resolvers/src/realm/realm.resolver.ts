@@ -22,11 +22,7 @@ export class RealmsResolver {
 
   @Query(() => [Realm])
   async realms(): Promise<Realm[]> {
-    return (await this.realmsService.getAllRealms()).map((x) => ({
-      ...x,
-      programPk: x.programPk.toBase58(),
-      realmPk: x.realmPk.toBase58(),
-    }));
+    return this.realmsService.getAllRealms();
   }
 
   @Query(() => Realm, { nullable: true })
@@ -43,49 +39,18 @@ export class RealmsResolver {
   @ResolveField('proposals', () => [Proposal])
   async proposals(@Parent() realm: Realm): Promise<Proposal[]> {
     const { realmPk } = realm;
-    return (await this.proposalService.getAllProposalsInRealm(realmPk)).map(
-      (x) => ({
-        ...x,
-        programPk: x.programPk.toBase58(),
-        realmPk: x.realmPk.toBase58(),
-        proposalPk: x.proposalPk.toBase58(),
-      }),
-    );
+    return await this.proposalService.getAllProposalsInRealm(realmPk);
   }
 
   @ResolveField('governances', () => [Governance])
   async governances(@Parent() realm: Realm): Promise<Governance[]> {
     const { realmPk } = realm;
-    return (
-      await this.governancesService.getAllGovernancesByRealm(realmPk)
-    ).map((x) => ({
-      ...x,
-      realmPk: x.realmPk.toBase58(),
-      governancePk: x.governancePk.toBase58(),
-      governedAccountPk: x.governedAccountPk.toBase58(),
-      config: {
-        ...x.config,
-        minCommunityTokensToCreateProposal:
-          x.config.minCommunityTokensToCreateProposal.toString(),
-        minCouncilTokensToCreateProposal:
-          x.config.minCouncilTokensToCreateProposal.toString(),
-      },
-    }));
+    return this.governancesService.getAllGovernancesByRealm(realmPk);
   }
 
   @ResolveField('tokenOwners', () => [TokenOwner])
   async tokenOwners(@Parent() realm: Realm): Promise<TokenOwner[]> {
     const { realmPk } = realm;
-    return (await this.tokenOwnerService.getAllTokenOwnersInRealm(realmPk)).map(
-      (x) => ({
-        ...x,
-        ownerPk: x.ownerPk.toBase58(),
-        realmPk: x.realmPk.toBase58(),
-        governanceDelegatePk: x.governanceDelegatePk?.toBase58(),
-        governingTokenMintPk: x.governingTokenMintPk.toBase58(),
-        governingTokenOwnerPk: x.governingTokenOwnerPk.toBase58(),
-        governingTokenDespositAmount: x.governingTokenDespositAmount.toString(),
-      }),
-    );
+    return this.tokenOwnerService.getAllTokenOwnersInRealm(realmPk);
   }
 }

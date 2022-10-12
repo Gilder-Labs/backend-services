@@ -1,47 +1,29 @@
-import {
-  Entity,
-  Column,
-  Unique,
-  PrimaryColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
 import type { TokenOwner as ITokenOwner } from '@gilder/types';
-import BN from 'bn.js';
-import { PublicKey } from '@solana/web3.js';
-import { PublicKeyTransformer } from './transformer/public-key.transformer';
-import { BNTransformer } from './transformer/bn.transformer';
 
 @Entity()
 @Unique('constraint_name', ['ownerPk'])
-export class TokenOwner implements ITokenOwner {
-  @PrimaryColumn('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  ownerPk: PublicKey;
+export class TokenOwner
+  extends BaseEntity
+  implements ITokenOwner<string, string>
+{
+  @PrimaryColumn('text')
+  ownerPk: string;
 
   @Column('int')
   governanceAccountType: number;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  realmPk: PublicKey;
+  @Column('text')
+  realmPk: string;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  governingTokenMintPk: PublicKey;
+  @Column('text')
+  governingTokenMintPk: string;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  governingTokenOwnerPk: PublicKey;
+  @Column('text')
+  governingTokenOwnerPk: string;
 
-  @Column('text', {
-    transformer: new BNTransformer(),
-  })
-  governingTokenDespositAmount: BN;
+  @Column('text')
+  governingTokenDespositAmount: string;
 
   @Column('int')
   unrelinquishedVotesCount: number;
@@ -54,20 +36,6 @@ export class TokenOwner implements ITokenOwner {
 
   @Column('text', {
     nullable: true,
-    transformer: new PublicKeyTransformer(),
   })
-  governanceDelegatePk?: PublicKey;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  created_at: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updated_at: Date;
+  governanceDelegatePk?: string;
 }

@@ -1,41 +1,29 @@
-import {
-  Entity,
-  Column,
-  Unique,
-  PrimaryColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
 import type {
   Governance as IGovernance,
   GovernanceConfig,
 } from '@gilder/types';
-import { PublicKey } from '@solana/web3.js';
-import { PublicKeyTransformer } from './transformer/public-key.transformer';
 
 @Entity()
 @Unique('constraint_name', ['governancePk'])
-export class Governance implements IGovernance {
-  @PrimaryColumn('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  governancePk: PublicKey;
+export class Governance
+  extends BaseEntity
+  implements IGovernance<string, string>
+{
+  @PrimaryColumn('text')
+  governancePk: string;
 
   @Column('int')
   accountType: number;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  realmPk: PublicKey;
+  @Column('text')
+  realmPk: string;
 
-  @Column('text', {
-    transformer: new PublicKeyTransformer(),
-  })
-  governedAccountPk: PublicKey;
+  @Column('text')
+  governedAccountPk: string;
 
   @Column('jsonb')
-  config: GovernanceConfig;
+  config: GovernanceConfig<string>;
 
   @Column('int')
   proposalCount: number;
@@ -54,17 +42,4 @@ export class Governance implements IGovernance {
 
   @Column('bool')
   isTokenGovernance: boolean;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  created_at: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updated_at: Date;
 }

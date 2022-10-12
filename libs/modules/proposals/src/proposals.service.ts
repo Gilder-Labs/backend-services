@@ -31,14 +31,14 @@ export class ProposalsService {
   }
 
   public async foundNewProposals(
-    realm: Realm,
+    realmPk: string,
     proposals: ProgramAccount<SolanaProposal>[],
   ): Promise<{
     found: boolean;
     newProposals: ProgramAccount<SolanaProposal>[];
   }> {
     const mostRecentProposal = await this.proposalRepo.findOne({
-      where: { realmPk: realm.realmPk.toBase58() },
+      where: { realmPk: realmPk },
       order: { draftAt: 'DESC' },
     });
 

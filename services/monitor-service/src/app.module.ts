@@ -10,15 +10,43 @@ import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
 import { GovernanceModule } from './governances';
 import { RpcManagerModule } from '@gilder/rpc-manager-module';
+import {
+  DEFAULT_CONNECTION,
+  PROPOSAL_CONNECTION,
+  WS_CONNECTION,
+} from './utils/constants';
+import { GovernanceProgramsMonitorModule } from './governance-programs';
 
 @Module({
   imports: [
-    RpcManagerModule.forRoot([
-      {
-        rps: 25,
-        uri: 'https://necessary-winter-county.solana-mainnet.discover.quiknode.pro/7ea512375c985ba68369cc9526c64a88ee27992a/',
-      },
-    ]),
+    RpcManagerModule.forRoot({
+      [DEFAULT_CONNECTION]: [
+        {
+          rps: 90,
+          uri: 'https://necessary-winter-county.solana-mainnet.quiknode.pro/7ea512375c985ba68369cc9526c64a88ee27992a/',
+        },
+        {
+          rps: 90,
+          uri: 'https://little-summer-emerald.solana-mainnet.quiknode.pro/1a5b112d72ed9c2218e8b295874cb90a21c34046/',
+        },
+      ],
+      [WS_CONNECTION]: [
+        {
+          rps: 90,
+          uri: 'https://tame-muddy-sea.solana-mainnet.quiknode.pro/1327f052cbc7dccfd47167de37c061f1abfb2e99/',
+        },
+        {
+          rps: 90,
+          uri: 'https://divine-powerful-bush.solana-mainnet.quiknode.pro/69aba9a17165369f035b916f40e85b29c1657e70/',
+        },
+      ],
+      [PROPOSAL_CONNECTION]: [
+        {
+          rps: 90,
+          uri: 'https://chaotic-ultra-aura.solana-mainnet.quiknode.pro/cb9855dc402f5ab8bc7bf2e180993433317bc28b/',
+        },
+      ],
+    }),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -58,10 +86,11 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
       }),
       inject: [ConfigService],
     }),
-    RealmsMonitorModule,
-    ProposalsMonitorModule,
-    TokenOwnersModule,
-    GovernanceModule,
+    GovernanceProgramsMonitorModule,
+    // RealmsMonitorModule,
+    // ProposalsMonitorModule,
+    // TokenOwnersModule,
+    // GovernanceModule,
   ],
   controllers: [],
   providers: [],

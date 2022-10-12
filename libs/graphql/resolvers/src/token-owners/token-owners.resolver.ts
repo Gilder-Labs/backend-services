@@ -8,27 +8,11 @@ export class TokenOwnersResolver {
 
   @Query(() => [TokenOwner])
   async tokenOwners(): Promise<TokenOwner[]> {
-    return (await this.tokenOwnersService.getAllTokenOwners()).map((x) => ({
-      ...x,
-      ownerPk: x.ownerPk.toBase58(),
-      realmPk: x.realmPk.toBase58(),
-      governanceDelegatePk: x.governanceDelegatePk?.toBase58(),
-      governingTokenMintPk: x.governingTokenMintPk.toBase58(),
-      governingTokenOwnerPk: x.governingTokenOwnerPk.toBase58(),
-      governingTokenDespositAmount: x.governingTokenDespositAmount.toString(),
-    }));
+    return this.tokenOwnersService.getAllTokenOwners();
   }
 
   @Query(() => [TokenOwner])
   async uniqueTokenOwners(): Promise<TokenOwner[]> {
-    return (await this.tokenOwnersService.getUniqueTokenOwners()).map((x) => ({
-      ...x,
-      ownerPk: x.ownerPk.toBase58(),
-      realmPk: x.realmPk.toBase58(),
-      governanceDelegatePk: x.governanceDelegatePk?.toBase58(),
-      governingTokenMintPk: x.governingTokenMintPk.toBase58(),
-      governingTokenOwnerPk: x.governingTokenOwnerPk.toBase58(),
-      governingTokenDespositAmount: x.governingTokenDespositAmount.toString(),
-    }));
+    return this.tokenOwnersService.getUniqueTokenOwners();
   }
 }

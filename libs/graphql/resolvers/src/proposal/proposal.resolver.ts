@@ -8,11 +8,6 @@ export class ProposalsResolver {
 
   @Query(() => [Proposal])
   async proposals(): Promise<Proposal[]> {
-    return (await this.proposalService.getAllProposals()).map((x) => ({
-      ...x,
-      programPk: x.programPk.toBase58(),
-      realmPk: x.realmPk.toBase58(),
-      proposalPk: x.proposalPk.toBase58(),
-    }));
+    return this.proposalService.getAllProposals();
   }
 }

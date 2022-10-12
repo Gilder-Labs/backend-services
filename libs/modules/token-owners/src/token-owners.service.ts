@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { InsertResult, Repository } from 'typeorm';
 import { TokenOwner } from '@gilder/db-entities';
 import { ProgramAccount, TokenOwnerRecord } from '@solana/spl-governance';
-import BN from 'bn.js';
-import { PublicKey } from '@solana/web3.js';
 import { distinctBy } from '@gilder/utilities';
 
 @Injectable()
@@ -38,13 +36,14 @@ export class TokenOwnersService {
     const tokenOwners = tokenOwnerRecords.map<Partial<TokenOwner>>((tor) => {
       const { account, pubkey } = tor;
       return {
-        ownerPk: pubkey,
-        realmPk: new PublicKey(realmPk),
+        ownerPk: pubkey.toBase58(),
+        realmPk: realmPk,
         governanceAccountType: account.accountType,
-        governanceDelegatePk: account.governanceDelegate,
-        governingTokenDespositAmount: account.governingTokenDepositAmount as BN,
-        governingTokenMintPk: account.governingTokenMint,
-        governingTokenOwnerPk: account.governingTokenOwner,
+        governanceDelegatePk: account.governanceDelegate?.toBase58(),
+        governingTokenDespositAmount:
+          account.governingTokenDepositAmount.toString(),
+        governingTokenMintPk: account.governingTokenMint.toBase58(),
+        governingTokenOwnerPk: account.governingTokenOwner.toBase58(),
         outstandingProposalCount: account.outstandingProposalCount,
         totalVotesCount: account.totalVotesCount,
         unrelinquishedVotesCount: account.unrelinquishedVotesCount,
