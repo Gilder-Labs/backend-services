@@ -1,57 +1,65 @@
 import type { Realm } from '@gilder/types';
-import { PublicKey } from '@solana/web3.js';
 import {
   GET_ALL_REALMS,
   GET_ALL_REALMS_WITH_PROPOSALS,
   GET_REALM,
   GET_REALM_WITH_PROPOSALS,
-} from 'src/queries';
+} from '../../queries';
 import { transformProposal } from '../proposals/utils';
-import { DefaultFetchOptions } from '../types';
+import { ApolloClient } from '../types';
+import { getResults } from '../utils';
 import { GetRealmArgs, RealmWithProposals } from './types';
 import { transformRealm } from './utils';
 
-const getRealms = async ({ client }: DefaultFetchOptions): Promise<Realm[]> => {
-  return client
-    .query<Realm<string>[]>({ query: GET_ALL_REALMS })
-    .then((r) => r.data.map<Realm>(transformRealm));
+const getAllRealms = async (client: ApolloClient): Promise<Realm[]> => {
+  return getResults<Realm<string>[]>({ query: GET_ALL_REALMS }, client).then(
+    (data) => data.map<Realm>(transformRealm),
+  );
 };
 
-const getRealmsWithProposals = async ({
-  client,
-}: DefaultFetchOptions): Promise<RealmWithProposals<PublicKey>[]> => {
-  return client
-    .query<RealmWithProposals[]>({ query: GET_ALL_REALMS_WITH_PROPOSALS })
-    .then((r) =>
-      r.data.map<RealmWithProposals<PublicKey>>((x) => ({
-        ...transformRealm(x),
-        proposals: x.proposals.map(transformProposal),
-      })),
-    );
+const getAllRealmsWithProposals = async (
+  client: ApolloClient,
+): Promise<RealmWithProposals[]> => {
+  return getResults<RealmWithProposals<string>[]>(
+    {
+      query: GET_ALL_REALMS_WITH_PROPOSALS,
+    },
+    client,
+  ).then((data) =>
+    data.map<RealmWithProposals>((x) => ({
+      ...transformRealm(x),
+      proposals: x.proposals.map(transformProposal),
+    })),
+  );
 };
 
-const getRealm = async ({
-  client,
-  variables,
-}: DefaultFetchOptions<GetRealmArgs>): Promise<Realm> => {
-  return client
-    .query<Realm<string>>({ query: GET_REALM, variables })
-    .then((r) => transformRealm(r.data));
+const getRealm = async (
+  variables: GetRealmArgs,
+  client: ApolloClient,
+): Promise<Realm> => {
+  return getResults<Realm<string>>(
+    { query: GET_REALM, variables },
+    client,
+  ).then((data) => transformRealm(data));
 };
 
-const getRealmWithProposals = async ({
-  client,
-  variables,
-}: DefaultFetchOptions<GetRealmArgs>): Promise<
-  RealmWithProposals<PublicKey>
-> => {
-  return client
-    .query<RealmWithProposals>({ query: GET_REALM_WITH_PROPOSALS, variables })
-    .then((r) => ({
-      ...transformRealm(r.data),
-      proposals: r.data.proposals.map(transformProposal),
-    }));
+const getRealmWithProposals = async (
+  variables: GetRealmArgs,
+  client: ApolloClient,
+): Promise<RealmWithProposals> => {
+  return getResults<RealmWithProposals<string>>(
+    { query: GET_REALM_WITH_PROPOSALS, variables },
+    client,
+  ).then((data) => ({
+    ...transformRealm(data),
+    proposals: data.proposals.map(transformProposal),
+  }));
 };
 
-export { getRealms, getRealmsWithProposals, getRealm, getRealmWithProposals };
+export {
+  getAllRealms,
+  getAllRealmsWithProposals,
+  getRealm,
+  getRealmWithProposals,
+};
 export * from './types';

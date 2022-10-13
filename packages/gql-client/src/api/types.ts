@@ -1,6 +1,3 @@
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient as AClient } from '@apollo/client';
 
-export type DefaultFetchOptions<T = undefined> = {
-  client: ApolloClient<any>;
-  variables?: T;
-};
+export type ApolloClient = AClient<any>;

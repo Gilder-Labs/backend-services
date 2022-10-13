@@ -22,28 +22,24 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
     RpcManagerModule.forRoot({
       [DEFAULT_CONNECTION]: [
         {
-          rps: 90,
-          uri: 'https://necessary-winter-county.solana-mainnet.quiknode.pro/7ea512375c985ba68369cc9526c64a88ee27992a/',
+          rps: 10,
+          uri: 'https://solana-api.projectserum.com',
         },
         {
-          rps: 90,
-          uri: 'https://little-summer-emerald.solana-mainnet.quiknode.pro/1a5b112d72ed9c2218e8b295874cb90a21c34046/',
+          rps: 10,
+          uri: 'https://api.mainnet-beta.solana.com',
         },
       ],
       [WS_CONNECTION]: [
         {
-          rps: 90,
-          uri: 'https://tame-muddy-sea.solana-mainnet.quiknode.pro/1327f052cbc7dccfd47167de37c061f1abfb2e99/',
-        },
-        {
-          rps: 90,
-          uri: 'https://divine-powerful-bush.solana-mainnet.quiknode.pro/69aba9a17165369f035b916f40e85b29c1657e70/',
+          rps: 20,
+          uri: 'https://ssc-dao.genesysgo.net/',
         },
       ],
       [PROPOSAL_CONNECTION]: [
         {
-          rps: 90,
-          uri: 'https://chaotic-ultra-aura.solana-mainnet.quiknode.pro/cb9855dc402f5ab8bc7bf2e180993433317bc28b/',
+          rps: 10,
+          uri: 'https://solana-api.projectserum.com',
         },
       ],
     }),

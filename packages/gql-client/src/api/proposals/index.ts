@@ -1,14 +1,14 @@
 import { Proposal } from '@gilder/types';
-import { GET_PROPOSALS } from 'src/queries/proposals';
-import { DefaultFetchOptions } from '../types';
+import { GET_ALL_PROPOSALS } from '../../queries/proposals';
+import { ApolloClient } from '../types';
+import { getResults } from '../utils';
 import { transformProposal } from './utils';
 
-const getProposals = async ({
-  client,
-}: DefaultFetchOptions): Promise<Proposal[]> => {
-  return client
-    .query<Proposal<string>[]>({ query: GET_PROPOSALS })
-    .then((r) => r.data.map<Proposal>(transformProposal));
+const getAllProposals = async (client: ApolloClient): Promise<Proposal[]> => {
+  return getResults<Proposal<string>[]>(
+    { query: GET_ALL_PROPOSALS },
+    client,
+  ).then((data) => data.map<Proposal>(transformProposal));
 };
 
-export { getProposals };
+export { getAllProposals };
