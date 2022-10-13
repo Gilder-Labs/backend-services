@@ -1,5 +1,5 @@
 {
-  "include": ["src", "apollo.config.js"],
+  "include": ["src"],
   "compilerOptions": {
     "types": ["vite/client"],
     "baseUrl": ".",

@@ -32,8 +32,8 @@
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.63.0",
-    "react": "^18.2.0",
-    "bn.js": "^5.2.1"
+    "bn.js": "^5.2.1",
+    "react": "^18.2.0"
   },
   "peerDependenciesMeta": {
     "bn.js": {

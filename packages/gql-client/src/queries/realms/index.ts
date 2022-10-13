@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 import { CORE_PROPOSAL_FIELDS } from '../proposals';
 
-const GET_REALMS = gql`
-  query GetRealms {
+const GET_ALL_REALMS = gql`
+  query GetAllRealms {
     realms {
       realmPk
       programPk
@@ -11,9 +11,9 @@ const GET_REALMS = gql`
   }
 `;
 
-const GET_REALMS_WITH_PROPOSALS = gql`
+const GET_ALL_REALMS_WITH_PROPOSALS = gql`
   ${CORE_PROPOSAL_FIELDS}
-  query GetRealmsWithProposals {
+  query GetAllRealmsWithProposals {
     realms {
       realmPk
       programPk
@@ -50,8 +50,8 @@ const GET_REALM_WITH_PROPOSALS = gql`
 `;
 
 export {
-  GET_REALMS,
-  GET_REALMS_WITH_PROPOSALS,
+  GET_ALL_REALMS,
+  GET_ALL_REALMS_WITH_PROPOSALS,
   GET_REALM,
   GET_REALM_WITH_PROPOSALS,
 };

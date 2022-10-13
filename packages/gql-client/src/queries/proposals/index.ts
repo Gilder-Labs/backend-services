@@ -8,4 +8,13 @@ const CORE_PROPOSAL_FIELDS = gql`
   }
 `;
 
+export const GET_PROPOSALS = gql`
+  ${CORE_PROPOSAL_FIELDS}
+  query GetProposals {
+    proposals {
+      ...CoreProposalFields
+    }
+  }
+`;
+
 export { CORE_PROPOSAL_FIELDS };

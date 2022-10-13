@@ -679,7 +679,11 @@ __metadata:
     vite: ^3.1.4
   peerDependencies:
     "@solana/web3.js": ^1.63.0
+    bn.js: ^5.2.1
     react: ^18.2.0
+  peerDependenciesMeta:
+    bn.js:
+      optional: true
   languageName: unknown
   linkType: soft
 
