@@ -16,7 +16,7 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
     RpcManagerModule.forRoot([
       {
         rps: 25,
-        uri: 'https://necessary-winter-county.solana-mainnet.discover.quiknode.pro/7ea512375c985ba68369cc9526c64a88ee27992a/',
+        uri: 'https://ssc-dao.genesysgo.net/',
       },
     ]),
     LoggerModule.forRoot({
@@ -58,10 +58,10 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
       }),
       inject: [ConfigService],
     }),
-    RealmsMonitorModule,
+    // RealmsMonitorModule,
     ProposalsMonitorModule,
-    TokenOwnersModule,
-    GovernanceModule,
+    // TokenOwnersModule,
+    // GovernanceModule,
   ],
   controllers: [],
   providers: [],
