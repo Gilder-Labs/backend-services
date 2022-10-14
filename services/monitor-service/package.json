@@ -1,9 +1,9 @@
 {
   "name": "@gilder/monitor-service",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
