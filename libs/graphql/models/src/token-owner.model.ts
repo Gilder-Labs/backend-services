@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import type { TokenOwner as ITokenOwner } from '@gilderlabs/types';
+import type { TokenOwner as ITokenOwner } from '@gilder/types';
 
 @ObjectType()
 export class TokenOwner implements ITokenOwner<string, string> {

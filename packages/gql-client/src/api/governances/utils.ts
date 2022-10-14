@@ -1,4 +1,4 @@
-import { Governance } from '@gilderlabs/types';
+import { Governance } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
 import { BN } from 'bn.js';
 

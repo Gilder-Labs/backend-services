@@ -1,4 +1,4 @@
-import { ConnectionManager } from '@gilderlabs/rpc-manager';
+import { ConnectionManager } from '@gilder/rpc-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { RPC_MANAGER_INSTANCE_TOKEN } from './constants';
 

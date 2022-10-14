@@ -1,5 +1,5 @@
 import { TOKEN_OWNER_QUEUE } from '@gilder/constants';
-import { RpcManagerService } from '@gilderlabs/rpc-manager-module';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
 import { TokenOwnersService } from '@gilder/token-owners-module';
 import {
   BulkProcessUpdates,

@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@gilder/db-entities": "workspace:*",
+    "@gilder/types": "workspace:*",
     "@gilder/utilities": "workspace:*",
-    "@gilderlabs/types": "workspace:*",
     "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",
     "@nestjs/platform-express": "^9.1.2",

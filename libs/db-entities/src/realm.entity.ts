@@ -1,5 +1,5 @@
 import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
-import type { Realm as IRealm } from '@gilderlabs/types';
+import type { Realm as IRealm } from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['realmPk'])

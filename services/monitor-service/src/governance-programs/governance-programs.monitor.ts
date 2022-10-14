@@ -1,7 +1,7 @@
 import { GovernancesService } from '@gilder/governances-module';
 import { ProposalsService } from '@gilder/proposals-module';
 import { RealmsRestService, RealmsService } from '@gilder/realms-module';
-import { RpcManagerService } from '@gilderlabs/rpc-manager-module';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
 import { tryGetProposalData, tryGetRealmData } from '@gilder/utilities';
 import {
   Injectable,

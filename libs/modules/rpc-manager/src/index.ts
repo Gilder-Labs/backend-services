@@ -1,4 +1,4 @@
-import { ConnectionManager } from '@gilderlabs/rpc-manager';
+import { ConnectionManager } from '@gilder/rpc-manager';
 
 export * from './rpc-manager.module';
 export * from './rpc-manager.service';

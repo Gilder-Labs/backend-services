@@ -1,4 +1,4 @@
-import type { Realm } from '@gilderlabs/types';
+import type { Realm } from '@gilder/types';
 import { ApiClient } from '../../client';
 import {
   GET_ALL_REALMS,

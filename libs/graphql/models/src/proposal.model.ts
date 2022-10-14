@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import type { Proposal as IProposal } from '@gilderlabs/types';
+import type { Proposal as IProposal } from '@gilder/types';
 
 @ObjectType()
 export class Proposal implements IProposal<string> {

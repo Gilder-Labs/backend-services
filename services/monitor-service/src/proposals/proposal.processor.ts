@@ -1,6 +1,6 @@
 import { PROPOSAL_QUEUE } from '@gilder/constants';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
-import { RpcManagerService } from '@gilderlabs/rpc-manager-module';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
 import {
   BulkProcessUpdates,
   ProcessRealmData,

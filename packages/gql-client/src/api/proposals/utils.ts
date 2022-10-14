@@ -1,4 +1,4 @@
-import { Proposal } from '@gilderlabs/types';
+import { Proposal } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
 
 export const transformProposal = (proposal: Proposal<string>): Proposal => {

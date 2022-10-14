@@ -7,13 +7,13 @@
 '@gilder/notification-subscriptions-module': patch
 '@gilder/proposals-module': patch
 '@gilder/realms-module': patch
-'@gilderlabs/rpc-manager-module': patch
+'@gilder/rpc-manager-module': patch
 '@gilder/token-owners-module': patch
 '@gilder/internal-types': patch
 '@gilder/utilities': patch
-'@gilderlabs/gql-client': patch
-'@gilderlabs/rpc-manager': patch
-'@gilderlabs/types': patch
+'@gilder/gql-client': patch
+'@gilder/rpc-manager': patch
+'@gilder/types': patch
 '@gilder/graphql-service': patch
 '@gilder/monitor-service': patch
 '@gilder/notify-service': patch

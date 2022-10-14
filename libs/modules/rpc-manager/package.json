@@ -1,5 +1,5 @@
 {
-  "name": "@gilderlabs/rpc-manager-module",
+  "name": "@gilder/rpc-manager-module",
   "private": true,
   "version": "1.0.0",
   "description": "",
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gilderlabs/rpc-manager": "workspace:*"
+    "@gilder/rpc-manager": "workspace:*"
   },
   "devDependencies": {
     "@nestjs/common": "^9.1.2",

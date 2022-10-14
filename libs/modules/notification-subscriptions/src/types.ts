@@ -1,4 +1,4 @@
-import type { NotificationType } from '@gilderlabs/types';
+import type { NotificationType } from '@gilder/types';
 
 export interface NotifyData {
   type: NotificationType;

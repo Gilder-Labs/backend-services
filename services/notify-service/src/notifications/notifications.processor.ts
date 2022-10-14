@@ -1,6 +1,6 @@
 import { NOTIFICATION_QUEUE } from '@gilder/constants';
 import type { ProcessNewProposalData } from '@gilder/internal-types';
-import { NotificationTypes } from '@gilderlabs/types';
+import { NotificationTypes } from '@gilder/types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';

@@ -24,7 +24,7 @@
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",
     "@gilder/token-owners-module": "workspace:*",
-    "@gilderlabs/types": "workspace:*",
+    "@gilder/types": "workspace:*",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

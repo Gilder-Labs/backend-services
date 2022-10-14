@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { QueryOptions } from './types';
-import { getGqlString } from './utils';
+import { getGqlString } from '../utils';
 
 type ClientOptions = {
   /** Default: https://api.gilder.xyz/graphql */

@@ -1,6 +1,6 @@
 {
-  "name": "@gilderlabs/gql-client",
-  "version": "1.0.4",
+  "name": "@gilder/gql-client",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -26,8 +26,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gilderlabs/types": "workspace:*",
+    "@gilder/types": "workspace:*",
     "@solana/web3.js": "^1.63.1",
+    "bigint-buffer": "^1.1.5",
     "bn.js": "^5.2.1",
     "cross-fetch": "^3.1.5",
     "graphql": "^16.6.0",

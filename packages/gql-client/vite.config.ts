@@ -22,7 +22,6 @@ export default defineConfig({
             path.resolve(__dirname, 'src'),
             path.dirname(facadeModuleId),
           );
-          console.log(path.join(relativeDir, fileName));
           return path.join(relativeDir, fileName);
         },
       },

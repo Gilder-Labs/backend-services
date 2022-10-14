@@ -6,7 +6,7 @@ import {
   Unique,
   PrimaryColumn,
 } from 'typeorm';
-import type { Proposal as IProposal } from '@gilderlabs/types';
+import type { Proposal as IProposal } from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['proposalPk'])

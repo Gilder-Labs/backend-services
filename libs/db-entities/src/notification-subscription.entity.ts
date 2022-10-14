@@ -8,7 +8,7 @@ import {
 import type {
   NotificationType,
   NotificationSubscription as INotificationSubscription,
-} from '@gilderlabs/types';
+} from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['mobileToken', 'type', 'realmPk'])

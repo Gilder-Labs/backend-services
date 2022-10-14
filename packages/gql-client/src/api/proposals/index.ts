@@ -1,4 +1,4 @@
-import { Proposal } from '@gilderlabs/types';
+import { Proposal } from '@gilder/types';
 import { ApiClient } from '../../client';
 import { GET_ALL_PROPOSALS } from '../../queries/proposals';
 import { getResults } from '../utils';
