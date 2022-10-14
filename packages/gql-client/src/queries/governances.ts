@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import gql from 'graphql-tag';
 
 export const CORE_GOVERNANCE_FIELDS = gql`
   fragment CoreGovernanceFields on Governance {

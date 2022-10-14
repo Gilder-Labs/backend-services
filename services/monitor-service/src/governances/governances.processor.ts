@@ -1,6 +1,6 @@
 import { GOVERNANCE_QUEUE } from '@gilder/constants';
 import { GovernancesService } from '@gilder/governances-module';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { RpcManagerService } from '@gilderlabs/rpc-manager-module';
 import {
   BulkProcessUpdates,
   ProcessRealmData,

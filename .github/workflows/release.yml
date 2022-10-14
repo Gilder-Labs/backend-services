@@ -27,7 +27,7 @@ jobs:
           node-version: 16
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@gilder'
+          scope: '@gilderlabs'
 
       - name: Install dependencies
         run: yarn ci

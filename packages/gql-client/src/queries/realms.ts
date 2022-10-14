@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import { CORE_PROPOSAL_FIELDS } from '../proposals';
+import gql from 'graphql-tag';
+import { CORE_PROPOSAL_FIELDS } from './proposals';
 
 const GET_ALL_REALMS = gql`
   query GetAllRealms {

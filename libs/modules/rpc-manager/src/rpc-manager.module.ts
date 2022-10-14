@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { RpcManagerService } from './rpc-manager.service';
-import type { Endpoint } from '@gilder/rpc-manager';
-import { ConnectionManager } from '@gilder/rpc-manager';
+import type { Endpoint } from '@gilderlabs/rpc-manager';
+import { ConnectionManager } from '@gilderlabs/rpc-manager';
 import { RPC_MANAGER_INSTANCE_TOKEN } from './constants';
 
 @Global()

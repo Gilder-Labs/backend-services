@@ -3,7 +3,7 @@ import type {
   Governance as IGovernance,
   GovernanceConfig as IGovernanceConfig,
   VoteThreshold as IVoteThreshold,
-} from '@gilder/types';
+} from '@gilderlabs/types';
 
 @ObjectType()
 export class VoteThreshold implements IVoteThreshold {

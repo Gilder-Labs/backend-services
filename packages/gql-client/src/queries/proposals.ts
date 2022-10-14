@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import gql from 'graphql-tag';
 
 const CORE_PROPOSAL_FIELDS = gql`
   fragment CoreProposalFields on Proposal {

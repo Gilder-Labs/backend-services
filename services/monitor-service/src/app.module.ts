@@ -9,7 +9,7 @@ import { ProposalsMonitorModule } from './proposals';
 import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
 import { GovernanceModule } from './governances';
-import { RpcManagerModule } from '@gilder/rpc-manager-module';
+import { RpcManagerModule } from '@gilderlabs/rpc-manager-module';
 import {
   DEFAULT_CONNECTION,
   PROPOSAL_CONNECTION,

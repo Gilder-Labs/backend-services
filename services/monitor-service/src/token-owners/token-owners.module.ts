@@ -1,6 +1,6 @@
 import { TOKEN_OWNER_QUEUE } from '@gilder/constants';
 import { TokenOwner } from '@gilder/db-entities';
-import { RpcManagerModule } from '@gilder/rpc-manager-module';
+import { RpcManagerModule } from '@gilderlabs/rpc-manager-module';
 import { TokenOwnersServiceModule } from '@gilder/token-owners-module';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';

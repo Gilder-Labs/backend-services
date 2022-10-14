@@ -1,10 +1,4 @@
-import {
-  ApolloClient,
-  HttpLink,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from '@apollo/client';
-import fetch from 'cross-fetch';
+import axios from 'axios';
 
 type ClientOptions = {
   /** Default: https://api.gilder.xyz/graphql */
@@ -12,13 +6,15 @@ type ClientOptions = {
 };
 
 const createClient = (
-  { uri }: ClientOptions = { uri: 'https://api.gilder.xyz/graphql' },
-): ApolloClient<NormalizedCacheObject> => {
-  return new ApolloClient({
-    cache: new InMemoryCache(),
-    link: new HttpLink({ uri, fetch }),
+  { uri }: ClientOptions = { uri: 'https://api.gilder.xyz' },
+) => {
+  const client = axios.create({
+    baseURL: uri,
   });
+  return client;
 };
 
+type ApiClient = ReturnType<typeof createClient>;
+
 export { createClient };
-export type { ClientOptions };
+export type { ClientOptions, ApiClient };

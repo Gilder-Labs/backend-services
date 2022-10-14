@@ -1,4 +1,4 @@
-import { Realm } from '@gilder/types';
+import { Realm } from '@gilderlabs/types';
 import { PublicKey } from '@solana/web3.js';
 
 export const transformRealm = ({

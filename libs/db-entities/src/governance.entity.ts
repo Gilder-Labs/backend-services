@@ -2,7 +2,7 @@ import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
 import type {
   Governance as IGovernance,
   GovernanceConfig,
-} from '@gilder/types';
+} from '@gilderlabs/types';
 
 @Entity()
 @Unique('constraint_name', ['governancePk'])

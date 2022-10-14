@@ -83,42 +83,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.7.0":
-  version: 3.7.0
-  resolution: "@apollo/client@npm:3.7.0"
-  dependencies:
-    "@graphql-typed-document-node/core": ^3.1.1
-    "@wry/context": ^0.7.0
-    "@wry/equality": ^0.5.0
-    "@wry/trie": ^0.3.0
-    graphql-tag: ^2.12.6
-    hoist-non-react-statics: ^3.3.2
-    optimism: ^0.16.1
-    prop-types: ^15.7.2
-    response-iterator: ^0.2.6
-    symbol-observable: ^4.0.0
-    ts-invariant: ^0.10.3
-    tslib: ^2.3.0
-    zen-observable-ts: ^1.2.5
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-    graphql-ws: ^5.5.5
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    subscriptions-transport-ws: ^0.9.0 || ^0.11.0
-  peerDependenciesMeta:
-    graphql-ws:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    subscriptions-transport-ws:
-      optional: true
-  checksum: e6e2fb6c4f05509a0ec1c632fc8eeae7bd4831dbafd2db243bad1412b3c024476a3efb838e31568888cf6b07bd8833467343edac2309e58d60c7bf50f67d449c
-  languageName: node
-  linkType: hard
-
 "@apollo/protobufjs@npm:1.2.4":
   version: 1.2.4
   resolution: "@apollo/protobufjs@npm:1.2.4"
@@ -618,7 +582,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gilder/db-entities@workspace:libs/db-entities"
   dependencies:
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@solana/web3.js": ^1.63.1
     "@swc/core": ^1.3.3
     bn.js: ^5.2.1
@@ -641,8 +605,8 @@ __metadata:
   resolution: "@gilder/governances-module@workspace:libs/modules/governances"
   dependencies:
     "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
@@ -664,34 +628,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/gql-client@workspace:packages/gql-client":
-  version: 0.0.0-use.local
-  resolution: "@gilder/gql-client@workspace:packages/gql-client"
-  dependencies:
-    "@apollo/client": ^3.7.0
-    "@gilder/types": "workspace:*"
-    "@solana/web3.js": ^1.63.1
-    bn.js: ^5.2.1
-    cross-fetch: ^3.1.5
-    graphql: ^16.6.0
-    react: ^18.2.0
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@solana/web3.js": ^1.63.0
-    bn.js: ^5.2.1
-    react: ^18.2.0
-  peerDependenciesMeta:
-    bn.js:
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@gilder/graphql-models@workspace:*, @gilder/graphql-models@workspace:libs/graphql/models":
   version: 0.0.0-use.local
   resolution: "@gilder/graphql-models@workspace:libs/graphql/models"
   dependencies:
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/common": ^9.0.0
     "@nestjs/core": ^9.0.0
     "@nestjs/graphql": ^10.1.2
@@ -724,7 +665,7 @@ __metadata:
     "@gilder/proposals-module": "workspace:*"
     "@gilder/realms-module": "workspace:*"
     "@gilder/token-owners-module": "workspace:*"
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/axios": ^0.1.0
     "@nestjs/common": ^9.0.0
     "@nestjs/core": ^9.0.0
@@ -758,7 +699,7 @@ __metadata:
   dependencies:
     "@gilder/db-entities": "workspace:*"
     "@gilder/graphql-resolvers": "workspace:*"
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
     "@nestjs/common": ^9.1.2
@@ -822,11 +763,11 @@ __metadata:
     "@gilder/internal-types": "workspace:*"
     "@gilder/proposals-module": "workspace:*"
     "@gilder/realms-module": "workspace:*"
-    "@gilder/rpc-manager": "workspace:*"
-    "@gilder/rpc-manager-module": "workspace:*"
     "@gilder/token-owners-module": "workspace:*"
-    "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
+    "@gilderlabs/rpc-manager": "workspace:*"
+    "@gilderlabs/rpc-manager-module": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/axios": ^0.1.0
     "@nestjs/bull": ^0.6.1
     "@nestjs/cli": ^9.1.3
@@ -879,7 +820,7 @@ __metadata:
   dependencies:
     "@gilder/constants": "workspace:*"
     "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/microservices": ^9.1.2
@@ -910,7 +851,7 @@ __metadata:
     "@gilder/db-entities": "workspace:*"
     "@gilder/internal-types": "workspace:*"
     "@gilder/notification-subscriptions-module": "workspace:*"
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/bull": ^0.6.1
     "@nestjs/cli": ^9.1.3
     "@nestjs/common": ^9.1.2
@@ -953,8 +894,8 @@ __metadata:
   resolution: "@gilder/proposals-module@workspace:libs/modules/proposals"
   dependencies:
     "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:^"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
@@ -983,7 +924,7 @@ __metadata:
   resolution: "@gilder/realms-module@workspace:libs/modules/realms"
   dependencies:
     "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/axios": ^0.1.0
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
@@ -1007,47 +948,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/rpc-manager-module@workspace:*, @gilder/rpc-manager-module@workspace:libs/modules/rpc-manager":
-  version: 0.0.0-use.local
-  resolution: "@gilder/rpc-manager-module@workspace:libs/modules/rpc-manager"
-  dependencies:
-    "@gilder/rpc-manager": "workspace:*"
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  languageName: unknown
-  linkType: soft
-
-"@gilder/rpc-manager@workspace:*, @gilder/rpc-manager@workspace:packages/rpc-manager":
-  version: 0.0.0-use.local
-  resolution: "@gilder/rpc-manager@workspace:packages/rpc-manager"
-  dependencies:
-    "@solana/web3.js": ^1.63.1
-    node-fetch: ^3.2.10
-    throttled-queue: ^2.1.4
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@solana/web3.js": ^1.63.0
-  languageName: unknown
-  linkType: soft
-
 "@gilder/token-owners-module@workspace:*, @gilder/token-owners-module@workspace:libs/modules/token-owners":
   version: 0.0.0-use.local
   resolution: "@gilder/token-owners-module@workspace:libs/modules/token-owners"
   dependencies:
     "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
+    "@gilderlabs/types": "workspace:*"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
@@ -1069,19 +976,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/types@workspace:*, @gilder/types@workspace:packages/types":
-  version: 0.0.0-use.local
-  resolution: "@gilder/types@workspace:packages/types"
-  dependencies:
-    "@solana/web3.js": ^1.63.1
-    bn.js: ^5.2.1
-    typescript: ^4.8.4
-  peerDependencies:
-    "@solana/web3.js": ^1.63.1
-    bn.js: ^5.21.1
-  languageName: unknown
-  linkType: soft
-
 "@gilder/utilities@workspace:*, @gilder/utilities@workspace:^, @gilder/utilities@workspace:libs/utilities":
   version: 0.0.0-use.local
   resolution: "@gilder/utilities@workspace:libs/utilities"
@@ -1093,6 +987,84 @@ __metadata:
   peerDependencies:
     "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
+  languageName: unknown
+  linkType: soft
+
+"@gilderlabs/gql-client@1.0.0, @gilderlabs/gql-client@workspace:packages/gql-client":
+  version: 0.0.0-use.local
+  resolution: "@gilderlabs/gql-client@workspace:packages/gql-client"
+  dependencies:
+    "@gilderlabs/types": "workspace:*"
+    "@solana/web3.js": ^1.63.1
+    axios: ^1.1.2
+    bn.js: ^5.2.1
+    graphql: ^16.6.0
+    graphql-tag: ^2.12.6
+    react: ^18.2.0
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@solana/web3.js": ^1.63.0
+    bn.js: ^5.2.1
+    react: ^18.2.0
+  peerDependenciesMeta:
+    bn.js:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@gilderlabs/rpc-manager-module@workspace:*, @gilderlabs/rpc-manager-module@workspace:libs/modules/rpc-manager":
+  version: 0.0.0-use.local
+  resolution: "@gilderlabs/rpc-manager-module@workspace:libs/modules/rpc-manager"
+  dependencies:
+    "@gilderlabs/rpc-manager": "workspace:*"
+    "@nestjs/common": ^9.1.2
+    "@nestjs/core": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@solana/web3.js": ^1.63.1
+    "@swc/core": ^1.3.0
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  languageName: unknown
+  linkType: soft
+
+"@gilderlabs/rpc-manager@workspace:*, @gilderlabs/rpc-manager@workspace:packages/rpc-manager":
+  version: 0.0.0-use.local
+  resolution: "@gilderlabs/rpc-manager@workspace:packages/rpc-manager"
+  dependencies:
+    "@solana/web3.js": ^1.63.1
+    node-fetch: ^3.2.10
+    throttled-queue: ^2.1.4
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@solana/web3.js": ^1.63.0
+  languageName: unknown
+  linkType: soft
+
+"@gilderlabs/test@workspace:packages/test":
+  version: 0.0.0-use.local
+  resolution: "@gilderlabs/test@workspace:packages/test"
+  dependencies:
+    "@gilderlabs/gql-client": 1.0.0
+  languageName: unknown
+  linkType: soft
+
+"@gilderlabs/types@workspace:*, @gilderlabs/types@workspace:packages/types":
+  version: 0.0.0-use.local
+  resolution: "@gilderlabs/types@workspace:packages/types"
+  dependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.2.1
+    typescript: ^4.8.4
+  peerDependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.21.1
   languageName: unknown
   linkType: soft
 
@@ -1181,15 +1153,6 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
   checksum: 8d1d8a11722e211dc8723cd3fd7a97fa5401ab22146e4240a0f9d45547792476c34814ff914524578beec961db7b0ff23a6ddff8fe059764537e594cff35c906
-  languageName: node
-  linkType: hard
-
-"@graphql-typed-document-node/core@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@graphql-typed-document-node/core@npm:3.1.1"
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 87ff4cee308f1075f4472b80f9f9409667979940f8f701e87f0aa35ce5cf104d94b41258ea8192d05a0893475cd0f086a3929a07663b4fe8d0e805a277f07ed5
   languageName: node
   linkType: hard
 
@@ -2680,42 +2643,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wry/context@npm:^0.6.0":
-  version: 0.6.1
-  resolution: "@wry/context@npm:0.6.1"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 4187863175061a8f54659f124e3e5c202e010b2b65bf886b4de9777ce8a45cf183b6f6d88f1f537002cbcbea52103a2eadc337d494106490def10acaf9522c5d
-  languageName: node
-  linkType: hard
-
-"@wry/context@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@wry/context@npm:0.7.0"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: f4ff78023a0b949122037aae766232b7d2284dc415204d22d9ea6d7969ff8f5f29b18128bc9a40e68dc054c8a12b1bf5868a357fdb50c398c447290c3a5b0496
-  languageName: node
-  linkType: hard
-
-"@wry/equality@npm:^0.5.0":
-  version: 0.5.3
-  resolution: "@wry/equality@npm:0.5.3"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 7ea8ded51462911217183b93cc3ffbb4d18dc02a62d4a79e0d9983463739bf54106aaeb25649bf33168120bd044b61d135018bfcf4fefad8099c13eac9238aa6
-  languageName: node
-  linkType: hard
-
-"@wry/trie@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "@wry/trie@npm:0.3.2"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 151d06b519e1ff1c3acf6ee6846161b1d7d50bbecd4c48e5cd1b05f9e37c30602aff02e88f20105f6e6c54ae4123f9c4eb7715044d7fd927d4ba4ec3e755cd36
-  languageName: node
-  linkType: hard
-
 "@xtuc/ieee754@npm:^1.2.0":
   version: 1.2.0
   resolution: "@xtuc/ieee754@npm:1.2.0"
@@ -3170,6 +3097,17 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "axios@npm:1.1.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 136c25a5031aa2845fdbda3006c36888bbe351b11d1195f1f898a23c5df1430febbdb1ad034a61f27967e83762d5b5a3e851fff8a363cb4badeb883f8ff21461
   languageName: node
   linkType: hard
 
@@ -3938,15 +3876,6 @@ __metadata:
   dependencies:
     node-fetch: 2.6.1
   checksum: fc855278c3bae191a00003eed618a40b48dfadf25ccf707ffdb173add97921f89ef459815bc5cbd20554de713da4f0a2c1258f83e60895efdeab5a7834c6e3b6
-  languageName: node
-  linkType: hard
-
-"cross-fetch@npm:^3.1.5":
-  version: 3.1.5
-  resolution: "cross-fetch@npm:3.1.5"
-  dependencies:
-    node-fetch: 2.6.7
-  checksum: f6b8c6ee3ef993ace6277fd789c71b6acf1b504fd5f5c7128df4ef2f125a429e29cd62dc8c127523f04a5f2fa4771ed80e3f3d9695617f441425045f505cf3bb
   languageName: node
   linkType: hard
 
@@ -5367,7 +5296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.9":
+"follow-redirects@npm:^1.14.9, follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -5818,15 +5747,6 @@ __metadata:
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
-  languageName: node
-  linkType: hard
-
-"hoist-non-react-statics@npm:^3.3.2":
-  version: 3.3.2
-  resolution: "hoist-non-react-statics@npm:3.3.2"
-  dependencies:
-    react-is: ^16.7.0
-  checksum: b1538270429b13901ee586aa44f4cc3ecd8831c061d06cb8322e50ea17b3f5ce4d0e2e66394761e6c8e152cd8c34fb3b4b690116c6ce2bd45b18c746516cb9e8
   languageName: node
   linkType: hard
 
@@ -6650,7 +6570,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.1.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -7167,7 +7087,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2, node-fetch@npm:2.6.7, node-fetch@npm:^2.5.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
+"node-fetch@npm:2, node-fetch@npm:^2.5.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -7381,16 +7301,6 @@ __metadata:
   dependencies:
     mimic-fn: ^2.1.0
   checksum: 2478859ef817fc5d4e9c2f9e5728512ddd1dbc9fb7829ad263765bb6d3b91ce699d6e2332eef6b7dff183c2f490bd3349f1666427eaba4469fba0ac38dfd0d34
-  languageName: node
-  linkType: hard
-
-"optimism@npm:^0.16.1":
-  version: 0.16.1
-  resolution: "optimism@npm:0.16.1"
-  dependencies:
-    "@wry/context": ^0.6.0
-    "@wry/trie": ^0.3.0
-  checksum: 7506a3e5e37b8945059ffacd68039e920ad121aab3eeff27483b7a8b594f6f694f2a3b61a198aeecc43b81753d35c8cb32b7f662d2b5e2d2449fe7068da678e1
   languageName: node
   linkType: hard
 
@@ -7949,17 +7859,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2":
-  version: 15.8.1
-  resolution: "prop-types@npm:15.8.1"
-  dependencies:
-    loose-envify: ^1.4.0
-    object-assign: ^4.1.1
-    react-is: ^16.13.1
-  checksum: c056d3f1c057cb7ff8344c645450e14f088a915d078dcda795041765047fa080d38e5d626560ccaac94a4e16e3aa15f3557c1a9a8d1174530955e992c675e459
-  languageName: node
-  linkType: hard
-
 "proxy-addr@npm:~2.0.7":
   version: 2.0.7
   resolution: "proxy-addr@npm:2.0.7"
@@ -7967,6 +7866,13 @@ __metadata:
     forwarded: 0.2.0
     ipaddr.js: 1.9.1
   checksum: 29c6990ce9364648255454842f06f8c46fcd124d3e6d7c5066df44662de63cdc0bad032e9bf5a3d653ff72141cc7b6019873d685708ac8210c30458ad99f2b74
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 
@@ -8067,13 +7973,6 @@ __metadata:
     iconv-lite: 0.4.24
     unpipe: 1.0.0
   checksum: 5362adff1575d691bb3f75998803a0ffed8c64eabeaa06e54b4ada25a0cd1b2ae7f4f5ec46565d1bec337e08b5ac90c76eaa0758de6f72a633f025d754dec29e
-  languageName: node
-  linkType: hard
-
-"react-is@npm:^16.13.1, react-is@npm:^16.7.0":
-  version: 16.13.1
-  resolution: "react-is@npm:16.13.1"
-  checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
   languageName: node
   linkType: hard
 
@@ -8307,13 +8206,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: 5656f4d0bedcf8eb52685c1abdf8fbe73a1603bb1160a24d716e27a57f6cecbe2432ff9c89c2bd57542c3a7b9d14b1882b73bfe2e9d7849c9a4c0b8b39f02b8b
-  languageName: node
-  linkType: hard
-
-"response-iterator@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "response-iterator@npm:0.2.6"
-  checksum: b0db3c0665a0d698d65512951de9623c086b9c84ce015a76076d4bd0bf733779601d0b41f0931d16ae38132fba29e1ce291c1f8e6550fc32daaa2dc3ab4f338d
   languageName: node
   linkType: hard
 
@@ -9051,7 +8943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"symbol-observable@npm:4.0.0, symbol-observable@npm:^4.0.0":
+"symbol-observable@npm:4.0.0":
   version: 4.0.0
   resolution: "symbol-observable@npm:4.0.0"
   checksum: 212c7edce6186634d671336a88c0e0bbd626c2ab51ed57498dc90698cce541839a261b969c2a1e8dd43762133d47672e8b62e0b1ce9cf4157934ba45fd172ba8
@@ -9232,15 +9124,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-invariant@npm:^0.10.3":
-  version: 0.10.3
-  resolution: "ts-invariant@npm:0.10.3"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: bb07d56fe4aae69d8860e0301dfdee2d375281159054bc24bf1e49e513fb0835bf7f70a11351344d213a79199c5e695f37ebbf5a447188a377ce0cd81d91ddb5
-  languageName: node
-  linkType: hard
-
 "tsconfig-paths-webpack-plugin@npm:4.0.0":
   version: 4.0.0
   resolution: "tsconfig-paths-webpack-plugin@npm:4.0.0"
@@ -9263,7 +9146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.4.0, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
+"tslib@npm:2.4.0, tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
@@ -10145,22 +10028,6 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
-  languageName: node
-  linkType: hard
-
-"zen-observable-ts@npm:^1.2.5":
-  version: 1.2.5
-  resolution: "zen-observable-ts@npm:1.2.5"
-  dependencies:
-    zen-observable: 0.8.15
-  checksum: 3b707b7a0239a9bc40f73ba71b27733a689a957c1f364fabb9fa9cbd7d04b7c2faf0d517bf17004e3ed3f4330ac613e84c0d32313e450ddaa046f3350af44541
-  languageName: node
-  linkType: hard
-
-"zen-observable@npm:0.8.15":
-  version: 0.8.15
-  resolution: "zen-observable@npm:0.8.15"
-  checksum: b7289084bc1fc74a559b7259faa23d3214b14b538a8843d2b001a35e27147833f4107590b1b44bf5bc7f6dfe6f488660d3a3725f268e09b3925b3476153b7821
   languageName: node
   linkType: hard
 

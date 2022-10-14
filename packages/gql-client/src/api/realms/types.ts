@@ -1,4 +1,4 @@
-import { Proposal, Realm } from '@gilder/types';
+import { Proposal, Realm } from '@gilderlabs/types';
 import { PublicKey } from '@solana/web3.js';
 
 export type RealmWithProposals<TKey = PublicKey> = Realm<TKey> & {

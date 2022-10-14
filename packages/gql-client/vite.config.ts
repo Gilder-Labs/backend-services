@@ -9,7 +9,7 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['@solana/web3.js', /react.*/],
+      external: ['@solana/web3.js'],
     },
   },
   plugins: [

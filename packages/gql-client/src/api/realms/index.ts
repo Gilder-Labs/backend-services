@@ -1,4 +1,5 @@
-import type { Realm } from '@gilder/types';
+import type { Realm } from '@gilderlabs/types';
+import { ApiClient } from 'src/client';
 import {
   GET_ALL_REALMS,
   GET_ALL_REALMS_WITH_PROPOSALS,
@@ -6,19 +7,18 @@ import {
   GET_REALM_WITH_PROPOSALS,
 } from '../../queries';
 import { transformProposal } from '../proposals/utils';
-import { ApolloClient } from '../types';
 import { getResults } from '../utils';
 import { GetRealmArgs, RealmWithProposals } from './types';
 import { transformRealm } from './utils';
 
-const getAllRealms = async (client: ApolloClient): Promise<Realm[]> => {
+const getAllRealms = async (client: ApiClient): Promise<Realm[]> => {
   return getResults<Realm<string>[]>({ query: GET_ALL_REALMS }, client).then(
     (data) => data.map<Realm>(transformRealm),
   );
 };
 
 const getAllRealmsWithProposals = async (
-  client: ApolloClient,
+  client: ApiClient,
 ): Promise<RealmWithProposals[]> => {
   return getResults<RealmWithProposals<string>[]>(
     {
@@ -35,9 +35,9 @@ const getAllRealmsWithProposals = async (
 
 const getRealm = async (
   variables: GetRealmArgs,
-  client: ApolloClient,
+  client: ApiClient,
 ): Promise<Realm> => {
-  return getResults<Realm<string>>(
+  return getResults<Realm<string>, GetRealmArgs>(
     { query: GET_REALM, variables },
     client,
   ).then((data) => transformRealm(data));
@@ -45,9 +45,9 @@ const getRealm = async (
 
 const getRealmWithProposals = async (
   variables: GetRealmArgs,
-  client: ApolloClient,
+  client: ApiClient,
 ): Promise<RealmWithProposals> => {
-  return getResults<RealmWithProposals<string>>(
+  return getResults<RealmWithProposals<string>, GetRealmArgs>(
     { query: GET_REALM_WITH_PROPOSALS, variables },
     client,
   ).then((data) => ({

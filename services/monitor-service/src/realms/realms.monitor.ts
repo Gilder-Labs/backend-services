@@ -6,7 +6,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { ProcessRealmData, QueueProcessTypes } from '@gilder/internal-types';
 import { chunkArray } from '@gilder/utilities';
 import { Queue } from 'bull';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { RpcManagerService } from '@gilderlabs/rpc-manager-module';
 import { Connection } from '@solana/web3.js';
 import { DEFAULT_CONNECTION } from 'src/utils/constants';
 

@@ -1,5 +1,5 @@
 import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
-import type { TokenOwner as ITokenOwner } from '@gilder/types';
+import type { TokenOwner as ITokenOwner } from '@gilderlabs/types';
 
 @Entity()
 @Unique('constraint_name', ['ownerPk'])
