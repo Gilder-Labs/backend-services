@@ -1,13 +1,9 @@
-import {
-  GOVERNANCE_QUEUE,
-  PROPOSAL_QUEUE,
-  TOKEN_OWNER_QUEUE,
-} from '@gilder/constants';
+import { GOVERNANCE_QUEUE, TOKEN_OWNER_QUEUE } from '@gilder/constants';
 import { RealmsRPCService, RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { ProcessRealmData, QueueProcessTypes } from '@gilder/types';
+import { ProcessRealmData, QueueProcessTypes } from '@gilder/internal-types';
 import { chunkArray } from '@gilder/utilities';
 import { Queue } from 'bull';
 import { RpcManagerService } from '@gilder/rpc-manager-module';

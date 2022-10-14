@@ -10,6 +10,14 @@
     "src",
     "README.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gilder-labs/backend-services.git",
+    "directory": "packages/gql-client"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "vite build",
     "watch": "vite build -w"

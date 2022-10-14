@@ -14,7 +14,8 @@ import { ProgramAccount, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
-import { ProcessNewProposalData, NotificationTypes } from '@gilder/types';
+import { NotificationTypes } from '@gilder/types';
+import type { ProcessNewProposalData } from '@gilder/internal-types';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
 import { PROPOSAL_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
 

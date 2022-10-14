@@ -1,6 +1,6 @@
 import { PROPOSAL_QUEUE } from '@gilder/constants';
 import { RealmsService } from '@gilder/realms-module';
-import { ProcessRealmData, QueueProcessTypes } from '@gilder/types';
+import { ProcessRealmData, QueueProcessTypes } from '@gilder/internal-types';
 import { chunkArray } from '@gilder/utilities';
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable, Logger } from '@nestjs/common';

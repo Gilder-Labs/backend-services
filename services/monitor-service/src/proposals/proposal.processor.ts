@@ -5,7 +5,7 @@ import {
   BulkProcessUpdates,
   ProcessRealmData,
   QueueProcessTypes,
-} from '@gilder/types';
+} from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
