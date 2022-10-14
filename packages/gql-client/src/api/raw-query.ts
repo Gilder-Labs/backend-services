@@ -1,12 +1,12 @@
 import { ApiClient } from 'src/client';
-import { getGqlString, QueryOptions } from './utils';
+import type { QueryOptions } from '../types';
 
-const getRawResults = <TResult extends object>(
-  { query, variables }: Pick<QueryOptions, 'query' | 'variables'>,
+const getRawResults = <TVars = undefined, TResult = any>(
+  { query, variables }: QueryOptions<TVars>,
   client: ApiClient,
 ) => {
-  return client.post<TResult>('/graphql', {
-    query: getGqlString(query),
+  return client<TVars, TResult>({
+    query,
     variables,
   });
 };
