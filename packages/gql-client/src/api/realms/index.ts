@@ -1,5 +1,5 @@
 import type { Realm } from '@gilderlabs/types';
-import { ApiClient } from 'src/client';
+import { ApiClient } from '../../client';
 import {
   GET_ALL_REALMS,
   GET_ALL_REALMS_WITH_PROPOSALS,
