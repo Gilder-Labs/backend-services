@@ -43,7 +43,7 @@ export default defineConfig({
         lazy: false,
         noInterop: true,
       },
-      sourceMaps: 'inline',
+      sourceMaps: true,
     }),
     {
       name: 'vite-plugin-dts',
