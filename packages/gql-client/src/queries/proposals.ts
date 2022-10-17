@@ -8,7 +8,7 @@ const CORE_PROPOSAL_FIELDS = gql`
   }
 `;
 
-export const GET_ALL_PROPOSALS = gql`
+const GET_ALL_PROPOSALS = gql`
   ${CORE_PROPOSAL_FIELDS}
   query GetProposals {
     proposals {
@@ -17,4 +17,4 @@ export const GET_ALL_PROPOSALS = gql`
   }
 `;
 
-export { CORE_PROPOSAL_FIELDS, CORE_PROPOSAL_FIELDS };
+export { CORE_PROPOSAL_FIELDS, GET_ALL_PROPOSALS };
