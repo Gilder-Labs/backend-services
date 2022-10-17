@@ -27,8 +27,8 @@ import { ProposalListenerService } from './proposal.listener';
   controllers: [ProposalController],
   providers: [
     ProposalListenerService,
-    ProposalsMonitorService,
-    ProposalProcessor,
+//     ProposalsMonitorService,
+//     ProposalProcessor,
   ],
 })
 export class ProposalsMonitorModule {}

@@ -1,2 +1,3 @@
+export const RPC_MANAGER_MODULE_OPTIONS = 'RpcManagerModuleOptions';
 export const RPC_MANAGER_INSTANCE_TOKEN = 'RPC_MANAGER_INSTANCE_TOKEN';
 export const RPC_MANAGER_MODULE_ID = 'RPC_MODULE_ID';

@@ -94,7 +94,8 @@ class ConnectionManager {
       fetch: async (_, init) => {
         const limiter = getLimiter();
         const rpcEndpoint = limiter.rpcEndpoint;
-        return await throttle(async () => await fetch(rpcEndpoint, init));
+        const res = await throttle(async () => await fetch(rpcEndpoint, init));
+        return res;
       },
     });
   }

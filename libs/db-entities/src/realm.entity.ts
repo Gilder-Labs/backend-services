@@ -1,9 +1,9 @@
-import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { Realm as IRealm } from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['realmPk'])
-export class Realm extends BaseEntity implements IRealm<string> {
+export class Realm implements IRealm<string> {
   @PrimaryColumn('text')
   realmPk: string;
 

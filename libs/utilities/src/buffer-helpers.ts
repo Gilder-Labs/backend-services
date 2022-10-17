@@ -2,16 +2,26 @@ import {
   GovernanceAccountParser,
   ProgramAccount,
   Proposal,
+  ProposalState,
   Realm,
 } from '@solana/spl-governance';
 import { AccountInfo, PublicKey } from '@solana/web3.js';
+
+/*
+ * I found that there were realms with names like '\u0000' that I want to filter out
+ */
+const realmRegex = /\0/g;
 
 export const tryGetRealmData = (
   pubkey: PublicKey,
   info: AccountInfo<Buffer>,
 ): ProgramAccount<Realm> | null => {
   try {
-    return GovernanceAccountParser(Realm)(pubkey, info);
+    const realm = GovernanceAccountParser(Realm)(pubkey, info);
+    if (realm?.account.name?.replace(realmRegex, '')) {
+      return realm;
+    }
+    return null;
   } catch {
     return null;
   }
@@ -22,7 +32,11 @@ export const tryGetProposalData = (
   info: AccountInfo<Buffer>,
 ): ProgramAccount<Proposal> | null => {
   try {
-    return GovernanceAccountParser(Proposal)(pubkey, info);
+    const proposal = GovernanceAccountParser(Proposal)(pubkey, info);
+    if (proposal?.account.name && proposal?.account.state in ProposalState) {
+      return proposal;
+    }
+    return null;
   } catch {
     return null;
   }

@@ -1,12 +1,9 @@
-import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { TokenOwner as ITokenOwner } from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['ownerPk'])
-export class TokenOwner
-  extends BaseEntity
-  implements ITokenOwner<string, string>
-{
+export class TokenOwner implements ITokenOwner<string, string> {
   @PrimaryColumn('text')
   ownerPk: string;
 

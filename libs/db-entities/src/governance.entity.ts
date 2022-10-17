@@ -1,4 +1,4 @@
-import { Entity, Column, Unique, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type {
   Governance as IGovernance,
   GovernanceConfig,
@@ -6,10 +6,7 @@ import type {
 
 @Entity()
 @Unique('constraint_name', ['governancePk'])
-export class Governance
-  extends BaseEntity
-  implements IGovernance<string, string>
-{
+export class Governance implements IGovernance<string, string> {
   @PrimaryColumn('text')
   governancePk: string;
 

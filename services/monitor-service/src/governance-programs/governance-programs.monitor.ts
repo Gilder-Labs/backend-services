@@ -13,11 +13,6 @@ import { ProposalState } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
 
-/*
- * I found that there were realms with names like '\u0000' that I want to filter out
- */
-const realmRegex = /\0/g;
-
 @Injectable()
 export class GovernanceProgramsMonitorService
   implements OnModuleInit, OnModuleDestroy
@@ -47,38 +42,34 @@ export class GovernanceProgramsMonitorService
         try {
           const { accountId, accountInfo } = keyedAccountInfo;
 
-          const [proposal, realm] = await Promise.all([
-            tryGetProposalData(accountId, accountInfo),
+          const [realm] = await Promise.all([
+            // tryGetProposalData(accountId, accountInfo),
             tryGetRealmData(accountId, accountInfo),
           ]);
 
-          if (
-            proposal?.account.name &&
-            proposal?.account.state in ProposalState
-          ) {
-            const governance = await this.governanceService.getGovernanceByPk(
-              proposal.account.governance.toBase58(),
-            );
+          // if (proposal) {
+          //   const governance = await this.governanceService.getGovernanceByPk(
+          //     proposal.account.governance.toBase58(),
+          //   );
 
-            if (governance) {
-              this.logger.log(
-                `Adding/Updating Proposal: ${JSON.stringify(proposal)}`,
-              );
-              await this.proposalsService.addOrUpdateProposals(
-                {
-                  realmPk: governance.realmPk,
-                  programPk: programPk.toBase58(),
-                },
-                [proposal],
-                this.connection,
-              );
-            }
-          }
+          //   if (governance) {
+          //     this.logger.log(
+          //       `Adding/Updating Proposal: ${JSON.stringify(proposal)}`,
+          //     );
+          //     await this.proposalsService.addOrUpdateProposals(
+          //       {
+          //         realmPk: governance.realmPk,
+          //         programPk: programPk.toBase58(),
+          //       },
+          //       [proposal],
+          //       this.connection,
+          //     );
+          //   }
+          // }
 
-          if (realm?.account.name?.replace(realmRegex, '')) {
+          if (realm) {
             this.logger.log(`Adding/Updating Realm: ${JSON.stringify(realm)}`);
-            const foo = await this.realmsService.addOrUpdateRealms([realm]);
-            this.logger.log(`Foo: ${JSON.stringify(foo)}`);
+            await this.realmsService.addOrUpdateRealms([realm]);
           }
         } catch (e) {
           this.logger.error(`Something went wrong. Error: ${e}`);

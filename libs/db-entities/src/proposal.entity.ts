@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  UpdateDateColumn,
-  CreateDateColumn,
-  Unique,
-  PrimaryColumn,
-} from 'typeorm';
+import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { Proposal as IProposal } from '@gilder/types';
 
 @Entity()
@@ -55,17 +48,4 @@ export class Proposal implements IProposal<string> {
 
   @Column({ type: 'timestamp', nullable: true })
   executingAt?: Date;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  created_at: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updated_at: Date;
 }
