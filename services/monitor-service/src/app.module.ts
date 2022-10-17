@@ -35,6 +35,14 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
           rps: 20,
           uri: 'https://ssc-dao.genesysgo.net/',
         },
+        {
+          rps: 10,
+          uri: 'https://api.mainnet-beta.solana.com',
+        },
+        {
+          rps: 10,
+          uri: 'https://solana-api.projectserum.com',
+        },
       ],
       [PROPOSAL_CONNECTION]: [
         {
