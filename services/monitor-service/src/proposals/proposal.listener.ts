@@ -21,7 +21,7 @@ import { Queue } from 'bull';
 import { NotificationTypes } from '@gilder/types';
 import type { ProcessNewProposalData } from '@gilder/internal-types';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
-import { PROPOSAL_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
+import { DEFAULT_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
 import { tryGetProposalData, tryGetRealmData } from '@gilder/utilities';
 
 @Injectable()
@@ -53,7 +53,7 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     private readonly proposalRpcService: ProposalRPCService,
     rpcManagerService: RpcManagerService,
   ) {
-    this.connection = rpcManagerService.getConnection(PROPOSAL_CONNECTION);
+    this.connection = rpcManagerService.getConnection(DEFAULT_CONNECTION);
     this.wsConnection = rpcManagerService.getConnection(WS_CONNECTION);
   }
 
