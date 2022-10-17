@@ -1,5 +1,11 @@
 # @gilder/rpc-manager
 
+## 1.0.3
+
+### Patch Changes
+
+- [`a490855`](https://github.com/Gilder-Labs/backend-services/commit/a490855b06426457e52d127c128560b145580079) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding a forRootAsync static method for RPC Manager and removing the updated and created on fields for solana entities
+
 ## 1.0.2
 
 ### Patch Changes
