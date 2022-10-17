@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const CORE_GOVERNANCE_FIELDS = gql`
+const CORE_GOVERNANCE_FIELDS = gql`
   fragment CoreGovernanceFields on Governance {
     accountType
     governancePk
@@ -36,7 +36,7 @@ export const CORE_GOVERNANCE_FIELDS = gql`
   }
 `;
 
-export const GET_ALL_GOVERNANCES = gql`
+const GET_ALL_GOVERNANCES = gql`
   query GetAllGovernances {
     ${CORE_GOVERNANCE_FIELDS}
     governances {
@@ -44,3 +44,5 @@ export const GET_ALL_GOVERNANCES = gql`
     }
   }
 `;
+
+export { CORE_GOVERNANCE_FIELDS, GET_ALL_GOVERNANCES };

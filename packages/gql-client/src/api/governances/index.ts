@@ -1,4 +1,5 @@
 import { Governance } from '@gilder/types';
+import { getGovernance } from '@solana/spl-governance';
 import { ApiClient } from '../../client';
 import { GET_ALL_GOVERNANCES } from '../../queries/governances';
 import { getResults } from '../utils';

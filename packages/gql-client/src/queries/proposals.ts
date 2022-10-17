@@ -17,4 +17,4 @@ export const GET_ALL_PROPOSALS = gql`
   }
 `;
 
-export { CORE_PROPOSAL_FIELDS };
+export { CORE_PROPOSAL_FIELDS, CORE_PROPOSAL_FIELDS };
