@@ -1,5 +1,12 @@
 # @gilder/governances-module
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`a490855`](https://github.com/Gilder-Labs/backend-services/commit/a490855b06426457e52d127c128560b145580079)]:
+  - @gilder/utilities@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
