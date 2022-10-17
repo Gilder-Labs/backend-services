@@ -8,6 +8,7 @@ import { ProposalsModule } from '@gilder/proposals-module';
 import { BullModule } from '@nestjs/bull';
 import { NOTIFICATION_QUEUE, PROPOSAL_QUEUE } from '@gilder/constants';
 import { ProposalProcessor } from './proposal.processor';
+import { ProposalListenerService } from './proposal.listener';
 
 @Module({
   imports: [
@@ -24,6 +25,10 @@ import { ProposalProcessor } from './proposal.processor';
     ProposalsModule,
   ],
   controllers: [ProposalController],
-  providers: [ProposalsMonitorService, ProposalProcessor],
+  providers: [
+    ProposalListenerService,
+    ProposalsMonitorService,
+    ProposalProcessor,
+  ],
 })
 export class ProposalsMonitorModule {}

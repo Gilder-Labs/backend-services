@@ -1,9 +1,9 @@
 {
   "name": "@gilder/monitor-service",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "author": "",
-  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -52,6 +52,7 @@
     "typeorm": "^0.3.10"
   },
   "devDependencies": {
+    "@gilder/internal-types": "workspace:*",
     "@gilder/types": "workspace:*",
     "@nestjs/cli": "^9.1.3",
     "@nestjs/schematics": "^9.0.3",

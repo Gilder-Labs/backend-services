@@ -9,7 +9,7 @@ export class RpcManagerService {
     private readonly manager: ConnectionManager,
   ) {}
 
-  get connection() {
-    return this.manager.connection;
+  public getConnection(key: string) {
+    return this.manager.getConnnection(key);
   }
 }

@@ -5,21 +5,25 @@ import {
   BulkProcessUpdates,
   ProcessRealmData,
   QueueProcessTypes,
-} from '@gilder/types';
+} from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { getAllGovernances } from '@solana/spl-governance';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
+import { DEFAULT_CONNECTION } from 'src/utils/constants';
 
 @Processor(GOVERNANCE_QUEUE)
 export class GovernanceProcessor {
   private readonly logger = new Logger(GovernanceProcessor.name);
+  private readonly connection: Connection;
 
   constructor(
     private readonly rpcManager: RpcManagerService,
     private readonly governanceService: GovernancesService,
-  ) {}
+  ) {
+    this.connection = rpcManager.getConnection(DEFAULT_CONNECTION);
+  }
 
   @Process(QueueProcessTypes.UPDATE_PROCESS)
   async processRealmGovernances(
@@ -35,7 +39,7 @@ export class GovernanceProcessor {
 
         try {
           const governances = await getAllGovernances(
-            this.rpcManager.connection,
+            this.connection,
             realm.programPk,
             realm.realmPk,
           );

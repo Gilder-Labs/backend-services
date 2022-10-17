@@ -2,9 +2,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   Unique,
+  BaseEntity,
 } from 'typeorm';
 import type {
   NotificationType,
@@ -13,7 +12,10 @@ import type {
 
 @Entity()
 @Unique('constraint_name', ['mobileToken', 'type', 'realmPk'])
-export class NotificationSubscription implements INotificationSubscription {
+export class NotificationSubscription
+  extends BaseEntity
+  implements INotificationSubscription
+{
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -30,17 +32,4 @@ export class NotificationSubscription implements INotificationSubscription {
     default: true,
   })
   isActive: boolean;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  created_at: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updated_at: Date;
 }

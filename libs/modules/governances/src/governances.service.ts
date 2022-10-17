@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertResult, Repository } from 'typeorm';
-import { Governance } from '@gilder/db-entities';
 import {
   ProgramAccount,
   Governance as SolanaGovernance,
 } from '@solana/spl-governance';
-import BN from 'bn.js';
-import { PublicKey } from '@solana/web3.js';
+import { Governance } from '@gilder/db-entities';
 
 @Injectable()
 export class GovernancesService {
@@ -16,11 +14,15 @@ export class GovernancesService {
     private readonly governanceRepo: Repository<Governance>,
   ) {}
 
-  public async getAllGovernances() {
+  public getGovernanceByPk(governancePk: string) {
+    return this.governanceRepo.findOne({ where: { governancePk } });
+  }
+
+  public getAllGovernances() {
     return this.governanceRepo.find();
   }
 
-  public async getAllGovernancesByRealm(realmPk: string) {
+  public getAllGovernancesByRealm(realmPk: string) {
     return this.governanceRepo.find({
       where: {
         realmPk: realmPk,
@@ -36,7 +38,7 @@ export class GovernancesService {
       const { account, pubkey } = gov;
       const { config } = account;
       return {
-        governancePk: pubkey,
+        governancePk: pubkey.toBase58(),
         accountType: account.accountType,
         config: {
           communityVetoVoteThreshold: config.communityVetoVoteThreshold,
@@ -47,14 +49,14 @@ export class GovernancesService {
           councilVoteTipping: config.councilVoteTipping,
           maxVotingTime: config.maxVotingTime,
           minCommunityTokensToCreateProposal:
-            config.minCommunityTokensToCreateProposal as BN,
+            config.minCommunityTokensToCreateProposal.toString(),
           minCouncilTokensToCreateProposal:
-            config.minCouncilTokensToCreateProposal as BN,
+            config.minCouncilTokensToCreateProposal.toString(),
           minInstructionHoldUpTime: config.minInstructionHoldUpTime,
         },
-        governedAccountPk: account.governedAccount,
+        governedAccountPk: account.governedAccount.toBase58(),
         proposalCount: account.proposalCount,
-        realmPk: new PublicKey(realmPk),
+        realmPk: realmPk,
         votingProposalCount: account.votingProposalCount,
         isAccountGovernance: account.isAccountGovernance(),
         isMintGovernance: account.isMintGovernance(),

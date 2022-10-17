@@ -5,18 +5,23 @@ import {
   BulkProcessUpdates,
   ProcessRealmData,
   QueueProcessTypes,
-} from '@gilder/types';
+} from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
+import { PROPOSAL_CONNECTION } from 'src/utils/constants';
 
 @Processor(PROPOSAL_QUEUE)
 export class ProposalProcessor {
+  private readonly connection: Connection;
+
   constructor(
     private readonly proposalRpcService: ProposalRPCService,
     private readonly proposalService: ProposalsService,
-    private readonly rpcManager: RpcManagerService,
-  ) {}
+    rpcManager: RpcManagerService,
+  ) {
+    this.connection = rpcManager.getConnection(PROPOSAL_CONNECTION);
+  }
 
   @Process(QueueProcessTypes.UPDATE_PROCESS)
   async processRealmProposals(job: Job<BulkProcessUpdates<ProcessRealmData>>) {
@@ -24,19 +29,19 @@ export class ProposalProcessor {
     await Promise.all(
       entities.map(async ({ realmPk, programPk }) => {
         const realm = {
-          realmPk: new PublicKey(realmPk),
-          programPk: new PublicKey(programPk),
+          realmPk,
+          programPk,
         };
         const proposals =
           await this.proposalRpcService.getProposalsFromSolanaByRealm(
             realm,
-            this.rpcManager.connection,
+            this.connection,
           );
 
         await this.proposalService.addOrUpdateProposals(
           realm,
           proposals,
-          this.rpcManager.connection,
+          this.connection,
         );
       }),
     );

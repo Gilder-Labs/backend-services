@@ -1,1 +1,1 @@
-# Database Entities
+# SPL-Gov Types

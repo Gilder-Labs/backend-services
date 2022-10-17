@@ -5,21 +5,25 @@ import {
   BulkProcessUpdates,
   ProcessRealmData,
   QueueProcessTypes,
-} from '@gilder/types';
+} from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { getAllTokenOwnerRecords } from '@solana/spl-governance';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
+import { DEFAULT_CONNECTION } from 'src/utils/constants';
 
 @Processor(TOKEN_OWNER_QUEUE)
 export class TokenOwnersProcessor {
   private readonly logger = new Logger(TokenOwnersProcessor.name);
+  private readonly connection: Connection;
 
   constructor(
-    private readonly rpcManager: RpcManagerService,
+    rpcManager: RpcManagerService,
     private readonly tokenOwnerService: TokenOwnersService,
-  ) {}
+  ) {
+    this.connection = rpcManager.getConnection(DEFAULT_CONNECTION);
+  }
 
   @Process(QueueProcessTypes.UPDATE_PROCESS)
   async processRealmTokenOwners(
@@ -30,7 +34,7 @@ export class TokenOwnersProcessor {
       entities.map(async ({ realmPk, programPk }) => {
         try {
           const tokenOwners = await getAllTokenOwnerRecords(
-            this.rpcManager.connection,
+            this.connection,
             new PublicKey(programPk),
             new PublicKey(realmPk),
           );

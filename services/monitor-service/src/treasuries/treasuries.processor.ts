@@ -3,7 +3,7 @@ import {
   BulkProcessUpdates,
   ProcessRealmData,
   QueueProcessTypes,
-} from '@gilder/types';
+} from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';

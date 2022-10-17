@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import swc from 'rollup-plugin-swc';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 

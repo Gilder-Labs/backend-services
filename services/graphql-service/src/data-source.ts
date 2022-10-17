@@ -13,7 +13,7 @@ export const getDataConfig = (
     password: configService.getOrThrow('DB_PASSWORD'),
     database: configService.getOrThrow('DB_NAME'),
     port: configService.getOrThrow<number>('DB_PORT'),
-    ssl: configService.getOrThrow<boolean>('USE_SSL')
+    ssl: configService.get<boolean>('USE_SSL')
       ? {
           rejectUnauthorized: false,
         }

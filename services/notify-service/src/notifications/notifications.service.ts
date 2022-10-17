@@ -2,14 +2,14 @@ import { NotificationSubscription } from '@gilder/db-entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import type {
-  ExpoNotification,
-  ProcessNewProposalData,
-  NotificationType,
-  NotifyProposalData,
-} from '@gilder/types';
+import type { NotificationType } from '@gilder/types';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import type {
+  ExpoNotification,
+  NotifyProposalData,
+  ProcessNewProposalData,
+} from '@gilder/internal-types';
 
 @Injectable()
 export class NotificationsService {

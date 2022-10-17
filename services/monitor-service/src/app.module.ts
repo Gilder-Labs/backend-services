@@ -10,15 +10,39 @@ import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
 import { GovernanceModule } from './governances';
 import { RpcManagerModule } from '@gilder/rpc-manager-module';
+import {
+  DEFAULT_CONNECTION,
+  PROPOSAL_CONNECTION,
+  WS_CONNECTION,
+} from './utils/constants';
+import { GovernanceProgramsMonitorModule } from './governance-programs';
 
 @Module({
   imports: [
-    RpcManagerModule.forRoot([
-      {
-        rps: 25,
-        uri: 'https://ssc-dao.genesysgo.net/',
-      },
-    ]),
+    RpcManagerModule.forRoot({
+      [DEFAULT_CONNECTION]: [
+        {
+          rps: 10,
+          uri: 'https://solana-api.projectserum.com',
+        },
+        {
+          rps: 10,
+          uri: 'https://api.mainnet-beta.solana.com',
+        },
+      ],
+      [WS_CONNECTION]: [
+        {
+          rps: 20,
+          uri: 'https://ssc-dao.genesysgo.net/',
+        },
+      ],
+      [PROPOSAL_CONNECTION]: [
+        {
+          rps: 10,
+          uri: 'https://solana-api.projectserum.com',
+        },
+      ],
+    }),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -58,6 +82,7 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
       }),
       inject: [ConfigService],
     }),
+    GovernanceProgramsMonitorModule,
     // RealmsMonitorModule,
     ProposalsMonitorModule,
     // TokenOwnersModule,

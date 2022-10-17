@@ -37,44 +37,64 @@ class Limiter {
   }
 }
 
+type ThrottleType = <Return = unknown>(
+  fn: () => Return | Promise<Return>,
+) => Promise<Return>;
+
+type ConnectionState = {
+  connection: Connection;
+  limiters: Limiter[];
+  currentIndex: number;
+};
+
 class ConnectionManager {
-  private _currentIndex = 0;
-  private _limiters: Limiter[];
-  private _connection: Connection;
-  private _throttle: <Return = unknown>(
-    fn: () => Return | Promise<Return>,
-  ) => Promise<Return>;
+  private _connections: Map<string, ConnectionState> = new Map();
 
-  constructor(endpoints: Endpoint[]) {
-    this._limiters = endpoints.map((e) => new Limiter(e));
-    this._connection = this.createConnection(endpoints[0]);
-    this._throttle = throttledQueue(
-      endpoints.reduce((prev, cur) => prev + cur.rps, 0),
-      1000,
-      true,
-    );
-  }
+  constructor(endpoints: Record<string, Endpoint[]>) {
+    for (const key of Object.keys(endpoints)) {
+      const limiters = endpoints[key].map((e) => new Limiter(e));
 
-  get connection() {
-    return this._connection;
-  }
+      const getLimiter = () => {
+        const state = this._connections.get(key)!;
+        let index = state.currentIndex;
+        const limiter = limiters[index];
+        if (limiter.maxedRps) {
+          index = index + 1 >= limiters.length ? 0 : index + 1;
+        }
+        this._connections.set(key, { ...state, currentIndex: index });
+        return limiters[index];
+      };
 
-  private get _limiter() {
-    let index = this._currentIndex;
-    const limiter = this._limiters[index];
-    if (limiter.maxedRps) {
-      index = index + 1 >= this._limiters.length ? 0 : index + 1;
-      this._currentIndex = index;
+      const maxRps = endpoints[key].reduce((prev, cur) => prev + cur.rps, 0);
+      const throttle = throttledQueue(maxRps, 1000, true);
+      const connection = this.createConnection(
+        endpoints[key][0],
+        throttle,
+        getLimiter,
+      );
+
+      this._connections.set(key, { connection, currentIndex: 0, limiters });
     }
-    return this._limiters[index];
   }
 
-  private createConnection(endpoint: Endpoint) {
+  public getConnnection(key: string): Connection {
+    if (!this._connections.has(key)) {
+      throw Error(`No key with name '${key}' found`);
+    }
+    return this._connections.get(key)!.connection;
+  }
+
+  private createConnection(
+    endpoint: Endpoint,
+    throttle: ThrottleType,
+    getLimiter: () => Limiter,
+  ) {
     return new Connection(endpoint.uri, {
       commitment: 'confirmed',
       fetch: async (_, init) => {
-        const rpcEndpoint = this._limiter.rpcEndpoint;
-        return await this._throttle(() => fetch(rpcEndpoint, init));
+        const limiter = getLimiter();
+        const rpcEndpoint = limiter.rpcEndpoint;
+        return await throttle(async () => await fetch(rpcEndpoint, init));
       },
     });
   }

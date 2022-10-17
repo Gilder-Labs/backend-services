@@ -1,5 +1,5 @@
 import { VOTES_QUEUE } from '@gilder/constants';
-import { BulkProcessUpdates, QueueProcessTypes } from '@gilder/types';
+import { BulkProcessUpdates, QueueProcessTypes } from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
