@@ -9,7 +9,7 @@ import {
 import { Processor, Process } from '@nestjs/bull';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Job } from 'bull';
-import { PROPOSAL_CONNECTION } from 'src/utils/constants';
+import { DEFAULT_CONNECTION } from 'src/utils/constants';
 
 @Processor(PROPOSAL_QUEUE)
 export class ProposalProcessor {
@@ -20,7 +20,7 @@ export class ProposalProcessor {
     private readonly proposalService: ProposalsService,
     rpcManager: RpcManagerService,
   ) {
-    this.connection = rpcManager.getConnection(PROPOSAL_CONNECTION);
+    this.connection = rpcManager.getConnection(DEFAULT_CONNECTION);
   }
 
   @Process(QueueProcessTypes.UPDATE_PROCESS)

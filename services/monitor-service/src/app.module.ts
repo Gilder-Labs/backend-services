@@ -10,11 +10,7 @@ import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
 import { GovernanceModule } from './governances';
 import { RpcManagerModule } from '@gilder/rpc-manager-module';
-import {
-  DEFAULT_CONNECTION,
-  PROPOSAL_CONNECTION,
-  WS_CONNECTION,
-} from './utils/constants';
+import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 import { GovernanceProgramsMonitorModule } from './governance-programs';
 
 @Module({
@@ -51,12 +47,6 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
             rps: 25,
             uri: x,
           })),
-          [PROPOSAL_CONNECTION]: [
-            {
-              rps: 25,
-              uri: 'https://try-rpc.mainnet.solana.blockdaemon.tech',
-            },
-          ],
         };
       },
     }),
