@@ -28,7 +28,7 @@ jobs:
           scope: '@gilder'
 
       - name: Install dependencies
-        run: yarn ci
+        run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn build:libs
