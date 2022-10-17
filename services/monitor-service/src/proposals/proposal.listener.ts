@@ -1,5 +1,9 @@
 import { NOTIFICATION_QUEUE } from '@gilder/constants';
-import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import {
+  NotificationSubscription,
+  Realm,
+  Proposal as DbProposal,
+} from '@gilder/db-entities';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';
@@ -10,7 +14,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProgramAccount, Proposal } from '@solana/spl-governance';
+import { getProposal, getRealm, ProposalState } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
@@ -18,11 +22,7 @@ import { NotificationTypes } from '@gilder/types';
 import type { ProcessNewProposalData } from '@gilder/internal-types';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
 import { PROPOSAL_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
-
-interface ProposalWithRealm {
-  proposal: ProgramAccount<Proposal>;
-  realm: Realm;
-}
+import { tryGetProposalData, tryGetRealmData } from '@gilder/utilities';
 
 @Injectable()
 export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
@@ -30,8 +30,16 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
 
   private uniqueRealmKeys: Set<string> = new Set();
 
-  private realmSubscriptionIds: number[] = [];
-  private proposalSubscriptionIds: number[] = [];
+  private get realmSubscriptionIds() {
+    return this._realmSubscriptionIds;
+  }
+
+  private get proposalSubscriptionIds() {
+    return this._proposalSubscriptionIds;
+  }
+
+  private _realmSubscriptionIds: number[] = [];
+  private _proposalSubscriptionIds: number[] = [];
   private readonly connection: Connection;
   private readonly wsConnection: Connection;
 
@@ -57,20 +65,6 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     await this.cleanUpSubscriptions();
   }
 
-  public async tryAddNewRealmListener(
-    subscription: NotificationSubscription,
-  ): Promise<void> {
-    if (this.uniqueRealmKeys.has(subscription.realmPk)) {
-      return;
-    }
-
-    this.uniqueRealmKeys.add(subscription.realmPk);
-    const realm = await this.realmsService.getRealmByRealmPubKey(
-      subscription.realmPk,
-    );
-    await this.addRealmListener(realm);
-  }
-
   public async listenForProposals() {
     await this.cleanUpSubscriptions();
 
@@ -92,68 +86,85 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
+  public async tryAddNewRealmListener(
+    subscription: NotificationSubscription,
+  ): Promise<void> {
+    if (this.uniqueRealmKeys.has(subscription.realmPk)) {
+      return;
+    }
+
+    this.uniqueRealmKeys.add(subscription.realmPk);
+    const realm = await this.realmsService.getRealmByRealmPubKey(
+      subscription.realmPk,
+    );
+    await this.addRealmListener(realm);
+  }
+
   private async addRealmListener(realm: Realm) {
-    const proposals =
-      await this.proposalRpcService.getProposalsFromSolanaByRealm(
-        realm,
-        this.connection,
-      );
+    const proposals = await this.proposalsService.getAllProposalsInRealm(
+      realm.realmPk,
+    );
+
+    const realmProposalSubscriptions = (
+      await Promise.all(
+        proposals
+          .filter((x) => x.state < 3)
+          .map((proposal) => this.listenForProposalChanges(proposal)),
+      )
+    ).filter((x) => !!x);
 
     this.logger.log(
-      `Found ${proposals.length} proposals associated to Realm: ${realm.name}`,
-    );
-    await this.proposalsService.addOrUpdateProposals(
-      realm,
-      proposals,
-      this.connection,
+      `Found ${realmProposalSubscriptions.length} active proposals associated to Realm: ${realm.name}`,
     );
 
-    const activeProposals = proposals
-      .filter((p) => !p.account.isVoteFinalized())
-      .map<ProposalWithRealm>((x) => ({ proposal: x, realm }));
-
-    this.logger.log(
-      `${activeProposals.length} proposals currently active for Realm: ${realm.name}`,
-    );
-
-    const proposalSubscriptionIds = activeProposals.map((proposal) =>
-      this.listenForProposalChanges(proposal),
-    );
-
-    this.realmSubscriptionIds.push(this.listenForNewProposals(realm));
-    this.proposalSubscriptionIds = this.proposalSubscriptionIds.concat(
-      proposalSubscriptionIds,
+    this._realmSubscriptionIds.push(await this.listenForNewProposals(realm));
+    this._proposalSubscriptionIds = this.proposalSubscriptionIds.concat(
+      ...realmProposalSubscriptions,
     );
   }
 
-  private listenForProposalChanges({ proposal, realm }: ProposalWithRealm) {
-    let currentState = proposal.account.state;
-    const subscriptionId = this.wsConnection.onAccountChange(
-      new PublicKey(proposal.pubkey),
-      async () => {
-        this.logger.log(
-          `Detected change for proposal: ${proposal.account.name}`,
-        );
+  private async listenForProposalChanges({
+    realmPk,
+    proposalPk,
+    programPk,
+  }: Pick<DbProposal, 'realmPk' | 'proposalPk' | 'programPk'>): Promise<
+    number | null
+  > {
+    const proposalPubKey = new PublicKey(proposalPk);
+    const solanaProposal = await getProposal(this.connection, proposalPubKey);
 
-        const updatedProposal =
-          await this.proposalRpcService.getProposalFromSolana(
-            proposal.pubkey.toBase58(),
-            this.connection,
-          );
+    if (solanaProposal.account.isVoteFinalized()) {
+      await this.proposalsService.addOrUpdateProposals(
+        { realmPk, programPk },
+        [solanaProposal],
+        this.connection,
+      );
+      return null;
+    }
+
+    let currentState = solanaProposal.account;
+    const subscriptionId = this.wsConnection.onAccountChange(
+      proposalPubKey,
+      async (accountInfo) => {
+        const proposal = tryGetProposalData(proposalPubKey, accountInfo);
+
         try {
-          if (currentState !== updatedProposal.account.state) {
-            this.logger.log(
-              `Proposal state was changed from ${currentState} to ${updatedProposal.account.state}`,
-            );
-            currentState = updatedProposal.account.state;
+          if (currentState.state === proposal.account.state) {
+            currentState = proposal.account;
+            return;
           }
 
-          if (updatedProposal.account.isVoteFinalized()) {
+          this.logger.log(
+            `Proposal state was changed from ${currentState.state} to ${proposal.account.state} for ${proposal.account.name}`,
+          );
+          currentState = proposal.account;
+
+          if (proposal.account.isVoteFinalized()) {
             this.logger.log(
-              `Voting was finalized. Removing ${updatedProposal.account.name} listener...`,
+              `Voting was finalized. Removing ${proposal.account.name} listener...`,
             );
-            await this.connection.removeAccountChangeListener(subscriptionId);
-            this.proposalSubscriptionIds = this.proposalSubscriptionIds.filter(
+            await this.wsConnection.removeAccountChangeListener(subscriptionId);
+            this._proposalSubscriptionIds = this.proposalSubscriptionIds.filter(
               (x) => x !== subscriptionId,
             );
           }
@@ -161,8 +172,8 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
           this.logger.error(`Something went wrong. Error: ${e}`);
         } finally {
           await this.proposalsService.addOrUpdateProposals(
-            realm,
-            [updatedProposal],
+            { realmPk, programPk },
+            [proposal],
             this.connection,
           );
         }
@@ -173,25 +184,47 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     return subscriptionId;
   }
 
-  private listenForNewProposals(realm: Realm) {
+  private async listenForNewProposals(realm: Realm) {
     this.logger.log(`Listening to changes for Realm: ${realm.name}`);
+    const realmPubKey = new PublicKey(realm.realmPk);
+
+    const solanaRealm = await getRealm(this.connection, realmPubKey);
+    let currentState = solanaRealm.account;
+
     return this.wsConnection.onAccountChange(
-      new PublicKey(realm.realmPk),
-      async () => {
-        this.logger.log(`Detected change for Realm: ${realm.name}`);
+      realmPubKey,
+      async (accountInfo) => {
+        const newRealmData = tryGetRealmData(realmPubKey, accountInfo);
+        if (
+          newRealmData.account.votingProposalCount ===
+          currentState.votingProposalCount
+        ) {
+          currentState = newRealmData.account;
+          return;
+        }
+
+        currentState = newRealmData.account;
+
         const allProposals =
           await this.proposalRpcService.getProposalsFromSolanaByRealm(
             realm,
             this.connection,
           );
+
         const { found, newProposals } =
           await this.proposalsService.foundNewProposals(
             realm.realmPk,
             allProposals,
           );
+
         if (found) {
-          this.logger.log(`Found new proposals for Realm: ${realm.name}`);
+          this.logger.log(
+            `Found ${newProposals.length} new proposals for Realm: ${realm.name}`,
+          );
           try {
+            // This logic is flawed due to not checking to see if proposal is in draft mode
+            // cause technically it could just now be entering into cancelled or completed which is arguably
+            // not "new" but will suffice for now
             await Promise.all(
               newProposals.map((p) => {
                 return this.notificationQueue.add(
@@ -205,18 +238,26 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
                 );
               }),
             );
+
+            const validProposals = newProposals.filter(
+              (x) => !x.account.isVoteFinalized(),
+            );
+
             const subscriptionIds = await Promise.all(
-              newProposals.map((p) =>
-                this.listenForProposalChanges({ proposal: p, realm }),
+              validProposals.map((p) =>
+                this.listenForProposalChanges({
+                  realmPk: realm.realmPk,
+                  programPk: realm.programPk,
+                  proposalPk: p.pubkey.toString(),
+                }),
               ),
             );
             this.logger.log(
               `Successfully added ${subscriptionIds.length} proposal listeners...`,
             );
-            this.proposalSubscriptionIds = [
-              ...this.proposalSubscriptionIds,
+            this._proposalSubscriptionIds = this.proposalSubscriptionIds.concat(
               ...subscriptionIds,
-            ];
+            );
           } catch (e) {
             this.logger.error(
               `Something went wrong when trying to add new proposal listeners. Error: ${e}`,
@@ -237,11 +278,11 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
   async cleanUpSubscriptions() {
     this.logger.log('Cleaning up any remaining subscriptions...');
     for (const id of this.realmSubscriptionIds) {
-      await this.connection.removeAccountChangeListener(id);
+      await this.wsConnection.removeAccountChangeListener(id);
     }
 
     for (const id of this.proposalSubscriptionIds) {
-      await this.connection.removeAccountChangeListener(id);
+      await this.wsConnection.removeAccountChangeListener(id);
     }
   }
 }

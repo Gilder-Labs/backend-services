@@ -19,38 +19,6 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
 
 @Module({
   imports: [
-    RpcManagerModule.forRoot({
-      [DEFAULT_CONNECTION]: [
-        {
-          rps: 10,
-          uri: 'https://solana-api.projectserum.com',
-        },
-        {
-          rps: 10,
-          uri: 'https://api.mainnet-beta.solana.com',
-        },
-      ],
-      [WS_CONNECTION]: [
-        {
-          rps: 20,
-          uri: 'https://ssc-dao.genesysgo.net/',
-        },
-        {
-          rps: 10,
-          uri: 'https://api.mainnet-beta.solana.com',
-        },
-        {
-          rps: 10,
-          uri: 'https://solana-api.projectserum.com',
-        },
-      ],
-      [PROPOSAL_CONNECTION]: [
-        {
-          rps: 10,
-          uri: 'https://solana-api.projectserum.com',
-        },
-      ],
-    }),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -68,6 +36,30 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
     }),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
+    RpcManagerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const defaultUrls = configService.get<string>('RPC_URLS').split(';');
+        const wsUrls = configService.get<string>('WS_RPC_URLS').split(';');
+        return {
+          [DEFAULT_CONNECTION]: defaultUrls.map((x) => ({
+            rps: 25,
+            uri: x,
+          })),
+          [WS_CONNECTION]: wsUrls.map((x) => ({
+            rps: 25,
+            uri: x,
+          })),
+          [PROPOSAL_CONNECTION]: [
+            {
+              rps: 25,
+              uri: 'https://try-rpc.mainnet.solana.blockdaemon.tech',
+            },
+          ],
+        };
+      },
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -90,9 +82,9 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
       }),
       inject: [ConfigService],
     }),
+    ProposalsMonitorModule,
     GovernanceProgramsMonitorModule,
     // RealmsMonitorModule,
-    ProposalsMonitorModule,
     // TokenOwnersModule,
     // GovernanceModule,
   ],

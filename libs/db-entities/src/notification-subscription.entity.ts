@@ -1,14 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  Unique,
-  BaseEntity,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import type {
   NotificationType,
   NotificationSubscription as INotificationSubscription,
 } from '@gilder/types';
+import { BaseEntity } from './base.entity';
 
 @Entity()
 @Unique('constraint_name', ['mobileToken', 'type', 'realmPk'])
