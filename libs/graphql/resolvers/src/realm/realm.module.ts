@@ -6,10 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TokenOwnersServiceModule } from '@gilder/token-owners-module';
 import { ProposalsModule } from '@gilder/proposals-module';
 import { GovernancesServiceModule } from '@gilder/governances-module';
+import { DataLoaderModule } from '@gilder/graphql-dataloaders';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Realm, Proposal, TokenOwner]),
+    DataLoaderModule,
     TokenOwnersServiceModule,
     ProposalsModule,
     GovernancesServiceModule,

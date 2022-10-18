@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import { In, InsertResult, Repository } from 'typeorm';
 import { Proposal, Realm } from '@gilder/db-entities';
 import {
   ProgramAccount,
@@ -26,6 +26,29 @@ export class ProposalsService {
     return this.proposalRepo.find({
       where: {
         realmPk: realmPk,
+      },
+    });
+  }
+
+  public async getRealmProposalsByBatch(
+    realmPks: readonly string[],
+  ): Promise<(Proposal | any)[]> {
+    const proposals = await this.getAllProposalsByRealmPks(realmPks);
+    return this._mapResultToIds(realmPks, proposals);
+  }
+
+  private _mapResultToIds(realmPks: readonly string[], proposals: Proposal[]) {
+    return realmPks.map(
+      (id) =>
+        proposals.filter((proposal: Proposal) => proposal.realmPk === id) ||
+        null,
+    );
+  }
+
+  public getAllProposalsByRealmPks(realmPks: readonly string[]) {
+    return this.proposalRepo.find({
+      where: {
+        realmPk: In(realmPks as string[]),
       },
     });
   }

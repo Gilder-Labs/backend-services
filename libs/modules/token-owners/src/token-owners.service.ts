@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import { In, InsertResult, Repository } from 'typeorm';
 import { TokenOwner } from '@gilder/db-entities';
 import { ProgramAccount, TokenOwnerRecord } from '@solana/spl-governance';
 import { distinctBy } from '@gilder/utilities';
@@ -19,6 +19,33 @@ export class TokenOwnersService {
   public async getUniqueTokenOwners() {
     const tokenOwners = await this.tokenOwnerRepo.find();
     return distinctBy(tokenOwners, (x) => x.governingTokenOwnerPk);
+  }
+
+  public async getRealmTokenOwnersByBatch(
+    realmPks: readonly string[],
+  ): Promise<(TokenOwner | any)[]> {
+    const tokenOwners = await this.getAllTokenOwnersByRealmPks(realmPks);
+    return this._mapResultToIds(realmPks, tokenOwners);
+  }
+
+  private _mapResultToIds(
+    realmPks: readonly string[],
+    tokenOwners: TokenOwner[],
+  ) {
+    return realmPks.map(
+      (id) =>
+        tokenOwners.filter(
+          (tokenOwner: TokenOwner) => tokenOwner.realmPk === id,
+        ) || null,
+    );
+  }
+
+  public getAllTokenOwnersByRealmPks(realmPks: readonly string[]) {
+    return this.tokenOwnerRepo.find({
+      where: {
+        realmPk: In(realmPks as string[]),
+      },
+    });
   }
 
   public async getAllTokenOwnersInRealm(realmPk: string) {

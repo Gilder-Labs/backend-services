@@ -1,22 +1,26 @@
 import { GovernancesService } from '@gilder/governances-module';
+import { IDataLoaders } from '@gilder/graphql-dataloaders';
 import {
   Governance,
   Proposal,
   Realm,
   TokenOwner,
 } from '@gilder/graphql-models';
-import { ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
-import { TokenOwnersService } from '@gilder/token-owners-module';
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GetRealmArgs } from './args/get-realm-args';
 
 @Resolver(Realm)
 export class RealmsResolver {
   constructor(
     private readonly realmsService: RealmsService,
-    private readonly tokenOwnerService: TokenOwnersService,
-    private readonly proposalService: ProposalsService,
     private readonly governancesService: GovernancesService,
   ) {}
 
@@ -37,9 +41,12 @@ export class RealmsResolver {
   }
 
   @ResolveField('proposals', () => [Proposal])
-  async proposals(@Parent() realm: Realm): Promise<Proposal[]> {
+  async proposals(
+    @Parent() realm: Realm,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<Proposal[]> {
     const { realmPk } = realm;
-    return await this.proposalService.getAllProposalsInRealm(realmPk);
+    return loaders.proposalsLoader.load(realmPk);
   }
 
   @ResolveField('governances', () => [Governance])
@@ -49,8 +56,11 @@ export class RealmsResolver {
   }
 
   @ResolveField('tokenOwners', () => [TokenOwner])
-  async tokenOwners(@Parent() realm: Realm): Promise<TokenOwner[]> {
+  async tokenOwners(
+    @Parent() realm: Realm,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<TokenOwner[]> {
     const { realmPk } = realm;
-    return this.tokenOwnerService.getAllTokenOwnersInRealm(realmPk);
+    return loaders.tokenOwnersLoader.load(realmPk);
   }
 }

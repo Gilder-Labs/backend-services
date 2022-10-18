@@ -12,6 +12,10 @@ import {
   TokenOwnersGraphQLModule,
   GovernancesGraphQLModule,
 } from '@gilder/graphql-resolvers';
+import {
+  DataLoaderModule,
+  DataLoaderService,
+} from '@gilder/graphql-dataloaders';
 
 @Module({
   imports: [
@@ -44,13 +48,19 @@ import {
     GovernancesGraphQLModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      imports: [ConfigModule, DataLoaderModule],
+      inject: [ConfigService, DataLoaderService],
+      useFactory: (
+        configService: ConfigService,
+        dataLoaderService: DataLoaderService,
+      ) => ({
         autoSchemaFile: true,
         cache: 'bounded',
         installSubscriptionHandlers: true,
         debug: configService.get<boolean>('DEBUG'),
+        context: () => ({
+          loaders: dataLoaderService.getLoaders(),
+        }),
         subscriptions: {
           'graphql-ws': true,
         },
