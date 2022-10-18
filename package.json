@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "concurrently -c \"bgGreen.bold,bgMagenta.bold,bgBlue.bold,bgCyan.bold\" \"yarn:watch:*\"",
     "dev:monitor": "concurrently -c \"bgGreen.bold,bgMagenta.bold\" \"yarn:watch:libs\" \"yarn:watch:monitor-service\"",
+    "dev:stream": "concurrently -c \"bgGreen.bold,bgMagenta.bold\" \"yarn:watch:libs\" \"yarn:watch:stream-service\"",
     "dev:graphql": "concurrently -c \"bgGreen.bold,bgMagenta.bold\" \"yarn:watch:libs\" \"yarn:watch:graphql-service\"",
     "dev:notify": "concurrently -c \"bgGreen.bold,bgMagenta.bold\" \"yarn:watch:libs\" \"yarn:watch:notify-service\"",
     "build:libs": "turbo run --filter=\"./libs/**\" --filter=\"./packages/**\" build",
@@ -23,6 +24,7 @@
     "watch:monitor-service": "yarn workspace @gilder/monitor-service dev",
     "watch:notify-service": "yarn workspace @gilder/notify-service dev",
     "watch:graphql-service": "yarn workspace @gilder/graphql-service dev",
+    "watch:stream-service": "yarn workspace @gilder/stream-service dev",
     "ci:version": "changeset version",
     "ci:publish": "changeset publish",
     "nuke": "rimraf ./**/{node_modules,dist,.turbo} ./.yarn/cache"
