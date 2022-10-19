@@ -1,4 +1,4 @@
-import { RealmsRestService, RealmsRPCService } from '@gilder/realms-module';
+import { RealmsRestService } from '@gilder/realms-module';
 import { Query, Resolver } from '@nestjs/graphql';
 
 @Resolver('GovernanceProgram')

@@ -6,13 +6,6 @@ import { getDataConfig } from './data-source';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import {
-  ProposalsGraphQLModule,
-  RealmsGraphQLModule,
-  GovernanceProgramsGraphQLModule,
-  TokenOwnersGraphQLModule,
-  GovernancesGraphQLModule,
-} from '@gilder/graphql-resolvers';
-import {
   DataLoaderModule,
   DataLoaderService,
 } from '@gilder/graphql-dataloaders';
@@ -43,27 +36,12 @@ import {
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      imports: [
-        ConfigModule,
-        DataLoaderModule,
-        RealmsGraphQLModule,
-        ProposalsGraphQLModule,
-        GovernanceProgramsGraphQLModule,
-        TokenOwnersGraphQLModule,
-        GovernancesGraphQLModule,
-      ],
+      imports: [ConfigModule, DataLoaderModule],
       inject: [ConfigService, DataLoaderService],
       useFactory: (
         configService: ConfigService,
         dataLoaderService: DataLoaderService,
       ) => ({
-        include: [
-          RealmsGraphQLModule,
-          ProposalsGraphQLModule,
-          GovernanceProgramsGraphQLModule,
-          TokenOwnersGraphQLModule,
-          GovernancesGraphQLModule,
-        ],
         autoSchemaFile: true,
         cache: 'bounded',
         installSubscriptionHandlers: true,
