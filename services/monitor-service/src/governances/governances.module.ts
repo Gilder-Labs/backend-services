@@ -1,5 +1,5 @@
 import { GOVERNANCE_QUEUE } from '@gilder/constants';
-import { Governance } from '@gilder/db-entities';
+import { Governance } from '@gilder/gov-db-entities';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

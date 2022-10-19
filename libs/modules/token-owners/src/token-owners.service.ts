@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, InsertResult, Repository } from 'typeorm';
-import { TokenOwner } from '@gilder/db-entities';
+import { TokenOwner } from '@gilder/gov-db-entities';
 import { ProgramAccount, TokenOwnerRecord } from '@solana/spl-governance';
 import { distinctBy } from '@gilder/utilities';
 

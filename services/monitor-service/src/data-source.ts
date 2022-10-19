@@ -4,7 +4,7 @@ import {
   Proposal,
   Realm,
   TokenOwner,
-} from '@gilder/db-entities';
+} from '@gilder/gov-db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';

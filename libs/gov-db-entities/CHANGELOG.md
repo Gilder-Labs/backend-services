@@ -1,4 +1,4 @@
-# @gilder/db-entities
+# @gilder/gov-db-entities
 
 ## 1.0.2
 

@@ -25,7 +25,7 @@
   "license": "ISC",
   "devDependencies": {
     "@gilder/constants": "workspace:*",
-    "@gilder/db-entities": "workspace:*",
+    "@gilder/gov-db-entities": "workspace:*",
     "@gilder/types": "workspace:*",
     "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",

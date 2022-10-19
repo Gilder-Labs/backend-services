@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, InsertResult, Repository } from 'typeorm';
-import { Proposal, Realm } from '@gilder/db-entities';
+import { Proposal, Realm } from '@gilder/gov-db-entities';
 import {
   ProgramAccount,
   Proposal as SolanaProposal,

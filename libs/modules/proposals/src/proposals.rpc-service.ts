@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { Proposal as DbProposal } from '@gilder/db-entities';
+import { Proposal as DbProposal } from '@gilder/gov-db-entities';
 import {
   getProposal,
   getAllProposals,

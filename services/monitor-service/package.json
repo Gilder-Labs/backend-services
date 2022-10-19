@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@gilder/constants": "workspace:*",
-    "@gilder/db-entities": "workspace:*",
+    "@gilder/gov-db-entities": "workspace:*",
     "@gilder/governances-module": "workspace:*",
     "@gilder/proposals-module": "workspace:*",
     "@gilder/realms-module": "workspace:*",

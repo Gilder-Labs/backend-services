@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@gilder/db-entities": "workspace:*",
+    "@gilder/gov-db-entities": "workspace:*",
     "@gilder/governances-module": "workspace:*",
     "@gilder/graphql-dataloaders": "workspace:*",
     "@gilder/graphql-models": "workspace:*",

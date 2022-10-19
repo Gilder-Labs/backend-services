@@ -1,4 +1,4 @@
-import { NotificationSubscription } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/gov-db-entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

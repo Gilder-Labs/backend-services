@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import { In, InsertResult, Repository } from 'typeorm';
 import {
   ProgramAccount,
   Governance as SolanaGovernance,
 } from '@solana/spl-governance';
-import { Governance } from '@gilder/db-entities';
+import { Governance } from '@gilder/gov-db-entities';
 
 @Injectable()
 export class GovernancesService {
@@ -26,6 +26,33 @@ export class GovernancesService {
     return this.governanceRepo.find({
       where: {
         realmPk: realmPk,
+      },
+    });
+  }
+
+  public async getRealmGovernancesByBatch(
+    realmPks: readonly string[],
+  ): Promise<(Governance | any)[]> {
+    const proposals = await this.getAllGovernancesByRealmPks(realmPks);
+    return this._mapResultToIds(realmPks, proposals);
+  }
+
+  private _mapResultToIds(
+    realmPks: readonly string[],
+    governances: Governance[],
+  ) {
+    return realmPks.map(
+      (id) =>
+        governances.filter(
+          (governance: Governance) => governance.realmPk === id,
+        ) || null,
+    );
+  }
+
+  public getAllGovernancesByRealmPks(realmPks: readonly string[]) {
+    return this.governanceRepo.find({
+      where: {
+        realmPk: In(realmPks as string[]),
       },
     });
   }

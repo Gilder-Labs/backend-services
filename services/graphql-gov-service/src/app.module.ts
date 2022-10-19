@@ -41,19 +41,29 @@ import {
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    RealmsGraphQLModule,
-    ProposalsGraphQLModule,
-    GovernanceProgramsGraphQLModule,
-    TokenOwnersGraphQLModule,
-    GovernancesGraphQLModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      imports: [ConfigModule, DataLoaderModule],
+      imports: [
+        ConfigModule,
+        DataLoaderModule,
+        RealmsGraphQLModule,
+        ProposalsGraphQLModule,
+        GovernanceProgramsGraphQLModule,
+        TokenOwnersGraphQLModule,
+        GovernancesGraphQLModule,
+      ],
       inject: [ConfigService, DataLoaderService],
       useFactory: (
         configService: ConfigService,
         dataLoaderService: DataLoaderService,
       ) => ({
+        include: [
+          RealmsGraphQLModule,
+          ProposalsGraphQLModule,
+          GovernanceProgramsGraphQLModule,
+          TokenOwnersGraphQLModule,
+          GovernancesGraphQLModule,
+        ],
         autoSchemaFile: true,
         cache: 'bounded',
         installSubscriptionHandlers: true,
@@ -67,7 +77,5 @@ import {
       }),
     }),
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

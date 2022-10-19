@@ -3,7 +3,7 @@ import {
   NotificationSubscription,
   Realm,
   Proposal as DbProposal,
-} from '@gilder/db-entities';
+} from '@gilder/gov-db-entities';
 import { ProposalRPCService, ProposalsService } from '@gilder/proposals-module';
 import { RealmsService } from '@gilder/realms-module';
 import { InjectQueue } from '@nestjs/bull';

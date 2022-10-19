@@ -1,4 +1,4 @@
-import { Proposal } from '@gilder/db-entities';
+import { Proposal } from '@gilder/gov-db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProposalRPCService } from './proposals.rpc-service';

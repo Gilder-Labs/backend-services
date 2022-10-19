@@ -1,4 +1,8 @@
-import { NotificationSubscription, Proposal, Realm } from '@gilder/db-entities';
+import {
+  NotificationSubscription,
+  Proposal,
+  Realm,
+} from '@gilder/gov-db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RealmsModule } from '@gilder/realms-module';
@@ -27,8 +31,8 @@ import { ProposalListenerService } from './proposal.listener';
   controllers: [ProposalController],
   providers: [
     ProposalListenerService,
-//     ProposalsMonitorService,
-//     ProposalProcessor,
+    //     ProposalsMonitorService,
+    //     ProposalProcessor,
   ],
 })
 export class ProposalsMonitorModule {}

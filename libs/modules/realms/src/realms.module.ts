@@ -1,4 +1,4 @@
-import { Realm } from '@gilder/db-entities';
+import { Realm } from '@gilder/gov-db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RealmsRestService } from './realms.rest-service';

@@ -1,4 +1,4 @@
-import { TokenOwner } from '@gilder/db-entities';
+import { TokenOwner } from '@gilder/gov-db-entities';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TokenOwnersService } from './token-owners.service';

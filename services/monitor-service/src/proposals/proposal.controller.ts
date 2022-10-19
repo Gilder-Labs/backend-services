@@ -1,5 +1,5 @@
 import { NEW_NOTIFICATION_SUBSCRIPTION } from '@gilder/constants';
-import { NotificationSubscription } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/gov-db-entities';
 import { Controller } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { ProposalListenerService } from './proposal.listener';

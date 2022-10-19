@@ -3,7 +3,7 @@ import {
   PROPOSAL_QUEUE,
   TOKEN_OWNER_QUEUE,
 } from '@gilder/constants';
-import { Realm } from '@gilder/db-entities';
+import { Realm } from '@gilder/gov-db-entities';
 import { RealmsModule } from '@gilder/realms-module';
 import { HttpModule } from '@nestjs/axios';
 import { BullModule } from '@nestjs/bull';

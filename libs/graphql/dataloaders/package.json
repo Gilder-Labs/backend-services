@@ -21,7 +21,7 @@
     "dataloader": "^2.1.0"
   },
   "devDependencies": {
-    "@gilder/db-entities": "workspace:*",
+    "@gilder/gov-db-entities": "workspace:*",
     "@gilder/governances-module": "workspace:*",
     "@gilder/graphql-models": "workspace:*",
     "@gilder/proposals-module": "workspace:*",

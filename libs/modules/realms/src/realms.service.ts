@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, In, InsertResult, Repository } from 'typeorm';
-import { Realm } from '@gilder/db-entities';
+import { Realm } from '@gilder/gov-db-entities';
 import { ProgramAccount, Realm as SolanaRealm } from '@solana/spl-governance';
 
 @Injectable()

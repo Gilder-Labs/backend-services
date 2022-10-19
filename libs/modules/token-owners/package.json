@@ -28,7 +28,7 @@
     "bn.js": "^5.2.1"
   },
   "devDependencies": {
-    "@gilder/db-entities": "workspace:*",
+    "@gilder/gov-db-entities": "workspace:*",
     "@gilder/types": "workspace:*",
     "@gilder/utilities": "workspace:*",
     "@nestjs/common": "^9.1.2",

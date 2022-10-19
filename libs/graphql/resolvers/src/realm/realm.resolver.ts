@@ -1,4 +1,3 @@
-import { GovernancesService } from '@gilder/governances-module';
 import { IDataLoaders } from '@gilder/graphql-dataloaders';
 import {
   Governance,
@@ -19,10 +18,7 @@ import { GetRealmArgs } from './args/get-realm-args';
 
 @Resolver(Realm)
 export class RealmsResolver {
-  constructor(
-    private readonly realmsService: RealmsService,
-    private readonly governancesService: GovernancesService,
-  ) {}
+  constructor(private readonly realmsService: RealmsService) {}
 
   @Query(() => [Realm])
   async realms(): Promise<Realm[]> {
@@ -50,9 +46,12 @@ export class RealmsResolver {
   }
 
   @ResolveField('governances', () => [Governance])
-  async governances(@Parent() realm: Realm): Promise<Governance[]> {
+  async governances(
+    @Parent() realm: Realm,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<Governance[]> {
     const { realmPk } = realm;
-    return this.governancesService.getAllGovernancesByRealm(realmPk);
+    return loaders.governancesLoader.load(realmPk);
   }
 
   @ResolveField('tokenOwners', () => [TokenOwner])
