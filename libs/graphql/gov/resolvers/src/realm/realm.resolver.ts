@@ -6,6 +6,7 @@ import {
   Realm,
   TokenOwner,
 } from '@gilder/graphql-gov-models';
+import { Inject } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -18,19 +19,20 @@ import { GetRealmArgs } from './args/get-realm-args';
 
 @Resolver(Realm)
 export class RealmsResolver {
-  constructor(private readonly realmsService: RealmsService) {}
+  @Inject(RealmsService)
+  private readonly realmsService!: RealmsService;
 
   @Query(() => [Realm])
   async realms(): Promise<Realm[]> {
-    return this.realmsService.getAllRealms();
+    return this.realmsService.getAll();
   }
 
   @Query(() => Realm, { nullable: true })
   async getRealm(@Args() { name, realmPk }: GetRealmArgs) {
     if (name) {
-      return this.realmsService.getRealmByName(name);
+      return this.realmsService.getBy({ name });
     } else if (realmPk) {
-      return this.realmsService.getRealmByPubKey(realmPk);
+      return this.realmsService.getBy({ realmPk });
     } else {
       return null;
     }

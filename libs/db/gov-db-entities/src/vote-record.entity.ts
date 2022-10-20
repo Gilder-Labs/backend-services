@@ -4,10 +4,14 @@ import type {
   VoteWeight,
 } from '@gilder/types';
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { BaseGovEntity } from './base.entity';
 
 @Entity()
 @Unique('vote-record-constraint', ['proposalPk', 'governingTokenOwnerPk'])
-export class VoteRecord implements IVoteRecord<string, string> {
+export class VoteRecord
+  extends BaseGovEntity
+  implements IVoteRecord<string, string>
+{
   @Column('int')
   accountType: number;
 

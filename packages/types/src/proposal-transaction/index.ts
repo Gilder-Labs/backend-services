@@ -16,6 +16,7 @@ export interface InstructionData<TKey = PublicKey> {
 export interface ProposalTransaction<TKey = PublicKey, TNum = BN> {
   accountType: number;
   proposalPk: TKey;
+  programPk: TKey;
   instructionIndex: number;
   instruction: InstructionData<TKey>;
   optionIndex: number;

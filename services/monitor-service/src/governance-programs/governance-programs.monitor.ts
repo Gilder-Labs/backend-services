@@ -95,7 +95,7 @@ export class GovernanceProgramsMonitorService
     switch (type) {
       case 'realm':
         this.logger.log(`Adding/Updating Realm: ${JSON.stringify(account)}`);
-        await this.realmsService.addOrUpdateRealms([account]);
+        // await this.realmsService.addOrUpdateRealms([account]);
         return;
       case 'proposal':
         this.logger.log(`Adding/Updating Proposal: ${JSON.stringify(account)}`);
@@ -138,10 +138,17 @@ export class GovernanceProgramsMonitorService
     const governanceProgramPks =
       await this.realmsRestService.getSplGovernancePrograms();
 
-    for (const programPk of governanceProgramPks) {
-      const subId = this.addGovernanceProgramSubscriber(programPk);
-      this.subscriptionIds.push(subId);
-    }
+    // const foo = await this.realmsService.getAll();
+    // const realm = foo[0];
+    // await this.realmsService.addOrUpdateEntity({
+    //   ...realm,
+    //   name: 'Wooooooooooooooooo',
+    // });
+
+    // for (const programPk of governanceProgramPks) {
+    //   const subId = this.addGovernanceProgramSubscriber(programPk);
+    //   this.subscriptionIds.push(subId);
+    // }
 
     this.seedDatabase(governanceProgramPks.map((x) => x.toBase58()));
   }
@@ -149,7 +156,9 @@ export class GovernanceProgramsMonitorService
   async seedDatabase(programPks: string[]) {
     this.logger.log('Starting seeding process...');
 
+    this.logger.log('Querying all program account data...');
     const allData = await getAllProgramAccounts(programPks, this.connection);
+    this.logger.log('Finished querying!');
 
     this.logger.log(
       `Discovered...\n${allData.realm.length} Realms\n${allData['token-owner'].length} Token Owners\n${allData.governance.length} Governances\n${allData.proposal.length} Proposals`,
@@ -159,50 +168,50 @@ export class GovernanceProgramsMonitorService
       const type = key as AccountType;
       switch (type) {
         case 'realm':
-          await this.realmsService.addOrUpdateRealms(entities);
+          await this.realmsService.addOrUpdateFromSolanaEntities(...entities);
           continue;
-        case 'proposal':
-          const groupedProposalsByGovernances = groupBy(
-            entities as ProgramAccount<Proposal>[],
-            (x) => x.account.governance.toBase58(),
-          );
-          const governances = allData['governance'];
-          for (const [key, proposals] of Object.entries(
-            groupedProposalsByGovernances,
-          )) {
-            const gov = governances.find(
-              (x) => x.pubkey.toBase58() === key,
-            ) as ProgramAccount<Governance>;
-            const realmPk = gov.account.realm.toBase58();
-            await this.proposalsService.addOrUpdateProposals(
-              { programPk: gov.owner.toBase58(), realmPk },
-              proposals,
-              this.connection,
-            );
-          }
-          continue;
-        case 'governance':
-          const groupedGovernancesByRealm = groupBy(
-            entities as ProgramAccount<Governance>[],
-            (x) => x.account.realm.toBase58(),
-          );
-          for (const [key, value] of Object.entries(
-            groupedGovernancesByRealm,
-          )) {
-            await this.governanceService.addOrUpdateGovernances(key, value);
-          }
-          continue;
-        case 'token-owner':
-          const groupedTokenOwnersByRealm = groupBy(
-            entities as ProgramAccount<TokenOwnerRecord>[],
-            (x) => x.account.realm.toBase58(),
-          );
-          for (const [key, value] of Object.entries(
-            groupedTokenOwnersByRealm,
-          )) {
-            await this.tokenOwnersService.addOrUpdateTokenOwners(key, value);
-          }
-          continue;
+        //   case 'proposal':
+        //     const groupedProposalsByGovernances = groupBy(
+        //       entities as ProgramAccount<Proposal>[],
+        //       (x) => x.account.governance.toBase58(),
+        //     );
+        //     const governances = allData['governance'];
+        //     for (const [key, proposals] of Object.entries(
+        //       groupedProposalsByGovernances,
+        //     )) {
+        //       const gov = governances.find(
+        //         (x) => x.pubkey.toBase58() === key,
+        //       ) as ProgramAccount<Governance>;
+        //       const realmPk = gov.account.realm.toBase58();
+        //       await this.proposalsService.addOrUpdateProposals(
+        //         { programPk: gov.owner.toBase58(), realmPk },
+        //         proposals,
+        //         this.connection,
+        //       );
+        //     }
+        //     continue;
+        //   case 'governance':
+        //     const groupedGovernancesByRealm = groupBy(
+        //       entities as ProgramAccount<Governance>[],
+        //       (x) => x.account.realm.toBase58(),
+        //     );
+        //     for (const [key, value] of Object.entries(
+        //       groupedGovernancesByRealm,
+        //     )) {
+        //       await this.governanceService.addOrUpdateGovernances(key, value);
+        //     }
+        //     continue;
+        //   case 'token-owner':
+        //     const groupedTokenOwnersByRealm = groupBy(
+        //       entities as ProgramAccount<TokenOwnerRecord>[],
+        //       (x) => x.account.realm.toBase58(),
+        //     );
+        //     for (const [key, value] of Object.entries(
+        //       groupedTokenOwnersByRealm,
+        //     )) {
+        //       await this.tokenOwnersService.addOrUpdateTokenOwners(key, value);
+        //     }
+        //     continue;
       }
     }
 

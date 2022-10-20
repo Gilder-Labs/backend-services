@@ -3,10 +3,14 @@ import type {
   Governance as IGovernance,
   GovernanceConfig,
 } from '@gilder/types';
+import { BaseGovEntity } from './base.entity';
 
 @Entity()
 @Unique('governance_constraint', ['governancePk'])
-export class Governance implements IGovernance<string, string> {
+export class Governance
+  extends BaseGovEntity
+  implements IGovernance<string, string>
+{
   @PrimaryColumn('text')
   governancePk: string;
 

@@ -85,17 +85,17 @@ export class ProposalsService {
     proposals: ProgramAccount<SolanaProposal>[],
     connection: Connection,
   ): Promise<InsertResult> {
-    const dbProposals =
-      await this.proposalRPCService.convertSolanaProposalToEntity(
-        realm,
-        proposals,
-        connection,
-      );
+    // const dbProposals =
+    //   await this.proposalRPCService.convertSolanaProposalToEntity(
+    //     realm,
+    //     proposals,
+    //     connection,
+    //   );
     return this.proposalRepo
       .createQueryBuilder()
       .insert()
       .into(Proposal)
-      .values(dbProposals)
+      .values([])
       .orUpdate(
         [
           'descriptionLink',

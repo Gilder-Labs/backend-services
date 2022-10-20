@@ -21,6 +21,7 @@ export interface VoteWeight<TNum = BN> {
 export interface VoteRecord<TKey = PublicKey, TNum = BN> {
   accountType: number;
   proposalPk: TKey;
+  programPk: TKey;
   governingTokenOwnerPk: TKey;
   isRelinquished: boolean;
   voteWeight?: VoteWeight<TNum>;

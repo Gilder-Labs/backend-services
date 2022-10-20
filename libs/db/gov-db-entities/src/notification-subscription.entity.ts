@@ -1,9 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Unique,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import type {
   NotificationType,
   NotificationSubscription as INotificationSubscription,
 } from '@gilder/types';
-import { BaseEntity } from './base.entity';
 
 @Entity()
 @Unique('notification-subscription-constraint', [
@@ -11,10 +17,7 @@ import { BaseEntity } from './base.entity';
   'type',
   'realmPk',
 ])
-export class NotificationSubscription
-  extends BaseEntity
-  implements INotificationSubscription
-{
+export class NotificationSubscription implements INotificationSubscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -31,4 +34,17 @@ export class NotificationSubscription
     default: true,
   })
   isActive: boolean;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 }

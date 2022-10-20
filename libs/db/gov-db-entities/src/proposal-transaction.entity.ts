@@ -3,9 +3,11 @@ import type {
   InstructionData,
   ProposalTransaction as IProposalTransaction,
 } from '@gilder/types';
+import { BaseGovEntity } from './base.entity';
 
 @Entity()
 export class ProposalTransaction
+  extends BaseGovEntity
   implements IProposalTransaction<string, string>
 {
   @PrimaryGeneratedColumn('uuid')

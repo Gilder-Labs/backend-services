@@ -8,6 +8,7 @@ import { BullModule } from '@nestjs/bull';
 import { RpcManagerModule } from '@gilder/rpc-manager-module';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 import { GovernanceProgramsMonitorModule } from './governance-programs';
+import { RealmSubscriber } from './test.subscriber';
 
 @Module({
   imports: [
@@ -75,6 +76,6 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
     // GovernanceModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [RealmSubscriber],
 })
 export class AppModule {}

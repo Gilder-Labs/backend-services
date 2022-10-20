@@ -1,14 +1,15 @@
 import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { Proposal as IProposal } from '@gilder/types';
+import { BaseGovEntity } from './base.entity';
 
 @Entity()
 @Unique('proposal-constraint', ['proposalPk'])
-export class Proposal implements IProposal<string> {
+export class Proposal extends BaseGovEntity implements IProposal<string> {
   @PrimaryColumn('text')
   proposalPk: string;
 
   @Column('text')
-  programPk: string;
+  governancePk: string;
 
   @Column('text')
   realmPk: string;
