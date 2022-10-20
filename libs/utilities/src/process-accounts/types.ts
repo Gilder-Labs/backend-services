@@ -23,4 +23,15 @@ export interface RawAccount {
   pubkey: string;
 }
 
-export type AccountType = 'governance' | 'proposal' | 'token-owner' | 'realm';
+export enum AccountTypes {
+  Governance = 'governance',
+  Proposal = 'proposal',
+  TokenOwner = 'token-owner',
+  Realm = 'realm',
+  ProoposalTransaction = 'proposal-transaction',
+  SignatoryRecord = 'signatory-record',
+  VoteRecord = 'vote-record',
+  ProgramMetadata = 'program-metadata',
+  RealmConfig = 'realm-config',
+}
+export type AccountType = `${AccountTypes}`;

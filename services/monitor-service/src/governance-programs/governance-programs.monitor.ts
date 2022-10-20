@@ -1,14 +1,16 @@
-import { GovernancesService } from '@gilder/governances-module';
-import { ProposalsService } from '@gilder/proposals-module';
-import { RealmsRestService, RealmsService } from '@gilder/realms-module';
+import {
+  GovernancesService,
+  ProposalsService,
+  RealmsRestService,
+  RealmsService,
+  TokenOwnersService,
+} from '@gilder/gov-service-module';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
-import { TokenOwnersService } from '@gilder/token-owners-module';
 import {
   AccountType,
   getAccountType,
   getAllProgramAccounts,
   parseAccount,
-  ParsedAccount,
 } from '@gilder/utilities';
 import {
   Inject,
@@ -19,7 +21,6 @@ import {
 } from '@nestjs/common';
 import {
   getGovernance,
-  GovernanceAccountType,
   Proposal,
   Governance,
   ProgramAccount,

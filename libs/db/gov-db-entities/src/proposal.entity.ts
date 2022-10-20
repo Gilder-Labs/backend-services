@@ -2,7 +2,7 @@ import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { Proposal as IProposal } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['proposalPk'])
+@Unique('proposal-constraint', ['proposalPk'])
 export class Proposal implements IProposal<string> {
   @PrimaryColumn('text')
   proposalPk: string;

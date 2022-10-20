@@ -8,7 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import {
   DataLoaderModule,
   DataLoaderService,
-} from '@gilder/graphql-dataloaders';
+} from '@gilder/graphql-gov-dataloaders';
 
 @Module({
   imports: [

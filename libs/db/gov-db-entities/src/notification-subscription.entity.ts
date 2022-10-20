@@ -6,7 +6,11 @@ import type {
 import { BaseEntity } from './base.entity';
 
 @Entity()
-@Unique('constraint_name', ['mobileToken', 'type', 'realmPk'])
+@Unique('notification-subscription-constraint', [
+  'mobileToken',
+  'type',
+  'realmPk',
+])
 export class NotificationSubscription
   extends BaseEntity
   implements INotificationSubscription

@@ -4,8 +4,12 @@ import {
   Governance,
   GovernanceAccountType,
   ProgramAccount,
+  ProgramMetadata,
   Proposal,
+  ProposalTransaction,
   Realm,
+  RealmConfig,
+  SignatoryRecord,
   TokenOwnerRecord,
   VoteRecord,
 } from '@solana/spl-governance';
@@ -51,6 +55,17 @@ const tryParseAccount = <T = any>(
     case GovernanceAccountType.TokenOwnerRecordV2:
       classType = TokenOwnerRecord;
       break;
+    case GovernanceAccountType.SignatoryRecordV1:
+    case GovernanceAccountType.SignatoryRecordV2:
+      classType = SignatoryRecord;
+      break;
+    case GovernanceAccountType.ProgramMetadata:
+      classType = ProgramMetadata;
+      break;
+    case GovernanceAccountType.ProposalTransactionV2:
+      classType = ProposalTransaction;
+      break;
+    case GovernanceAccountType.RealmConfig: // Gonna skip this for now...???
     default:
       return null;
   }

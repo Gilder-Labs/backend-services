@@ -1,9 +1,13 @@
 import {
   Governance,
   NotificationSubscription,
+  ProgramMetadata,
   Proposal,
+  ProposalTransaction,
   Realm,
+  SignatoryRecord,
   TokenOwner,
+  VoteRecord,
 } from '@gilder/gov-db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
@@ -31,6 +35,10 @@ export const getDataConfig = (
       Proposal,
       TokenOwner,
       Governance,
+      SignatoryRecord,
+      ProgramMetadata,
+      ProposalTransaction,
+      VoteRecord,
       NotificationSubscription,
     ],
     migrations: [],

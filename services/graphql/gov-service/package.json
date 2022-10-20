@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@gilder/gov-db-entities": "workspace:*",
-    "@gilder/graphql-dataloaders": "workspace:*",
-    "@gilder/graphql-resolvers": "workspace:*",
+    "@gilder/graphql-gov-dataloaders": "workspace:*",
+    "@gilder/graphql-gov-resolvers": "workspace:*",
     "@nestjs/apollo": "^10.1.0",
     "@nestjs/common": "^9.1.2",
     "@nestjs/config": "^2.2.0",

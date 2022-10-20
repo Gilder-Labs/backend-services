@@ -5,7 +5,7 @@ import type {
 } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['governancePk'])
+@Unique('governance_constraint', ['governancePk'])
 export class Governance implements IGovernance<string, string> {
   @PrimaryColumn('text')
   governancePk: string;

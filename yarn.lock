@@ -600,17 +600,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/governances-module@workspace:*, @gilder/governances-module@workspace:libs/modules/governances":
+"@gilder/gov-service-module@workspace:*, @gilder/gov-service-module@workspace:libs/modules/gov-service-module":
   version: 0.0.0-use.local
-  resolution: "@gilder/governances-module@workspace:libs/modules/governances"
+  resolution: "@gilder/gov-service-module@workspace:libs/modules/gov-service-module"
   dependencies:
     "@gilder/gov-db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:*"
+    "@gilder/utilities": "workspace:^"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
+    "@nestjs/typeorm": ^9.0.1
     "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
     "@swc/core": ^1.3.0
@@ -622,9 +622,6 @@ __metadata:
     typeorm: ^0.3.10
     typescript: ^4.8.4
     vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 
@@ -648,16 +645,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-dataloaders@workspace:*, @gilder/graphql-dataloaders@workspace:libs/graphql/dataloaders":
+"@gilder/graphql-gov-dataloaders@workspace:*, @gilder/graphql-gov-dataloaders@workspace:libs/graphql/gov/dataloaders":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-dataloaders@workspace:libs/graphql/dataloaders"
+  resolution: "@gilder/graphql-gov-dataloaders@workspace:libs/graphql/gov/dataloaders"
   dependencies:
     "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/governances-module": "workspace:*"
-    "@gilder/graphql-models": "workspace:*"
-    "@gilder/proposals-module": "workspace:*"
-    "@gilder/realms-module": "workspace:*"
-    "@gilder/token-owners-module": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/graphql-gov-models": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/common": ^9.0.0
     "@nestjs/core": ^9.0.0
@@ -680,13 +674,73 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/graphql-gov-models@workspace:*, @gilder/graphql-gov-models@workspace:libs/graphql/gov/models":
+  version: 0.0.0-use.local
+  resolution: "@gilder/graphql-gov-models@workspace:libs/graphql/gov/models"
+  dependencies:
+    "@gilder/types": "workspace:*"
+    "@nestjs/common": ^9.0.0
+    "@nestjs/core": ^9.0.0
+    "@nestjs/graphql": ^10.1.2
+    "@swc/core": ^1.3.0
+    graphql: ^16.6.0
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/typeorm": ^9.0.1
+    graphql: ^16.6.0
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.5.6
+    typeorm: ^0.3.9
+  languageName: unknown
+  linkType: soft
+
+"@gilder/graphql-gov-resolvers@workspace:*, @gilder/graphql-gov-resolvers@workspace:libs/graphql/gov/resolvers":
+  version: 0.0.0-use.local
+  resolution: "@gilder/graphql-gov-resolvers@workspace:libs/graphql/gov/resolvers"
+  dependencies:
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-models": "workspace:*"
+    "@gilder/types": "workspace:*"
+    "@nestjs/axios": ^0.1.0
+    "@nestjs/common": ^9.0.0
+    "@nestjs/core": ^9.0.0
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/typeorm": ^9.0.1
+    "@swc/core": ^1.3.0
+    graphql: ^16.6.0
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/typeorm": ^9.0.1
+    graphql: ^16.6.0
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.5.6
+    typeorm: ^0.3.9
+  languageName: unknown
+  linkType: soft
+
 "@gilder/graphql-gov-service@workspace:services/graphql/gov-service":
   version: 0.0.0-use.local
   resolution: "@gilder/graphql-gov-service@workspace:services/graphql/gov-service"
   dependencies:
     "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/graphql-dataloaders": "workspace:*"
-    "@gilder/graphql-resolvers": "workspace:*"
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-resolvers": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
@@ -728,75 +782,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-models@workspace:*, @gilder/graphql-models@workspace:libs/graphql/models":
-  version: 0.0.0-use.local
-  resolution: "@gilder/graphql-models@workspace:libs/graphql/models"
-  dependencies:
-    "@gilder/types": "workspace:*"
-    "@nestjs/common": ^9.0.0
-    "@nestjs/core": ^9.0.0
-    "@nestjs/graphql": ^10.1.2
-    "@swc/core": ^1.3.0
-    graphql: ^16.6.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/graphql": ^10.1.2
-    "@nestjs/typeorm": ^9.0.1
-    graphql: ^16.6.0
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.5.6
-    typeorm: ^0.3.9
-  languageName: unknown
-  linkType: soft
-
-"@gilder/graphql-resolvers@workspace:*, @gilder/graphql-resolvers@workspace:libs/graphql/resolvers":
-  version: 0.0.0-use.local
-  resolution: "@gilder/graphql-resolvers@workspace:libs/graphql/resolvers"
-  dependencies:
-    "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/governances-module": "workspace:*"
-    "@gilder/graphql-dataloaders": "workspace:*"
-    "@gilder/graphql-models": "workspace:*"
-    "@gilder/proposals-module": "workspace:*"
-    "@gilder/realms-module": "workspace:*"
-    "@gilder/token-owners-module": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@nestjs/axios": ^0.1.0
-    "@nestjs/common": ^9.0.0
-    "@nestjs/core": ^9.0.0
-    "@nestjs/graphql": ^10.1.2
-    "@nestjs/typeorm": ^9.0.1
-    "@swc/core": ^1.3.0
-    graphql: ^16.6.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/graphql": ^10.1.2
-    "@nestjs/typeorm": ^9.0.1
-    graphql: ^16.6.0
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.5.6
-    typeorm: ^0.3.9
-  languageName: unknown
-  linkType: soft
-
 "@gilder/graphql-web-service@workspace:services/graphql/web-service":
   version: 0.0.0-use.local
   resolution: "@gilder/graphql-web-service@workspace:services/graphql/web-service"
   dependencies:
-    "@gilder/graphql-dataloaders": "workspace:*"
-    "@gilder/graphql-resolvers": "workspace:*"
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-resolvers": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
@@ -857,13 +848,9 @@ __metadata:
   dependencies:
     "@gilder/constants": "workspace:*"
     "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/governances-module": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
     "@gilder/internal-types": "workspace:*"
-    "@gilder/proposals-module": "workspace:*"
-    "@gilder/realms-module": "workspace:*"
-    "@gilder/rpc-manager": "workspace:*"
     "@gilder/rpc-manager-module": "workspace:*"
-    "@gilder/token-owners-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
     "@nestjs/axios": ^0.1.0
@@ -987,65 +974,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/proposals-module@workspace:*, @gilder/proposals-module@workspace:libs/modules/proposals":
-  version: 0.0.0-use.local
-  resolution: "@gilder/proposals-module@workspace:libs/modules/proposals"
-  dependencies:
-    "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:^"
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    fast-sort: ^3.2.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    typeorm: ^0.3.10
-  languageName: unknown
-  linkType: soft
-
-"@gilder/realms-module@workspace:*, @gilder/realms-module@workspace:libs/modules/realms":
-  version: 0.0.0-use.local
-  resolution: "@gilder/realms-module@workspace:libs/modules/realms"
-  dependencies:
-    "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@nestjs/axios": ^0.1.0
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    typeorm: ^0.3.10
-  languageName: unknown
-  linkType: soft
-
 "@gilder/rpc-manager-module@workspace:*, @gilder/rpc-manager-module@workspace:libs/modules/rpc-manager":
   version: 0.0.0-use.local
   resolution: "@gilder/rpc-manager-module@workspace:libs/modules/rpc-manager"
@@ -1077,34 +1005,6 @@ __metadata:
     vite: ^3.1.4
   peerDependencies:
     "@solana/web3.js": ^1.63.0
-  languageName: unknown
-  linkType: soft
-
-"@gilder/token-owners-module@workspace:*, @gilder/token-owners-module@workspace:libs/modules/token-owners":
-  version: 0.0.0-use.local
-  resolution: "@gilder/token-owners-module@workspace:libs/modules/token-owners"
-  dependencies:
-    "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:*"
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    bn.js: ^5.2.1
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 

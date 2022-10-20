@@ -5,17 +5,11 @@ import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import {
-  ProposalsGraphQLModule,
-  RealmsGraphQLModule,
-  GovernanceProgramsGraphQLModule,
-  TokenOwnersGraphQLModule,
-  GovernancesGraphQLModule,
-} from '@gilder/graphql-resolvers';
+import { GovResolversModule } from '@gilder/graphql-gov-resolvers';
 import {
   DataLoaderModule,
   DataLoaderService,
-} from '@gilder/graphql-dataloaders';
+} from '@gilder/graphql-gov-dataloaders';
 
 @Module({
   imports: [
@@ -41,11 +35,7 @@ import {
       useFactory: (configService: ConfigService) =>
         getDataConfig(configService),
     }),
-    RealmsGraphQLModule,
-    ProposalsGraphQLModule,
-    GovernanceProgramsGraphQLModule,
-    TokenOwnersGraphQLModule,
-    GovernancesGraphQLModule,
+    GovResolversModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule, DataLoaderModule],

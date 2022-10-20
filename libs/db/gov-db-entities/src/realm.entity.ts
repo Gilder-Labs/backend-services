@@ -2,7 +2,7 @@ import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
 import type { Realm as IRealm, RealmConfig } from '@gilder/types';
 
 @Entity()
-@Unique('constraint_name', ['realmPk'])
+@Unique('realm-constraint', ['realmPk'])
 export class Realm implements IRealm<string, string> {
   @PrimaryColumn('text')
   realmPk: string;
