@@ -72,7 +72,7 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
       }),
       inject: [ConfigService],
     }),
-    ProposalsMonitorModule,
+    // ProposalsMonitorModule,
     GovernanceProgramsMonitorModule,
     // RealmsMonitorModule,
     // TokenOwnersModule,

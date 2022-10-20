@@ -34,6 +34,23 @@ export class RealmsService {
         name: x.account.name,
         programPk: x.owner.toBase58(),
         realmPk: x.pubkey.toBase58(),
+        authorityPk: x.account.authority?.toBase58(),
+        communityMintPk: x.account.communityMint.toBase58(),
+        votingProposalCount: x.account.votingProposalCount,
+        config: {
+          useCommunityVoterWeightAddin:
+            x.account.config.useCommunityVoterWeightAddin,
+          useMaxCommunityVoterWeightAddin:
+            x.account.config.useMaxCommunityVoterWeightAddin,
+          councilMintPk: x.account.config.councilMint?.toBase58(),
+          minCommunityTokensToCreateGovernance:
+            x.account.config.minCommunityTokensToCreateGovernance.toString(),
+          communityMintMaxVoteWeightSource: {
+            type: x.account.config.communityMintMaxVoteWeightSource.type,
+            value:
+              x.account.config.communityMintMaxVoteWeightSource.value.toString(),
+          },
+        },
       }));
 
     return this.realmRepo

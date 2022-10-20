@@ -1,11 +1,41 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import type { Realm as IRealm } from '@gilder/types';
+import type {
+  Realm as IRealm,
+  RealmConfig as IRealmConfig,
+} from '@gilder/types';
 import { TokenOwner } from './token-owner.model';
 import { Proposal } from './proposal.model';
 import { Governance } from './governance.model';
 
 @ObjectType()
-export class Realm implements IRealm<string> {
+export class MintMaxVoteWeightSource {
+  @Field()
+  type: number;
+
+  @Field()
+  value: string;
+}
+
+@ObjectType()
+export class RealmConfig implements IRealmConfig<string, string> {
+  @Field({ nullable: true })
+  councilMintPk?: string | undefined;
+
+  @Field(() => MintMaxVoteWeightSource)
+  communityMintMaxVoteWeightSource: MintMaxVoteWeightSource;
+
+  @Field()
+  minCommunityTokensToCreateGovernance: string;
+
+  @Field()
+  useCommunityVoterWeightAddin: boolean;
+
+  @Field()
+  useMaxCommunityVoterWeightAddin: boolean;
+}
+
+@ObjectType()
+export class Realm implements IRealm<string, string> {
   @Field()
   realmPk: string;
 
@@ -23,4 +53,16 @@ export class Realm implements IRealm<string> {
 
   @Field(() => [TokenOwner], { nullable: true })
   members?: TokenOwner[];
+
+  @Field()
+  communityMintPk: string;
+
+  @Field()
+  votingProposalCount: number;
+
+  @Field({ nullable: true })
+  authorityPk?: string | undefined;
+
+  @Field(() => RealmConfig)
+  config: IRealmConfig<string, string>;
 }

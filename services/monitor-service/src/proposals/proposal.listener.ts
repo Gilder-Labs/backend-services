@@ -14,7 +14,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getProposal, getRealm, ProposalState } from '@solana/spl-governance';
+import { getProposal, getRealm, Proposal } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Repository } from 'typeorm';
 import { Queue } from 'bull';
@@ -22,7 +22,7 @@ import { NotificationTypes } from '@gilder/types';
 import type { ProcessNewProposalData } from '@gilder/internal-types';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
-import { tryGetProposalData, tryGetRealmData } from '@gilder/utilities';
+import { parseAccount } from '@gilder/utilities';
 
 @Injectable()
 export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
@@ -146,7 +146,10 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     const subscriptionId = this.wsConnection.onAccountChange(
       proposalPubKey,
       async (accountInfo) => {
-        const proposal = tryGetProposalData(proposalPubKey, accountInfo);
+        const { account: proposal } = parseAccount<Proposal>(
+          proposalPk,
+          accountInfo,
+        );
 
         try {
           if (currentState.state === proposal.account.state) {
@@ -194,7 +197,10 @@ export class ProposalListenerService implements OnModuleInit, OnModuleDestroy {
     return this.wsConnection.onAccountChange(
       realmPubKey,
       async (accountInfo) => {
-        const newRealmData = tryGetRealmData(realmPubKey, accountInfo);
+        const { account: newRealmData } = parseAccount(
+          realm.realmPk,
+          accountInfo,
+        );
         if (
           newRealmData.account.votingProposalCount ===
           currentState.votingProposalCount

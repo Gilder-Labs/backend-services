@@ -1,9 +1,9 @@
 import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
-import type { Realm as IRealm } from '@gilder/types';
+import type { Realm as IRealm, RealmConfig } from '@gilder/types';
 
 @Entity()
 @Unique('constraint_name', ['realmPk'])
-export class Realm implements IRealm<string> {
+export class Realm implements IRealm<string, string> {
   @PrimaryColumn('text')
   realmPk: string;
 
@@ -16,4 +16,16 @@ export class Realm implements IRealm<string> {
     nullable: true,
   })
   name: string;
+
+  @Column('text')
+  communityMintPk: string;
+
+  @Column('int')
+  votingProposalCount: number;
+
+  @Column('text', { nullable: true })
+  authorityPk?: string;
+
+  @Column('jsonb')
+  config: RealmConfig<string, string>;
 }
