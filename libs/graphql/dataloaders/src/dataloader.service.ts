@@ -1,7 +1,8 @@
 import { GovernancesService } from '@gilder/governances-module';
 import { ProposalsService } from '@gilder/proposals-module';
+import { RealmsService } from '@gilder/realms-module';
 import { TokenOwnersService } from '@gilder/token-owners-module';
-import { Governance, Proposal, TokenOwner } from '@gilder/types';
+import { Governance, Proposal, Realm, TokenOwner } from '@gilder/types';
 import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import type { IDataLoaders } from './types';
@@ -17,14 +18,19 @@ export class DataLoaderService {
   @Inject(GovernancesService)
   private governancesService!: GovernancesService;
 
+  @Inject(RealmsService)
+  private realmService!: RealmsService;
+
   getLoaders(): IDataLoaders {
     const tokenOwnersLoader = this._createTokenOwnersLoader();
     const proposalsLoader = this._createProposalsLoader();
     const governancesLoader = this._createGovernancesLoader();
+    const realmsLoader = this._createRealmsLoader();
     return {
       tokenOwnersLoader,
       proposalsLoader,
       governancesLoader,
+      realmsLoader,
     };
   }
 
@@ -46,6 +52,12 @@ export class DataLoaderService {
     return new DataLoader<string, Governance<string, string>[]>(
       (keys: readonly string[]) =>
         this.governancesService.getRealmGovernancesByBatch(keys),
+    );
+  }
+
+  private _createRealmsLoader() {
+    return new DataLoader<string, Realm<string>[]>((keys: readonly string[]) =>
+      this.realmService.getRealmsByBatch(keys),
     );
   }
 }

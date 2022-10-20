@@ -1,14 +1,54 @@
-import { RealmsRestService } from '@gilder/realms-module';
-import { Query, Resolver } from '@nestjs/graphql';
+import { Realm, GovernanceProgram } from '@gilder/graphql-models';
+import { IDataLoaders } from '@gilder/graphql-dataloaders';
+import {
+  Args,
+  Context,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { GetProgramsArgs } from './args/get-programs-args';
 
-@Resolver('GovernanceProgram')
+@Resolver(GovernanceProgram)
 export class GovernanceProgramResolver {
-  constructor(private readonly realmsRestService: RealmsRestService) {}
+  @InjectRepository(Realm)
+  private readonly realmRepo!: Repository<Realm>;
 
-  @Query(() => [String])
-  async governancePrograms(): Promise<string[]> {
-    return (await this.realmsRestService.getSplGovernancePrograms()).map((x) =>
-      x.toBase58(),
-    );
+  @Query(() => [GovernanceProgram])
+  async governancePrograms(): Promise<GovernanceProgram[]> {
+    const uniquePrograms = await this.realmRepo
+      .createQueryBuilder('realm')
+      .select(['realm.programPk'])
+      .distinctOn(['realm.programPk'])
+      .getMany();
+    return uniquePrograms.map<GovernanceProgram>((x) => ({
+      governanceProgramPk: x.programPk,
+    }));
+  }
+
+  @Query(() => [GovernanceProgram], { nullable: true })
+  async getGovernancePrograms(
+    @Args() { governanceProgramPks }: GetProgramsArgs,
+  ) {
+    const uniquePrograms = await this.realmRepo
+      .createQueryBuilder('realm')
+      .select(['realm.programPk'])
+      .where('realm.programPk IN(:...pks)', { pks: governanceProgramPks })
+      .getMany();
+    return uniquePrograms.map<GovernanceProgram>((x) => ({
+      governanceProgramPk: x.programPk,
+    }));
+  }
+
+  @ResolveField('realms', () => [Realm])
+  async realms(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<Realm[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.realmsLoader.load(governanceProgramPk);
   }
 }

@@ -7,7 +7,7 @@ import {
   QueueProcessTypes,
 } from '@gilder/internal-types';
 import { Processor, Process } from '@nestjs/bull';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 import { Job } from 'bull';
 import { DEFAULT_CONNECTION } from 'src/utils/constants';
 

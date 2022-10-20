@@ -57,6 +57,27 @@ export class RealmsService {
     return this.realmRepo.findOneBy({ realmPk: pubKey });
   }
 
+  public async getRealmsByBatch(
+    programPks: readonly string[],
+  ): Promise<(Realm | any)[]> {
+    const realms = await this.getRealmsByProgramPks(programPks);
+    return this._mapResultToIds(programPks, realms);
+  }
+
+  private _mapResultToIds(realmPks: readonly string[], realms: Realm[]) {
+    return realmPks.map(
+      (id) => realms.filter((realm: Realm) => realm.programPk === id) || null,
+    );
+  }
+
+  public getRealmsByProgramPks(programPks: readonly string[]) {
+    return this.realmRepo.find({
+      where: {
+        programPk: In(programPks as string[]),
+      },
+    });
+  }
+
   public getRealmsByPubKey(pubKeys: string[]) {
     return this.realmRepo.find({
       where: {
