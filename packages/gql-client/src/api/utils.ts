@@ -1,4 +1,4 @@
-import { ApiClient } from 'src/client';
+import { ApiClient } from '../client';
 import type { QueryOptions } from '../types';
 
 export const getResults = async <TResult, TVariables = undefined>(

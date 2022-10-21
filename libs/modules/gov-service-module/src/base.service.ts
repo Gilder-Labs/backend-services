@@ -6,6 +6,7 @@ import {
 } from 'typeorm';
 import { BaseGovEntity } from '@gilder/gov-db-entities';
 import { ProgramAccount } from '@solana/spl-governance';
+import { chunkArray } from '@gilder/utilities';
 
 export abstract class BaseService<
   TEntity extends BaseGovEntity & ObjectLiteral,
@@ -57,7 +58,30 @@ export abstract class BaseService<
       entities.map(async (x) => this.mapSolanaEntityToDb(x, ...additionalArgs)),
     );
 
-    return repo.save(dbEntities, { chunk: 1000 });
+    return repo.save(dbEntities);
+  }
+
+  public async upsertFromSolanaEntities(
+    entities: ProgramAccount<TSolanaEntity>[],
+    conflictPaths: (keyof TEntity)[],
+    ...additionalArgs: any[]
+  ) {
+    const repo = this.getRepo();
+    const dbEntities = await Promise.all(
+      entities.map(async (x) => this.mapSolanaEntityToDb(x, ...additionalArgs)),
+    );
+
+    const chunkedEntities = chunkArray(dbEntities, 500);
+    const results = await Promise.all(
+      chunkedEntities.map((x) =>
+        repo.upsert(x, {
+          conflictPaths: conflictPaths as string[],
+          skipUpdateIfNoValuesChanged: true,
+        }),
+      ),
+    );
+
+    return results.flatMap((x) => x);
   }
 
   protected abstract getRepo(): Repository<TEntity>;

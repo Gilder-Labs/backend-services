@@ -4,6 +4,5 @@ export * from './token-owners';
 export * from './governances';
 export * from './gov.module';
 export * from './proposal-transactions';
-export * from './program-metadata';
 export * from './signatory-records';
 export * from './vote-records';

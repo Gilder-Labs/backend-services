@@ -1,5 +1,5 @@
 import { TokenOwner } from '@gilder/types';
-import { GET_ALL_TOKEN_OWNERS } from 'src/queries/token-owners';
+import { GET_ALL_TOKEN_OWNERS } from '../../queries/token-owners';
 import { ApiClient } from '../../client';
 import { getResults } from '../utils';
 import { transformTokenOwner } from './utils';

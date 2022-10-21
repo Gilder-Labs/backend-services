@@ -9,9 +9,12 @@ import { RpcManagerModule } from '@gilder/rpc-manager-module';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 import { GovernanceProgramsMonitorModule } from './governance-programs';
 import { RealmSubscriber, ProposalSubscriber } from './subscribers';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventListenersModule } from './event-listeners';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -69,13 +72,9 @@ import { RealmSubscriber, ProposalSubscriber } from './subscribers';
       }),
       inject: [ConfigService],
     }),
-    // ProposalsMonitorModule,
     GovernanceProgramsMonitorModule,
-    // RealmsMonitorModule,
-    // TokenOwnersModule,
-    // GovernanceModule,
+    EventListenersModule,
   ],
-  controllers: [],
   providers: [RealmSubscriber, ProposalSubscriber],
 })
 export class AppModule {}

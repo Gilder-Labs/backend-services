@@ -1,6 +1,5 @@
 import {
   Governance,
-  NotificationSubscription,
   Proposal,
   ProposalTransaction,
   Realm,
@@ -37,7 +36,6 @@ export const getDataConfig = (
       SignatoryRecord,
       ProposalTransaction,
       VoteRecord,
-      NotificationSubscription,
     ],
     migrations: [],
     subscribers: [],

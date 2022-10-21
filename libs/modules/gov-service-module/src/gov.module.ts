@@ -10,7 +10,6 @@ import { GovernancesService, GovernancesServiceModule } from './governances';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   Governance,
-  ProgramMetadata,
   Proposal,
   ProposalTransaction,
   Realm,
@@ -28,10 +27,6 @@ import {
   SignatoryRecordsServiceModule,
 } from './signatory-records';
 import { VoteRecordsService, VoteRecordsServiceModule } from './vote-records';
-import {
-  ProgramMetadataService,
-  ProgramMetadataServiceModule,
-} from './program-metadata';
 
 @Module({
   imports: [
@@ -44,7 +39,6 @@ import {
       VoteRecord,
       SignatoryRecord,
       ProposalTransaction,
-      ProgramMetadata,
     ]),
     GovernancesServiceModule,
     ProposalsServiceModule,
@@ -53,7 +47,6 @@ import {
     ProposalTransactionsServiceModule,
     SignatoryRecordsServiceModule,
     VoteRecordsServiceModule,
-    ProgramMetadataServiceModule,
   ],
   providers: [
     RealmsService,
@@ -64,7 +57,6 @@ import {
     ProposalTransactionsService,
     SignatoryRecordsService,
     VoteRecordsService,
-    ProgramMetadataService,
   ],
   exports: [
     RealmsRestService,
@@ -75,7 +67,6 @@ import {
     ProposalTransactionsService,
     SignatoryRecordsService,
     VoteRecordsService,
-    ProgramMetadataService,
   ],
 })
 export class GovServiceModule {}
