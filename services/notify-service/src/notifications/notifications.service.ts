@@ -23,7 +23,7 @@ export class NotificationsService {
 
   public getNotifySubscriptions(type: NotificationType, realmPk: string) {
     return this.subscriptionRepo.find({
-      where: { type: type, realmPk: realmPk },
+      where: { type: type, realmPk: realmPk, isActive: true },
     });
   }
 
