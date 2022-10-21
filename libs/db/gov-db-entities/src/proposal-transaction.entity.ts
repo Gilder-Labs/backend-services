@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
 import type {
   InstructionData,
   ProposalTransaction as IProposalTransaction,
@@ -10,16 +10,13 @@ export class ProposalTransaction
   extends BaseGovEntity
   implements IProposalTransaction<string, string>
 {
-  @PrimaryGeneratedColumn('uuid')
-  proposalTransactionId: string;
-
   @Column('int')
   accountType: number;
 
-  @Column('text')
+  @PrimaryColumn('text')
   proposalPk: string;
 
-  @Column('int')
+  @PrimaryColumn('int')
   instructionIndex: number;
 
   @Column('jsonb')

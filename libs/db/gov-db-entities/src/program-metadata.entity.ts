@@ -1,21 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import type { PrograMetadata as IProgramMetadata } from '@gilder/types';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
+import type { ProgramMetadata as IProgramMetadata } from '@gilder/types';
 import { BaseGovEntity } from './base.entity';
 
 @Entity()
 export class ProgramMetadata
   extends BaseGovEntity
-  implements IProgramMetadata<string, string>
+  implements IProgramMetadata<string>
 {
-  @PrimaryGeneratedColumn('uuid')
-  programMetadataId: string;
+  @PrimaryColumn('text')
+  declare programPk: string;
 
   @Column('int')
   accountType: number;
 
   @Column('text')
-  updatedAt: string;
+  updatedAt: Date;
 
-  @Column('text')
+  @PrimaryColumn('text')
   version: string;
 }

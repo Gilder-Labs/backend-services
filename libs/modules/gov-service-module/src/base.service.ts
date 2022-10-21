@@ -11,56 +11,59 @@ export abstract class BaseService<
   TEntity extends BaseGovEntity & ObjectLiteral,
   TSolanaEntity,
 > {
-  abstract get conflictPaths(): (keyof TEntity)[];
-
-  getBy(
+  public getBy(
     where: FindOptionsWhere<TEntity>,
     select?: FindOptionsSelect<TEntity>,
   ): Promise<TEntity | null> {
     return this.getRepo().findOne({ where, select });
   }
 
-  filterBy(
+  public filterBy(
     where: FindOptionsWhere<TEntity>,
     select?: FindOptionsSelect<TEntity>,
   ): Promise<TEntity[]> {
     return this.getRepo().find({ where, select });
   }
 
-  getAll(select?: FindOptionsSelect<TEntity>): Promise<TEntity[]> {
+  public getAll(select?: FindOptionsSelect<TEntity>): Promise<TEntity[]> {
     return this.getRepo().find({ select });
   }
 
-  getAllByProgramPk(programPk: string): Promise<TEntity[]> {
+  public getAllByProgramPk(programPk: string): Promise<TEntity[]> {
     return (this.getRepo() as Repository<any>).find({ where: { programPk } });
   }
 
-  addOrUpdateEntity(entity: TEntity) {
+  public addOrUpdateEntity(entity: TEntity) {
     return this.addOrUpdateEntities(entity);
   }
 
-  addOrUpdateEntities(...entities: TEntity[]) {
+  public addOrUpdateEntities(...entities: TEntity[]) {
     return this.getRepo().save(entities);
   }
 
-  async addOrUpdateFromSolanaEntity(entity: ProgramAccount<TSolanaEntity>) {
-    return this.addOrUpdateFromSolanaEntities(entity);
+  public async addOrUpdateFromSolanaEntity(
+    entity: ProgramAccount<TSolanaEntity>,
+    ...additionalArgs: any[]
+  ) {
+    return this.addOrUpdateFromSolanaEntities([entity], ...additionalArgs);
   }
 
-  async addOrUpdateFromSolanaEntities(
-    ...entities: ProgramAccount<TSolanaEntity>[]
+  public async addOrUpdateFromSolanaEntities(
+    entities: ProgramAccount<TSolanaEntity>[],
+    ...additionalArgs: any[]
   ) {
     const repo = this.getRepo();
     const dbEntities = await Promise.all(
-      entities.map(async (x) => this.mapSolanaEntityToDb(x)),
+      entities.map(async (x) => this.mapSolanaEntityToDb(x, ...additionalArgs)),
     );
 
-    return repo.save(dbEntities);
+    return repo.save(dbEntities, { chunk: 1000 });
   }
 
-  abstract getRepo(): Repository<TEntity>;
+  protected abstract getRepo(): Repository<TEntity>;
 
-  abstract mapSolanaEntityToDb(
+  protected abstract mapSolanaEntityToDb(
     solanaEntity: ProgramAccount<TSolanaEntity>,
+    ...args: any[]
   ): Promise<TEntity> | TEntity;
 }

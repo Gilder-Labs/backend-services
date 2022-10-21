@@ -19,6 +19,19 @@ import {
   VoteRecord,
 } from '@gilder/gov-db-entities';
 import { HttpModule } from '@nestjs/axios';
+import {
+  ProposalTransactionsService,
+  ProposalTransactionsServiceModule,
+} from './proposal-transactions';
+import {
+  SignatoryRecordsService,
+  SignatoryRecordsServiceModule,
+} from './signatory-records';
+import { VoteRecordsService, VoteRecordsServiceModule } from './vote-records';
+import {
+  ProgramMetadataService,
+  ProgramMetadataServiceModule,
+} from './program-metadata';
 
 @Module({
   imports: [
@@ -37,6 +50,10 @@ import { HttpModule } from '@nestjs/axios';
     ProposalsServiceModule,
     RealmsServiceModule,
     TokenOwnersServiceModule,
+    ProposalTransactionsServiceModule,
+    SignatoryRecordsServiceModule,
+    VoteRecordsServiceModule,
+    ProgramMetadataServiceModule,
   ],
   providers: [
     RealmsService,
@@ -44,6 +61,10 @@ import { HttpModule } from '@nestjs/axios';
     TokenOwnersService,
     ProposalsService,
     GovernancesService,
+    ProposalTransactionsService,
+    SignatoryRecordsService,
+    VoteRecordsService,
+    ProgramMetadataService,
   ],
   exports: [
     RealmsRestService,
@@ -51,6 +72,10 @@ import { HttpModule } from '@nestjs/axios';
     TokenOwnersService,
     ProposalsService,
     GovernancesService,
+    ProposalTransactionsService,
+    SignatoryRecordsService,
+    VoteRecordsService,
+    ProgramMetadataService,
   ],
 })
 export class GovServiceModule {}

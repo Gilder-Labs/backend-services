@@ -1,120 +1,69 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, InsertResult, Repository } from 'typeorm';
-import { Proposal, Realm } from '@gilder/gov-db-entities';
+import { Repository } from 'typeorm';
+import { Proposal } from '@gilder/gov-db-entities';
 import {
   ProgramAccount,
   Proposal as SolanaProposal,
+  Governance as SolanaGovernance,
 } from '@solana/spl-governance';
-import { sort } from 'fast-sort';
-import { ProposalRPCService } from './proposals.rpc-service';
-import { Connection } from '@solana/web3.js';
+import { BaseService } from '../base.service';
 
 @Injectable()
-export class ProposalsService {
-  constructor(
-    @InjectRepository(Proposal)
-    private readonly proposalRepo: Repository<Proposal>,
-    private readonly proposalRPCService: ProposalRPCService,
-  ) {}
+export class ProposalsService extends BaseService<Proposal, SolanaProposal> {
+  @InjectRepository(Proposal)
+  private readonly proposalRepo: Repository<Proposal>;
 
-  public getAllProposals() {
-    return this.proposalRepo.find();
+  protected getRepo(): Repository<Proposal> {
+    return this.proposalRepo;
   }
 
-  public getAllProposalsInRealm(realmPk: string) {
-    return this.proposalRepo.find({
-      where: {
-        realmPk: realmPk,
-      },
-    });
-  }
+  protected mapSolanaEntityToDb(
+    { account, owner, pubkey }: ProgramAccount<SolanaProposal>,
+    governance: ProgramAccount<SolanaGovernance>,
+  ): Proposal | Promise<Proposal> {
+    let estimatedVoteCompletionAt: number | undefined = undefined;
 
-  public async getRealmProposalsByBatch(
-    realmPks: readonly string[],
-  ): Promise<(Proposal | any)[]> {
-    const proposals = await this.getAllProposalsByRealmPks(realmPks);
-    return this._mapResultToIds(realmPks, proposals);
-  }
-
-  private _mapResultToIds(realmPks: readonly string[], proposals: Proposal[]) {
-    return realmPks.map(
-      (id) =>
-        proposals.filter((proposal: Proposal) => proposal.realmPk === id) ||
-        null,
-    );
-  }
-
-  public getAllProposalsByRealmPks(realmPks: readonly string[]) {
-    return this.proposalRepo.find({
-      where: {
-        realmPk: In(realmPks as string[]),
-      },
-    });
-  }
-
-  public async foundNewProposals(
-    realmPk: string,
-    proposals: ProgramAccount<SolanaProposal>[],
-  ): Promise<{
-    found: boolean;
-    newProposals: ProgramAccount<SolanaProposal>[];
-  }> {
-    const mostRecentProposal = await this.proposalRepo.findOne({
-      where: { realmPk: realmPk },
-      order: { draftAt: 'DESC' },
-    });
-
-    if (!mostRecentProposal) {
-      return { found: false, newProposals: [] };
+    if (account.votingAt) {
+      estimatedVoteCompletionAt =
+        account.votingAt.toNumber() +
+        account.getTimeToVoteEnd(governance.account);
     }
 
-    const sortedProposals = sort(proposals).desc((x) =>
-      x.account.draftAt.toNumber(),
-    );
-
-    const timestamp = Math.floor(mostRecentProposal.draftAt.getTime() / 1000);
-    const newerProposals = sortedProposals.filter(
-      (x) => x.account.draftAt.toNumber() > timestamp,
-    );
-    return { found: newerProposals.length > 0, newProposals: newerProposals };
-  }
-
-  public async addOrUpdateProposals(
-    realm: Pick<Realm, 'programPk' | 'realmPk'>,
-    proposals: ProgramAccount<SolanaProposal>[],
-    connection: Connection,
-  ): Promise<InsertResult> {
-    // const dbProposals =
-    //   await this.proposalRPCService.convertSolanaProposalToEntity(
-    //     realm,
-    //     proposals,
-    //     connection,
-    //   );
-    return this.proposalRepo
-      .createQueryBuilder()
-      .insert()
-      .into(Proposal)
-      .values([])
-      .orUpdate(
-        [
-          'descriptionLink',
-          'name',
-          'state',
-          'draftAt',
-          'startVotingAt',
-          'signingOffAt',
-          'votingCompletedAt',
-          'estimatedVoteCompletionAt',
-          'votingAt',
-          'closedAt',
-          'executingAt',
-        ],
-        ['proposalPk'],
-        {
-          skipUpdateIfNoValuesChanged: true,
-        },
-      )
-      .execute();
+    return {
+      governancePk: account.governance.toBase58(),
+      programPk: owner.toBase58(),
+      realmPk: governance.account.realm.toBase58(),
+      proposalPk: pubkey.toBase58(),
+      descriptionLink: account.descriptionLink,
+      name: account.name,
+      state: account.state,
+      draftAt: new Date(account.draftAt.toNumber() * 1000),
+      startVotingAt:
+        (account.startVotingAt &&
+          new Date(account.startVotingAt.toNumber() * 1000)) ??
+        undefined,
+      signingOffAt:
+        (account.signingOffAt &&
+          new Date(account.signingOffAt.toNumber() * 1000)) ??
+        undefined,
+      votingCompletedAt:
+        (account.votingCompletedAt &&
+          new Date(account.votingCompletedAt.toNumber() * 1000)) ??
+        undefined,
+      votingAt:
+        (account.votingAt && new Date(account.votingAt.toNumber() * 1000)) ??
+        undefined,
+      estimatedVoteCompletionAt: estimatedVoteCompletionAt
+        ? new Date(estimatedVoteCompletionAt * 1000)
+        : undefined,
+      closedAt:
+        (account.closedAt && new Date(account.closedAt.toNumber() * 1000)) ??
+        undefined,
+      executingAt:
+        (account.executingAt &&
+          new Date(account.executingAt.toNumber() * 1000)) ??
+        undefined,
+    };
   }
 }

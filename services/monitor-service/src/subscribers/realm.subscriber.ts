@@ -18,10 +18,10 @@ export class RealmSubscriber implements EntitySubscriberInterface<Realm> {
   }
 
   beforeInsert(event: InsertEvent<Realm>) {
-    console.log(`BEFORE REALM INSERTED: `, event.entity);
+    // console.log(`BEFORE REALM INSERTED: `, event.entity);
   }
 
   beforeUpdate(event: UpdateEvent<Realm>): void | Promise<any> {
-    console.log(`BEFORE REALM UPDATED: `, event.entity);
+    // console.log(`BEFORE REALM UPDATED: `, event.entity);
   }
 }

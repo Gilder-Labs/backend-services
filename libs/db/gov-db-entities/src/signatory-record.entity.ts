@@ -3,7 +3,6 @@ import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 import { BaseGovEntity } from './base.entity';
 
 @Entity()
-@Unique('signatory-record-constraint', ['signatoryPk', 'proposalPk'])
 export class SignatoryRecord
   extends BaseGovEntity
   implements ISignatoryRecord<string>
@@ -11,7 +10,7 @@ export class SignatoryRecord
   @Column('int')
   accountType: number;
 
-  @Column('text')
+  @PrimaryColumn('text')
   proposalPk: string;
 
   @PrimaryColumn('text')

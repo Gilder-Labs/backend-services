@@ -1,9 +1,13 @@
 import {
   GovernancesService,
+  ProgramMetadataService,
   ProposalsService,
+  ProposalTransactionsService,
   RealmsRestService,
   RealmsService,
+  SignatoryRecordsService,
   TokenOwnersService,
+  VoteRecordsService,
 } from '@gilder/gov-service-module';
 import { RpcManagerService } from '@gilder/rpc-manager-module';
 import {
@@ -20,11 +24,11 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import {
-  getGovernance,
   Proposal,
   Governance,
   ProgramAccount,
   TokenOwnerRecord,
+  getGovernance,
 } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { groupBy } from 'lodash';
@@ -54,6 +58,18 @@ export class GovernanceProgramsMonitorService
 
   @Inject(TokenOwnersService)
   private readonly tokenOwnersService: TokenOwnersService;
+
+  @Inject(ProposalTransactionsService)
+  private readonly proposalTransactionService: ProposalTransactionsService;
+
+  @Inject(VoteRecordsService)
+  private readonly voteRecordsService: VoteRecordsService;
+
+  @Inject(SignatoryRecordsService)
+  private readonly signatoryRecordsService: SignatoryRecordsService;
+
+  @Inject(ProgramMetadataService)
+  private readonly programMetadataService: ProgramMetadataService;
 
   constructor(rpcManager: RpcManagerService) {
     this.wsConnection = rpcManager.getConnection(WS_CONNECTION);
@@ -94,42 +110,37 @@ export class GovernanceProgramsMonitorService
   private async processData(type: AccountType, account: ProgramAccount<any>) {
     switch (type) {
       case 'realm':
-        this.logger.log(`Adding/Updating Realm: ${JSON.stringify(account)}`);
-        // await this.realmsService.addOrUpdateRealms([account]);
+        await this.realmsService.addOrUpdateFromSolanaEntity(account);
         return;
       case 'proposal':
-        this.logger.log(`Adding/Updating Proposal: ${JSON.stringify(account)}`);
-        const proposal = account.account as Proposal;
-        await this.proposalsService.addOrUpdateProposals(
-          {
-            realmPk: (
-              await getGovernance(this.connection, proposal.governance)
-            ).account.realm.toBase58(),
-            programPk: account.owner.toBase58(),
-          },
-          [account],
+        const governance = await getGovernance(
           this.connection,
+          account.account.governance,
+        );
+        await this.proposalsService.addOrUpdateFromSolanaEntity(
+          account,
+          governance,
         );
         return;
       case 'governance':
-        this.logger.log(
-          `Adding/Updating Governance: ${JSON.stringify(account)}`,
-        );
-        const governance = account.account as Governance;
-        await this.governanceService.addOrUpdateGovernances(
-          governance.realm.toBase58(),
-          [account],
-        );
+        await this.governanceService.addOrUpdateFromSolanaEntity(account);
         return;
       case 'token-owner':
-        this.logger.log(
-          `Adding/Updating Token Owner: ${JSON.stringify(account)}`,
+        await this.tokenOwnersService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'program-metadata':
+        await this.programMetadataService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'proposal-transaction':
+        await this.proposalTransactionService.addOrUpdateFromSolanaEntity(
+          account,
         );
-        const tokenOwner = account.account as TokenOwnerRecord;
-        await this.tokenOwnersService.addOrUpdateTokenOwners(
-          tokenOwner.realm.toBase58(),
-          [account],
-        );
+        return;
+      case 'signatory-record':
+        await this.signatoryRecordsService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'vote-record':
+        await this.voteRecordsService.addOrUpdateFromSolanaEntity(account);
         return;
     }
   }
@@ -138,17 +149,10 @@ export class GovernanceProgramsMonitorService
     const governanceProgramPks =
       await this.realmsRestService.getSplGovernancePrograms();
 
-    // const foo = await this.realmsService.getAll();
-    // const realm = foo[0];
-    // await this.realmsService.addOrUpdateEntity({
-    //   ...realm,
-    //   name: 'Wooooooooooooooooo',
-    // });
-
-    // for (const programPk of governanceProgramPks) {
-    //   const subId = this.addGovernanceProgramSubscriber(programPk);
-    //   this.subscriptionIds.push(subId);
-    // }
+    for (const programPk of governanceProgramPks) {
+      const subId = this.addGovernanceProgramSubscriber(programPk);
+      this.subscriptionIds.push(subId);
+    }
 
     this.seedDatabase(governanceProgramPks.map((x) => x.toBase58()));
   }
@@ -161,57 +165,66 @@ export class GovernanceProgramsMonitorService
     this.logger.log('Finished querying!');
 
     this.logger.log(
-      `Discovered...\n${allData.realm.length} Realms\n${allData['token-owner'].length} Token Owners\n${allData.governance.length} Governances\n${allData.proposal.length} Proposals`,
+      `
+Discovered...
+${allData.realm.length} Realms
+${allData['token-owner'].length} Token Owners
+${allData.governance.length} Governances
+${allData.proposal.length} Proposals
+${allData['program-metadata'].length} Program Metadata
+${allData['proposal-transaction'].length} Proposal Transactions
+${allData['signatory-record'].length} Signatory Records
+${allData['vote-record'].length} Vote Records`,
     );
 
     for (const [key, entities] of Object.entries(allData)) {
       const type = key as AccountType;
       switch (type) {
-        case 'realm':
-          await this.realmsService.addOrUpdateFromSolanaEntities(...entities);
+        case 'proposal':
+          const groupedProposalsByGovernances = groupBy(
+            entities as ProgramAccount<Proposal>[],
+            (x) => x.account.governance.toBase58(),
+          );
+          const governances = allData['governance'];
+          for (const [key, proposals] of Object.entries(
+            groupedProposalsByGovernances,
+          )) {
+            const gov = governances.find(
+              (x) => x.pubkey.toBase58() === key,
+            ) as ProgramAccount<Governance>;
+            await this.proposalsService.addOrUpdateFromSolanaEntities(
+              proposals,
+              gov,
+            );
+          }
           continue;
-        //   case 'proposal':
-        //     const groupedProposalsByGovernances = groupBy(
-        //       entities as ProgramAccount<Proposal>[],
-        //       (x) => x.account.governance.toBase58(),
-        //     );
-        //     const governances = allData['governance'];
-        //     for (const [key, proposals] of Object.entries(
-        //       groupedProposalsByGovernances,
-        //     )) {
-        //       const gov = governances.find(
-        //         (x) => x.pubkey.toBase58() === key,
-        //       ) as ProgramAccount<Governance>;
-        //       const realmPk = gov.account.realm.toBase58();
-        //       await this.proposalsService.addOrUpdateProposals(
-        //         { programPk: gov.owner.toBase58(), realmPk },
-        //         proposals,
-        //         this.connection,
-        //       );
-        //     }
-        //     continue;
-        //   case 'governance':
-        //     const groupedGovernancesByRealm = groupBy(
-        //       entities as ProgramAccount<Governance>[],
-        //       (x) => x.account.realm.toBase58(),
-        //     );
-        //     for (const [key, value] of Object.entries(
-        //       groupedGovernancesByRealm,
-        //     )) {
-        //       await this.governanceService.addOrUpdateGovernances(key, value);
-        //     }
-        //     continue;
-        //   case 'token-owner':
-        //     const groupedTokenOwnersByRealm = groupBy(
-        //       entities as ProgramAccount<TokenOwnerRecord>[],
-        //       (x) => x.account.realm.toBase58(),
-        //     );
-        //     for (const [key, value] of Object.entries(
-        //       groupedTokenOwnersByRealm,
-        //     )) {
-        //       await this.tokenOwnersService.addOrUpdateTokenOwners(key, value);
-        //     }
-        //     continue;
+        case 'governance':
+          await this.governanceService.addOrUpdateFromSolanaEntities(entities);
+          continue;
+        case 'token-owner':
+          await this.tokenOwnersService.addOrUpdateFromSolanaEntities(entities);
+          continue;
+        case 'realm':
+          await this.realmsService.addOrUpdateFromSolanaEntities(entities);
+          continue;
+        case 'program-metadata':
+          await this.programMetadataService.addOrUpdateFromSolanaEntities(
+            entities,
+          );
+          continue;
+        case 'proposal-transaction':
+          await this.proposalTransactionService.addOrUpdateFromSolanaEntities(
+            entities,
+          );
+          continue;
+        case 'signatory-record':
+          await this.signatoryRecordsService.addOrUpdateFromSolanaEntities(
+            entities,
+          );
+          continue;
+        case 'vote-record':
+          await this.voteRecordsService.addOrUpdateFromSolanaEntities(entities);
+          continue;
       }
     }
 

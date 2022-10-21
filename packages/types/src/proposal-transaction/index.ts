@@ -10,7 +10,6 @@ export interface AccountMetaData<TKey = PublicKey> {
 export interface InstructionData<TKey = PublicKey> {
   programId: TKey;
   accounts: AccountMetaData<TKey>[];
-  data: Uint8Array;
 }
 
 export interface ProposalTransaction<TKey = PublicKey, TNum = BN> {
