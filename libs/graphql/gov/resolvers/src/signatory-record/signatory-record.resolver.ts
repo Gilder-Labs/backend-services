@@ -1,13 +1,15 @@
-import { ProposalsService } from '@gilder/gov-service-module';
-import { Proposal } from '@gilder/graphql-gov-models';
+import { SignatoryRecordsService } from '@gilder/gov-service-module';
+import { Proposal, SignatoryRecord } from '@gilder/graphql-gov-models';
 import { Query, Resolver } from '@nestjs/graphql';
 
 @Resolver(Proposal)
 export class SignatoryRecordResolver {
-  constructor(private readonly proposalService: ProposalsService) {}
+  constructor(
+    private readonly signatoryRecordsService: SignatoryRecordsService,
+  ) {}
 
-  @Query(() => [Proposal])
-  async proposals(): Promise<Proposal[]> {
-    return this.proposalService.getAll();
+  @Query(() => [SignatoryRecord])
+  async signatoryRecords(): Promise<SignatoryRecord[]> {
+    return this.signatoryRecordsService.getAll();
   }
 }

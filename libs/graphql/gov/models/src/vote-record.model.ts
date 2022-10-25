@@ -6,6 +6,7 @@ import type {
 } from '@gilder/types';
 import { Field, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 export class VoteChoice implements IVoteChoice {
   @Field()
   rank: number;
@@ -19,8 +20,8 @@ export class Vote implements IVote {
   @Field()
   voteType: number;
 
-  // @Field(() => [VoteChoice], { nullable: true })
-  // approveChoices?: VoteChoice[];
+  @Field(() => [VoteChoice], { nullable: true })
+  approveChoices?: VoteChoice[];
 
   @Field(() => Boolean, { nullable: true })
   deny?: boolean;

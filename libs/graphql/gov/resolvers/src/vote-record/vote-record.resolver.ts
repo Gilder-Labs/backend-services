@@ -7,7 +7,7 @@ export class VoteRecordResolver {
   constructor(private readonly voteRecordService: VoteRecordsService) {}
 
   @Query(() => [VoteRecord])
-  async proposals(): Promise<VoteRecord[]> {
+  async voteRecords(): Promise<VoteRecord[]> {
     return this.voteRecordService.getAll();
   }
 }
