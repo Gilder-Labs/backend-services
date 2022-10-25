@@ -1,4 +1,4 @@
-import { NotificationSubscription, Realm } from '@gilder/db-entities';
+import { NotificationSubscription, Realm } from '@gilder/gov-db-entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { SubscriptionsController } from './subscriptions.controller';

@@ -1,5 +1,5 @@
 import { NOTIFICATION_QUEUE } from '@gilder/constants';
-import { NotificationSubscription } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/gov-db-entities';
 import { HttpModule } from '@nestjs/axios';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';

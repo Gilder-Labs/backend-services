@@ -1,4 +1,4 @@
-import { ApiClient } from 'src/client';
+import { ApiClient } from '../client';
 import type { QueryOptions } from '../types';
 
 const getRawResults = <TVars = undefined, TResult = any>(

@@ -1,8 +1,9 @@
 import { PublicKey } from '@solana/web3.js';
 
 export interface Proposal<TKey = PublicKey> {
-  proposalPk: TKey;
   programPk: TKey;
+  proposalPk: TKey;
+  governancePk: TKey;
   realmPk: TKey;
   name: string;
   state: number;

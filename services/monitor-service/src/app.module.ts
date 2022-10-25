@@ -4,17 +4,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { ScheduleModule } from '@nestjs/schedule';
-import { RealmsMonitorModule } from './realms';
-import { ProposalsMonitorModule } from './proposals';
-import { TokenOwnersModule } from './token-owners/token-owners.module';
 import { BullModule } from '@nestjs/bull';
-import { GovernanceModule } from './governances';
 import { RpcManagerModule } from '@gilder/rpc-manager-module';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 import { GovernanceProgramsMonitorModule } from './governance-programs';
+import { RealmSubscriber, ProposalSubscriber } from './subscribers';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventListenersModule } from './event-listeners';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: true,
@@ -72,13 +72,9 @@ import { GovernanceProgramsMonitorModule } from './governance-programs';
       }),
       inject: [ConfigService],
     }),
-    ProposalsMonitorModule,
     GovernanceProgramsMonitorModule,
-    // RealmsMonitorModule,
-    // TokenOwnersModule,
-    // GovernanceModule,
+    EventListenersModule,
   ],
-  controllers: [],
-  providers: [],
+  providers: [RealmSubscriber, ProposalSubscriber],
 })
 export class AppModule {}

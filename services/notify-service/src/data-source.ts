@@ -1,4 +1,4 @@
-import { NotificationSubscription } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/gov-db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';

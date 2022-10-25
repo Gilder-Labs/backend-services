@@ -1,4 +1,4 @@
-import { NotificationSubscription } from '@gilder/db-entities';
+import { NotificationSubscription } from '@gilder/gov-db-entities';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,7 +23,7 @@ export class NotificationsService {
 
   public getNotifySubscriptions(type: NotificationType, realmPk: string) {
     return this.subscriptionRepo.find({
-      where: { type: type, realmPk: realmPk },
+      where: { type: type, realmPk: realmPk, isActive: true },
     });
   }
 

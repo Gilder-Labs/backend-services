@@ -127,9 +127,9 @@ __metadata:
   linkType: hard
 
 "@apollo/utils.logger@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@apollo/utils.logger@npm:1.0.0"
-  checksum: 9be2b269d6d1cf2235c7b49a5edbb36c87589facf79516521df66d0c782709b7301a1365693b6e15d77f482d231bbb0fea4c2ae42faac7068cc4e014ce338c68
+  version: 1.0.1
+  resolution: "@apollo/utils.logger@npm:1.0.1"
+  checksum: 621bd80ce43a73f97342568b712fd46fee9041212d4c7264a63676e29d17ab292773c3c21b91f8a2dffb1fe7931ece3954886bd04e3100e1765c6d05e231e2a7
   languageName: node
   linkType: hard
 
@@ -578,9 +578,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/db-entities@workspace:*, @gilder/db-entities@workspace:libs/db-entities":
+"@gilder/gov-db-entities@workspace:*, @gilder/gov-db-entities@workspace:libs/db/gov-db-entities":
   version: 0.0.0-use.local
-  resolution: "@gilder/db-entities@workspace:libs/db-entities"
+  resolution: "@gilder/gov-db-entities@workspace:libs/db/gov-db-entities"
   dependencies:
     "@gilder/types": "workspace:*"
     "@solana/web3.js": ^1.63.1
@@ -600,17 +600,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/governances-module@workspace:*, @gilder/governances-module@workspace:libs/modules/governances":
+"@gilder/gov-service-module@workspace:*, @gilder/gov-service-module@workspace:libs/modules/gov-service-module":
   version: 0.0.0-use.local
-  resolution: "@gilder/governances-module@workspace:libs/modules/governances"
+  resolution: "@gilder/gov-service-module@workspace:libs/modules/gov-service-module"
   dependencies:
-    "@gilder/db-entities": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:*"
+    "@gilder/utilities": "workspace:^"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
+    "@nestjs/typeorm": ^9.0.1
     "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
     "@swc/core": ^1.3.0
@@ -622,9 +622,6 @@ __metadata:
     typeorm: ^0.3.10
     typescript: ^4.8.4
     vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 
@@ -648,9 +645,38 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-models@workspace:*, @gilder/graphql-models@workspace:libs/graphql/models":
+"@gilder/graphql-gov-dataloaders@workspace:*, @gilder/graphql-gov-dataloaders@workspace:libs/graphql/gov/dataloaders":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-models@workspace:libs/graphql/models"
+  resolution: "@gilder/graphql-gov-dataloaders@workspace:libs/graphql/gov/dataloaders"
+  dependencies:
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/graphql-gov-models": "workspace:*"
+    "@gilder/types": "workspace:*"
+    "@nestjs/common": ^9.0.0
+    "@nestjs/core": ^9.0.0
+    "@nestjs/graphql": ^10.1.2
+    "@swc/core": ^1.3.0
+    dataloader: ^2.1.0
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typescript: ^4.8.4
+    vite: ^3.1.4
+  peerDependencies:
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/typeorm": ^9.0.1
+    graphql: ^16.6.0
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.5.6
+    typeorm: ^0.3.9
+  languageName: unknown
+  linkType: soft
+
+"@gilder/graphql-gov-models@workspace:*, @gilder/graphql-gov-models@workspace:libs/graphql/gov/models":
+  version: 0.0.0-use.local
+  resolution: "@gilder/graphql-gov-models@workspace:libs/graphql/gov/models"
   dependencies:
     "@gilder/types": "workspace:*"
     "@nestjs/common": ^9.0.0
@@ -675,16 +701,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-resolvers@workspace:*, @gilder/graphql-resolvers@workspace:libs/graphql/resolvers":
+"@gilder/graphql-gov-resolvers@workspace:*, @gilder/graphql-gov-resolvers@workspace:libs/graphql/gov/resolvers":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-resolvers@workspace:libs/graphql/resolvers"
+  resolution: "@gilder/graphql-gov-resolvers@workspace:libs/graphql/gov/resolvers"
   dependencies:
-    "@gilder/db-entities": "workspace:*"
-    "@gilder/governances-module": "workspace:*"
-    "@gilder/graphql-models": "workspace:*"
-    "@gilder/proposals-module": "workspace:*"
-    "@gilder/realms-module": "workspace:*"
-    "@gilder/token-owners-module": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-models": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/axios": ^0.1.0
     "@nestjs/common": ^9.0.0
@@ -707,18 +731,16 @@ __metadata:
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
     typeorm: ^0.3.9
-  peerDependenciesMeta:
-    typeorm:
-      optional: false
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-service@workspace:services/graphql-service":
+"@gilder/graphql-gov-service@workspace:services/graphql/gov-service":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-service@workspace:services/graphql-service"
+  resolution: "@gilder/graphql-gov-service@workspace:services/graphql/gov-service"
   dependencies:
-    "@gilder/db-entities": "workspace:*"
-    "@gilder/graphql-resolvers": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-resolvers": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
@@ -736,11 +758,58 @@ __metadata:
     "@types/node": ^18.7.19
     "@typescript-eslint/eslint-plugin": ^5.38.0
     "@typescript-eslint/parser": ^5.38.0
-    apollo-server: ^3.10.2
-    apollo-server-express: ^3.10.2
+    apollo-server-express: ^3.10.3
     class-transformer: ^0.5.1
     class-validator: ^0.13.2
     cross-env: ^7.0.3
+    dataloader: ^2.1.0
+    eslint: ^8.24.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    graphql: ^16.6.0
+    lodash: ^4.17.21
+    nestjs-pino: ^3.1.1
+    pg: ^8.8.0
+    pino-http: ^8.2.1
+    pino-pretty: ^9.1.0
+    prettier: ^2.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.5.7
+    source-map-support: ^0.5.21
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@gilder/graphql-web-service@workspace:services/graphql/web-service":
+  version: 0.0.0-use.local
+  resolution: "@gilder/graphql-web-service@workspace:services/graphql/web-service"
+  dependencies:
+    "@gilder/graphql-gov-dataloaders": "workspace:*"
+    "@gilder/graphql-gov-resolvers": "workspace:*"
+    "@gilder/types": "workspace:*"
+    "@nestjs/apollo": ^10.1.0
+    "@nestjs/cli": ^9.1.3
+    "@nestjs/common": ^9.1.2
+    "@nestjs/config": ^2.2.0
+    "@nestjs/core": ^9.1.2
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/microservices": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@nestjs/schematics": ^9.0.3
+    "@nestjs/testing": ^9.1.2
+    "@nestjs/typeorm": ^9.0.1
+    "@types/express": ^4.17.14
+    "@types/lodash": ^4.14.185
+    "@types/node": ^18.7.19
+    "@typescript-eslint/eslint-plugin": ^5.38.0
+    "@typescript-eslint/parser": ^5.38.0
+    apollo-server-express: ^3.10.3
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    cross-env: ^7.0.3
+    dataloader: ^2.1.0
     eslint: ^8.24.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
@@ -778,14 +847,10 @@ __metadata:
   resolution: "@gilder/monitor-service@workspace:services/monitor-service"
   dependencies:
     "@gilder/constants": "workspace:*"
-    "@gilder/db-entities": "workspace:*"
-    "@gilder/governances-module": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
     "@gilder/internal-types": "workspace:*"
-    "@gilder/proposals-module": "workspace:*"
-    "@gilder/realms-module": "workspace:*"
-    "@gilder/rpc-manager": "workspace:*"
     "@gilder/rpc-manager-module": "workspace:*"
-    "@gilder/token-owners-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
     "@nestjs/axios": ^0.1.0
@@ -794,6 +859,7 @@ __metadata:
     "@nestjs/common": ^9.1.2
     "@nestjs/config": ^2.2.0
     "@nestjs/core": ^9.1.2
+    "@nestjs/event-emitter": ^1.3.1
     "@nestjs/microservices": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
     "@nestjs/schedule": ^2.1.0
@@ -839,7 +905,7 @@ __metadata:
   resolution: "@gilder/notification-subscriptions-module@workspace:libs/modules/notification-subscriptions"
   dependencies:
     "@gilder/constants": "workspace:*"
-    "@gilder/db-entities": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
     "@gilder/types": "workspace:*"
     "@nestjs/common": ^9.1.2
     "@nestjs/core": ^9.1.2
@@ -868,7 +934,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gilder/notify-service@workspace:services/notify-service"
   dependencies:
-    "@gilder/db-entities": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
     "@gilder/internal-types": "workspace:*"
     "@gilder/notification-subscriptions-module": "workspace:*"
     "@gilder/types": "workspace:*"
@@ -909,65 +975,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/proposals-module@workspace:*, @gilder/proposals-module@workspace:libs/modules/proposals":
-  version: 0.0.0-use.local
-  resolution: "@gilder/proposals-module@workspace:libs/modules/proposals"
-  dependencies:
-    "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:^"
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    fast-sort: ^3.2.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    typeorm: ^0.3.10
-  languageName: unknown
-  linkType: soft
-
-"@gilder/realms-module@workspace:*, @gilder/realms-module@workspace:libs/modules/realms":
-  version: 0.0.0-use.local
-  resolution: "@gilder/realms-module@workspace:libs/modules/realms"
-  dependencies:
-    "@gilder/db-entities": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@nestjs/axios": ^0.1.0
-    "@nestjs/common": ^9.1.2
-    "@nestjs/core": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    typeorm: ^0.3.10
-  languageName: unknown
-  linkType: soft
-
 "@gilder/rpc-manager-module@workspace:*, @gilder/rpc-manager-module@workspace:libs/modules/rpc-manager":
   version: 0.0.0-use.local
   resolution: "@gilder/rpc-manager-module@workspace:libs/modules/rpc-manager"
@@ -1002,31 +1009,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/token-owners-module@workspace:*, @gilder/token-owners-module@workspace:libs/modules/token-owners":
+"@gilder/seed-service@workspace:services/seed-service":
   version: 0.0.0-use.local
-  resolution: "@gilder/token-owners-module@workspace:libs/modules/token-owners"
+  resolution: "@gilder/seed-service@workspace:services/seed-service"
   dependencies:
-    "@gilder/db-entities": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/internal-types": "workspace:*"
+    "@gilder/rpc-manager": "workspace:*"
+    "@gilder/rpc-manager-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"
+    "@nestjs/cli": ^9.1.3
     "@nestjs/common": ^9.1.2
+    "@nestjs/config": ^2.2.0
     "@nestjs/core": ^9.1.2
+    "@nestjs/microservices": ^9.1.2
     "@nestjs/platform-express": ^9.1.2
-    "@nestjs/typeorm": 9.0.1
-    "@solana/spl-governance": ^0.3.15
-    "@solana/web3.js": ^1.63.1
-    "@swc/core": ^1.3.0
-    bn.js: ^5.2.1
+    "@nestjs/schedule": ^2.1.0
+    "@nestjs/schematics": ^9.0.3
+    "@nestjs/testing": ^9.1.2
+    "@nestjs/typeorm": ^9.0.1
+    "@types/bn.js": ^5.1.1
+    "@types/express": ^4.17.14
+    "@types/lodash": ^4.14.185
+    "@types/node": ^18.7.19
+    "@typescript-eslint/eslint-plugin": ^5.38.0
+    "@typescript-eslint/parser": ^5.38.0
+    cross-env: ^7.0.3
+    eslint: ^8.24.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    lodash: ^4.17.21
+    nestjs-pino: ^3.1.1
+    pg: ^8.8.0
+    pino-http: ^8.2.1
+    pino-pretty: ^9.1.0
+    prettier: ^2.7.1
     reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
+    rimraf: ^3.0.2
     rxjs: ^7.5.7
+    source-map-support: ^0.5.21
+    tsconfig-paths: ^4.1.0
     typeorm: ^0.3.10
     typescript: ^4.8.4
-    vite: ^3.1.4
-  peerDependencies:
-    "@nestjs/typeorm": ^9.0.1
-    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 
@@ -1049,11 +1075,34 @@ __metadata:
   dependencies:
     "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
+    "@swc/core": ^1.3.8
+    glob: ^8.0.3
+    node-fetch: ^3.2.10
+    typescript: ^4.8.4
+    unplugin-swc: ^1.3.2
+    vite: ^3.1.4
+  languageName: unknown
+  linkType: soft
+
+"@gilder/web-db-entities@workspace:libs/db/web-db-entities":
+  version: 0.0.0-use.local
+  resolution: "@gilder/web-db-entities@workspace:libs/db/web-db-entities"
+  dependencies:
+    "@gilder/types": "workspace:*"
+    "@solana/web3.js": ^1.63.1
+    "@swc/core": ^1.3.3
+    bn.js: ^5.2.1
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
     typescript: ^4.8.4
     vite: ^3.1.4
   peerDependencies:
-    "@solana/spl-governance": ^0.3.15
     "@solana/web3.js": ^1.63.1
+    bn.js: ^5.21.1
+    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 
@@ -1466,6 +1515,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/event-emitter@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "@nestjs/event-emitter@npm:1.3.1"
+  dependencies:
+    eventemitter2: 6.4.6
+  peerDependencies:
+    "@nestjs/common": ^7.0.0 || ^8.0.0 || ^9.0.0
+    "@nestjs/core": ^7.0.0 || ^8.0.0 || ^9.0.0
+    reflect-metadata: ^0.1.12
+  checksum: fd4b8f2ec6ff8f2aa5dce41d5bc4492ab22af908e42eff3b21978c929514ce816649ca1f077255171a8a586db731d0268b171a2e909f64dda7d6f2598b75a6fe
+  languageName: node
+  linkType: hard
+
 "@nestjs/graphql@npm:^10.1.2":
   version: 10.1.3
   resolution: "@nestjs/graphql@npm:10.1.3"
@@ -1834,8 +1896,8 @@ __metadata:
   linkType: hard
 
 "@solana/spl-governance@npm:^0.3.15":
-  version: 0.3.15
-  resolution: "@solana/spl-governance@npm:0.3.15"
+  version: 0.3.16
+  resolution: "@solana/spl-governance@npm:0.3.16"
   dependencies:
     "@solana/web3.js": ^1.22.0
     bignumber.js: ^9.0.1
@@ -1843,7 +1905,7 @@ __metadata:
     borsh: ^0.3.1
     bs58: ^4.0.1
     superstruct: ^0.15.2
-  checksum: e4c9ca1f36a2ad820cfc524755171fc330c0a1bd8bcf425ff82752a9875063fc15f04fd83ffed3c24f4468d7f5c0bb44b1ac25336ffa1dfd7b1797cb90f3d398
+  checksum: 32829eb6732b2f836752927a229b91f2dba5f7a33f46e87fe23b1be1ffc9805910fe7a9165c9902402e7d23a18bb5599f6b6743f49789ef0a542d10440f2a54c
   languageName: node
   linkType: hard
 
@@ -1870,8 +1932,8 @@ __metadata:
   linkType: hard
 
 "@solana/web3.js@npm:^1.22.0, @solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.63.1":
-  version: 1.65.0
-  resolution: "@solana/web3.js@npm:1.65.0"
+  version: 1.66.1
+  resolution: "@solana/web3.js@npm:1.66.1"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@noble/ed25519": ^1.7.0
@@ -1888,137 +1950,137 @@ __metadata:
     node-fetch: 2
     rpc-websockets: ^7.5.0
     superstruct: ^0.14.2
-  checksum: f4d7d0c2df4135f25f67f289aacc39b626d942679ffda215b75f5b159f5493e30f90cef138967fc1dbecbf6791cb940c8aac6c08af65c9429f8fc3e0d9fa4f63
+  checksum: 8ca786b352362382dca02cb2624bb420aad1aef7e30950d459e86cdf1bd9a09332849f42e5034594e0da4bcaa8ee7434bdab83cb0c940008c69a31624b2d9866
   languageName: node
   linkType: hard
 
 "@sqltools/formatter@npm:^1.2.2":
-  version: 1.2.3
-  resolution: "@sqltools/formatter@npm:1.2.3"
-  checksum: 5d80554b84ed15747fcfa6e488ef794c610c08152a53ebac0f270574ad938cdf39a02de7dfba4e9d9c33a790368f819945d315ee6dae360b220c29e092cba930
+  version: 1.2.5
+  resolution: "@sqltools/formatter@npm:1.2.5"
+  checksum: 9b8354e715467d660daa5afe044860b5686bbb1a5cb67a60866b932effafbf5e8b429f19a8ae67cd412065a4f067161f227e182f3664a0245339d5eb1e26e355
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm-eabi@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-android-arm-eabi@npm:1.3.8"
+"@swc/core-android-arm-eabi@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-android-arm-eabi@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.122
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm64@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-android-arm64@npm:1.3.8"
+"@swc/core-android-arm64@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-android-arm64@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-darwin-arm64@npm:1.3.8"
+"@swc/core-darwin-arm64@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-darwin-arm64@npm:1.3.9"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-darwin-x64@npm:1.3.8"
+"@swc/core-darwin-x64@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-darwin-x64@npm:1.3.9"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-freebsd-x64@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-freebsd-x64@npm:1.3.8"
+"@swc/core-freebsd-x64@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-freebsd-x64@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.8"
+"@swc/core-linux-arm-gnueabihf@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.8"
+"@swc/core-linux-arm64-gnu@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.9"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-linux-arm64-musl@npm:1.3.8"
+"@swc/core-linux-arm64-musl@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-linux-arm64-musl@npm:1.3.9"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-linux-x64-gnu@npm:1.3.8"
+"@swc/core-linux-x64-gnu@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-linux-x64-gnu@npm:1.3.9"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.8"
+"@swc/core-linux-x64-musl@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.9"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.8"
+"@swc/core-win32-arm64-msvc@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.8"
+"@swc/core-win32-ia32-msvc@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.9"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core-win32-x64-msvc@npm:1.3.8"
+"@swc/core-win32-x64-msvc@npm:1.3.9":
+  version: 1.3.9
+  resolution: "@swc/core-win32-x64-msvc@npm:1.3.9"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
 "@swc/core@npm:^1.3.0, @swc/core@npm:^1.3.3, @swc/core@npm:^1.3.8":
-  version: 1.3.8
-  resolution: "@swc/core@npm:1.3.8"
+  version: 1.3.9
+  resolution: "@swc/core@npm:1.3.9"
   dependencies:
-    "@swc/core-android-arm-eabi": 1.3.8
-    "@swc/core-android-arm64": 1.3.8
-    "@swc/core-darwin-arm64": 1.3.8
-    "@swc/core-darwin-x64": 1.3.8
-    "@swc/core-freebsd-x64": 1.3.8
-    "@swc/core-linux-arm-gnueabihf": 1.3.8
-    "@swc/core-linux-arm64-gnu": 1.3.8
-    "@swc/core-linux-arm64-musl": 1.3.8
-    "@swc/core-linux-x64-gnu": 1.3.8
-    "@swc/core-linux-x64-musl": 1.3.8
-    "@swc/core-win32-arm64-msvc": 1.3.8
-    "@swc/core-win32-ia32-msvc": 1.3.8
-    "@swc/core-win32-x64-msvc": 1.3.8
+    "@swc/core-android-arm-eabi": 1.3.9
+    "@swc/core-android-arm64": 1.3.9
+    "@swc/core-darwin-arm64": 1.3.9
+    "@swc/core-darwin-x64": 1.3.9
+    "@swc/core-freebsd-x64": 1.3.9
+    "@swc/core-linux-arm-gnueabihf": 1.3.9
+    "@swc/core-linux-arm64-gnu": 1.3.9
+    "@swc/core-linux-arm64-musl": 1.3.9
+    "@swc/core-linux-x64-gnu": 1.3.9
+    "@swc/core-linux-x64-musl": 1.3.9
+    "@swc/core-win32-arm64-msvc": 1.3.9
+    "@swc/core-win32-ia32-msvc": 1.3.9
+    "@swc/core-win32-x64-msvc": 1.3.9
   dependenciesMeta:
     "@swc/core-android-arm-eabi":
       optional: true
@@ -2048,7 +2110,7 @@ __metadata:
       optional: true
   bin:
     swcx: run_swcx.js
-  checksum: 0f4afe1cdfe0fc7c471f77ad9138cd46c65770060ed47a1ed13fdffc1a580c2b8aa4cbb936c1f9da61e925e3d964c6d73dc61888982502b5da148d64028d17b2
+  checksum: 761918f1bca5d494eaaafd49720717e3b3071df5bc6ef8b298a778ba4e4d20bc5a78c939a0b1c98623f9fe23e535a16a359179b72390cd1f5cbc891ea53c22fa
   languageName: node
   linkType: hard
 
@@ -2246,9 +2308,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^18.7.19, @types/node@npm:^18.7.20":
-  version: 18.11.0
-  resolution: "@types/node@npm:18.11.0"
-  checksum: f27f899ab428e5732f04fadadc9203f44bdf3abf56474540ee27da90e4f2ba133faf87263cada4d2271955f92ee6a142bd50683c86290fe5070c19aac44fd654
+  version: 18.11.2
+  resolution: "@types/node@npm:18.11.2"
+  checksum: 0ff5c90fb9ab653e018b858479aea4d2f763b07b31f9502383d408936f525ca37cac82ea27774a0dd0356ff9badba2792a6a3fff94f79fd7c82ee2a892c43ed5
   languageName: node
   linkType: hard
 
@@ -2308,6 +2370,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7.3.12":
+  version: 7.3.12
+  resolution: "@types/semver@npm:7.3.12"
+  checksum: 35536b2fc5602904f21cae681f6c9498e177dab3f54ae37c92f9a1b7e43c35f18bcd81e1c98c1cf0d33ee046bb06c771e9928c1c00a401d56a03f56549252a15
+  languageName: node
+  linkType: hard
+
 "@types/serve-static@npm:*":
   version: 1.15.0
   resolution: "@types/serve-static@npm:1.15.0"
@@ -2335,12 +2404,12 @@ __metadata:
   linkType: hard
 
 "@typescript-eslint/eslint-plugin@npm:^5.38.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:5.40.0"
+  version: 5.40.1
+  resolution: "@typescript-eslint/eslint-plugin@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/scope-manager": 5.40.0
-    "@typescript-eslint/type-utils": 5.40.0
-    "@typescript-eslint/utils": 5.40.0
+    "@typescript-eslint/scope-manager": 5.40.1
+    "@typescript-eslint/type-utils": 5.40.1
+    "@typescript-eslint/utils": 5.40.1
     debug: ^4.3.4
     ignore: ^5.2.0
     regexpp: ^3.2.0
@@ -2352,43 +2421,43 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: ac9e8fcea3545eb33353373c5094fd0a7b79647b37066adbcbd8edcb6fc17c6a601fd0e1b8db0a39200e8238acb33d4b1b036bfe09ebb9899cfb43f6c271a8fd
+  checksum: 61f19bde0f1206beb20aeb28d18c1ef26a98cf4d2ead9f1d2f204cb91af31582eb5ee9422fe5f92d6aa10cebf85cd50f1b41e8cf8ce65808e2208664c3b1d66a
   languageName: node
   linkType: hard
 
 "@typescript-eslint/parser@npm:^5.38.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/parser@npm:5.40.0"
+  version: 5.40.1
+  resolution: "@typescript-eslint/parser@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/scope-manager": 5.40.0
-    "@typescript-eslint/types": 5.40.0
-    "@typescript-eslint/typescript-estree": 5.40.0
+    "@typescript-eslint/scope-manager": 5.40.1
+    "@typescript-eslint/types": 5.40.1
+    "@typescript-eslint/typescript-estree": 5.40.1
     debug: ^4.3.4
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: a8d02950dd12fcb1d19ad5f24cbfd186ca88d8a099160f93f99767896a45198a9f9bfbdd1a57c1ae50d452e6c895ae5b4d7e4623dfc87bca55a45c5ba16491f8
+  checksum: 9fe410c1b14934803bb7c26de9b8de5d46ef9b6fe5dcbee1d7e111f0259659c214549b60dacdc729a3e23da835e6a44f08a9aa6bcb73ffff3c4fd5b9142358ed
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/scope-manager@npm:5.40.0"
+"@typescript-eslint/scope-manager@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/scope-manager@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/types": 5.40.0
-    "@typescript-eslint/visitor-keys": 5.40.0
-  checksum: 48dfb2f1a71bda5b782263e97608f1e1a2e8a89a603344af5072208be7936140af9d41483be439405c5ee379d0263555d6cc94405b187707f9ecfd7dd9821b5f
+    "@typescript-eslint/types": 5.40.1
+    "@typescript-eslint/visitor-keys": 5.40.1
+  checksum: 5f25b86bfd09fbf8cdfdf932eaf0b41a7594c9b4539d3c8321f882bf7b4bf486454256fdb9a5a8c4eae305419d377fa93d382f80004711d759ff77b3d565c1dc
   languageName: node
   linkType: hard
 
-"@typescript-eslint/type-utils@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/type-utils@npm:5.40.0"
+"@typescript-eslint/type-utils@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/type-utils@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/typescript-estree": 5.40.0
-    "@typescript-eslint/utils": 5.40.0
+    "@typescript-eslint/typescript-estree": 5.40.1
+    "@typescript-eslint/utils": 5.40.1
     debug: ^4.3.4
     tsutils: ^3.21.0
   peerDependencies:
@@ -2396,23 +2465,23 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: eabe86de93b0bd4bcbfb13cace097ff7addbd992c91b80c73bbaa677ce26f1c2abd1c63fe585f2fd9c80df07d3d54bd6e4a46aebc908cef0f870f1d6955d6b8a
+  checksum: 6771196b8f16f4893bae70aa1371ff004b0058e8edef9b935143e2f1272e471049e9c34beb1d625fb6423db95dd377e01e938b70dd4506fbf071566e2bfb574d
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/types@npm:5.40.0"
-  checksum: 892ff162176a3e292b5b55090421c6d318187255f3f91be46bd5c0b38e3c25a49d9320ffb646d5709f3a2cdf350217a79e557886fdfdbdb322caec27f2b3d116
+"@typescript-eslint/types@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/types@npm:5.40.1"
+  checksum: 2430c799667c820903df7ef39bc4c2762cb7654dbb8525d56f37e73f8cefb82186b80654dbbe0294c5b55affe929c641cdb90232e2749dcd7838f9e500a41549
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/typescript-estree@npm:5.40.0"
+"@typescript-eslint/typescript-estree@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/typescript-estree@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/types": 5.40.0
-    "@typescript-eslint/visitor-keys": 5.40.0
+    "@typescript-eslint/types": 5.40.1
+    "@typescript-eslint/visitor-keys": 5.40.1
     debug: ^4.3.4
     globby: ^11.1.0
     is-glob: ^4.0.3
@@ -2421,34 +2490,35 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 8b67b8c4278f6bbd16ec521c847920c6f0ba57ec4bf148505c057aa160363852f50f9db73f42ee71ac3906940e8554e9c27686194a57f6554efcd82a8b0fa3e8
+  checksum: d0426a55d24b76a3f042816dd8baaaa7a8da0158870bb08fff5a5524821c13ca196117dc269f098b8887ef75e01da1a498637153ab3c29c370ca356bfe4a1716
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/utils@npm:5.40.0"
+"@typescript-eslint/utils@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/utils@npm:5.40.1"
   dependencies:
     "@types/json-schema": ^7.0.9
-    "@typescript-eslint/scope-manager": 5.40.0
-    "@typescript-eslint/types": 5.40.0
-    "@typescript-eslint/typescript-estree": 5.40.0
+    "@types/semver": ^7.3.12
+    "@typescript-eslint/scope-manager": 5.40.1
+    "@typescript-eslint/types": 5.40.1
+    "@typescript-eslint/typescript-estree": 5.40.1
     eslint-scope: ^5.1.1
     eslint-utils: ^3.0.0
     semver: ^7.3.7
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-  checksum: 608e16ad510c1543de37e168ab42e9d11fdd7d38faf19fe5d60255ea8e43b9a8cebeea11bd9776eed55fe0e453c5d222bb708b930b431c5b113269c6b44788c1
+  checksum: a971101bb2f4c742a1734a87e17997addb7ffa6639d472097fe098f6c5f09567b858949b97f05892aabb20f38479abecdfdd69cf740046aa601dd3fc39a44090
   languageName: node
   linkType: hard
 
-"@typescript-eslint/visitor-keys@npm:5.40.0":
-  version: 5.40.0
-  resolution: "@typescript-eslint/visitor-keys@npm:5.40.0"
+"@typescript-eslint/visitor-keys@npm:5.40.1":
+  version: 5.40.1
+  resolution: "@typescript-eslint/visitor-keys@npm:5.40.1"
   dependencies:
-    "@typescript-eslint/types": 5.40.0
+    "@typescript-eslint/types": 5.40.1
     eslint-visitor-keys: ^3.3.0
-  checksum: a11787f7e6ac7018b22848028c9116d028f89782b0ee120517f0384e9db260e3001ad897512d9c3cf15ce16073ae4c1dc7f81f29d6d40dec78b5e8c8e79f344f
+  checksum: b5dbf1e484ba2832ca1883ee9cf7da5967f70aa5624f3fb67f13c3be90a3770b0bb96e64ccfb0c31b5d8f80794b5727e14b6c0d8c5184634a686f0ea6e798772
   languageName: node
   linkType: hard
 
@@ -2886,7 +2956,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server-express@npm:^3.10.2, apollo-server-express@npm:^3.10.3":
+"apollo-server-express@npm:^3.10.3":
   version: 3.10.3
   resolution: "apollo-server-express@npm:3.10.3"
   dependencies:
@@ -2930,20 +3000,6 @@ __metadata:
   peerDependencies:
     graphql: ^15.3.0 || ^16.0.0
   checksum: ebd218e6fa8b756bb2d6954b454676907d99b8f140923b439cc1bbb200251f9df7228a9d83c5c91bb571a448cc80c2d86bc0a0eae491a4ce028e86a724cde68a
-  languageName: node
-  linkType: hard
-
-"apollo-server@npm:^3.10.2":
-  version: 3.10.3
-  resolution: "apollo-server@npm:3.10.3"
-  dependencies:
-    "@types/express": 4.17.14
-    apollo-server-core: ^3.10.3
-    apollo-server-express: ^3.10.3
-    express: ^4.17.1
-  peerDependencies:
-    graphql: ^15.3.0 || ^16.0.0
-  checksum: eec2423bbd30256683c0e7873cd1e3f616ff2a3c90cf7bba241880027f5e1374d20d13bf7ce4b09543b16753d0d7a4627f77d64de77b5b241c410f0f246bdbd7
   languageName: node
   linkType: hard
 
@@ -3170,7 +3226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-parser@npm:1.20.1, body-parser@npm:^1.19.0":
+"body-parser@npm:^1.19.0":
   version: 1.20.1
   resolution: "body-parser@npm:1.20.1"
   dependencies:
@@ -3318,12 +3374,12 @@ __metadata:
   linkType: hard
 
 "bufferutil@npm:^4.0.1":
-  version: 4.0.6
-  resolution: "bufferutil@npm:4.0.6"
+  version: 4.0.7
+  resolution: "bufferutil@npm:4.0.7"
   dependencies:
     node-gyp: latest
     node-gyp-build: ^4.3.0
-  checksum: dd107560947445280af7820c3d0534127b911577d85d537e1d7e0aa30fd634853cef8a994d6e8aed3d81388ab1a20257de776164afe6a6af8e78f5f17968ebd6
+  checksum: f75aa87e3d1b99b87a95f60a855e63f70af07b57fb8443e75a2ddfef2e47788d130fdd46e3a78fd7e0c10176082b26dfbed970c5b8632e1cc299cafa0e93ce45
   languageName: node
   linkType: hard
 
@@ -3422,9 +3478,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001419
-  resolution: "caniuse-lite@npm:1.0.30001419"
-  checksum: 7a4dc2794a6773574b5aebcd1c9c0d56159654821714152d8a0b04e261e1522bfd3d86589b8406ce81c7bf5b706118b73b2cb85d577ae433e303dd48ac9ff65f
+  version: 1.0.30001422
+  resolution: "caniuse-lite@npm:1.0.30001422"
+  checksum: 29c950944b33ce242068402e679a5651d1289033381dcad7295cf14b589a6bd93d5bf32aa458bacaba9b25597731e0278c84ee588910ae774eab0585be88df62
   languageName: node
   linkType: hard
 
@@ -3944,6 +4000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dataloader@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "dataloader@npm:2.1.0"
+  checksum: bbd43496c41697766f8611f60ed3bae437b450985499140b9603a2447c10d45975d3a0661caaebaa9750bc1bc9fd154676a314423294916c8b8ca1a59a08d139
+  languageName: node
+  linkType: hard
+
 "date-fns@npm:^2.28.0, date-fns@npm:^2.29.1":
   version: 2.29.3
   resolution: "date-fns@npm:2.29.3"
@@ -4153,9 +4216,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.251":
-  version: 1.4.283
-  resolution: "electron-to-chromium@npm:1.4.283"
-  checksum: b005cdac737cecd0e7f875263b97da13ad914526f4e31b4051dd0179b82ccd4aff27b4a3e3a7814cbc1774efd73956f830ae7f6ef28b313175857c26928d80b5
+  version: 1.4.284
+  resolution: "electron-to-chromium@npm:1.4.284"
+  checksum: be496e9dca6509dbdbb54dc32146fc99f8eb716d28a7ee8ccd3eba0066561df36fc51418d8bd7cf5a5891810bf56c0def3418e74248f51ea4a843d423603d10a
   languageName: node
   linkType: hard
 
@@ -4982,6 +5045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter2@npm:6.4.6":
+  version: 6.4.6
+  resolution: "eventemitter2@npm:6.4.6"
+  checksum: 1ede7ce0c01298fa3bc1998b34857c2acd0e73a1d7406e37b9127a84712762cf303a46add62943ae6944cd806bdd29ff542344c727a012b2ea6fd3c90f059367
+  languageName: node
+  linkType: hard
+
 "eventemitter3@npm:^3.1.0":
   version: 3.1.2
   resolution: "eventemitter3@npm:3.1.2"
@@ -5056,45 +5126,6 @@ __metadata:
     utils-merge: 1.0.1
     vary: ~1.1.2
   checksum: c3d44c92e48226ef32ec978becfedb0ecf0ca21316bfd33674b3c5d20459840584f2325726a4f17f33d9c99f769636f728982d1c5433a5b6fe6eb95b8cf0c854
-  languageName: node
-  linkType: hard
-
-"express@npm:^4.17.1":
-  version: 4.18.2
-  resolution: "express@npm:4.18.2"
-  dependencies:
-    accepts: ~1.3.8
-    array-flatten: 1.1.1
-    body-parser: 1.20.1
-    content-disposition: 0.5.4
-    content-type: ~1.0.4
-    cookie: 0.5.0
-    cookie-signature: 1.0.6
-    debug: 2.6.9
-    depd: 2.0.0
-    encodeurl: ~1.0.2
-    escape-html: ~1.0.3
-    etag: ~1.8.1
-    finalhandler: 1.2.0
-    fresh: 0.5.2
-    http-errors: 2.0.0
-    merge-descriptors: 1.0.1
-    methods: ~1.1.2
-    on-finished: 2.4.1
-    parseurl: ~1.3.3
-    path-to-regexp: 0.1.7
-    proxy-addr: ~2.0.7
-    qs: 6.11.0
-    range-parser: ~1.2.1
-    safe-buffer: 5.2.1
-    send: 0.18.0
-    serve-static: 1.15.0
-    setprototypeof: 1.2.0
-    statuses: 2.0.1
-    type-is: ~1.6.18
-    utils-merge: 1.0.1
-    vary: ~1.1.2
-  checksum: 3c4b9b076879442f6b968fe53d85d9f1eeacbb4f4c41e5f16cc36d77ce39a2b0d81b3f250514982110d815b2f7173f5561367f9110fcc541f9371948e8c8b037
   languageName: node
   linkType: hard
 
@@ -6077,11 +6108,11 @@ __metadata:
   linkType: hard
 
 "is-core-module@npm:^2.9.0":
-  version: 2.10.0
-  resolution: "is-core-module@npm:2.10.0"
+  version: 2.11.0
+  resolution: "is-core-module@npm:2.11.0"
   dependencies:
     has: ^1.0.3
-  checksum: 0f3f77811f430af3256fa7bbc806f9639534b140f8ee69476f632c3e1eb4e28a38be0b9d1b8ecf596179c841b53576129279df95e7051d694dac4ceb6f967593
+  checksum: f96fd490c6b48eb4f6d10ba815c6ef13f410b0ba6f7eb8577af51697de523e5f2cd9de1c441b51d27251bf0e4aebc936545e33a5d26d5d51f28d25698d4a8bab
   languageName: node
   linkType: hard
 
@@ -8354,9 +8385,9 @@ __metadata:
   linkType: hard
 
 "safe-stable-stringify@npm:^2.3.1":
-  version: 2.4.0
-  resolution: "safe-stable-stringify@npm:2.4.0"
-  checksum: 5c9e4b2b2423470becafe232244948e7ce9545baaa65d67965e8c36536c93d2f7b4c1ddeb4bba8a912d0325e02c7691f24dd4de6935a9c1221402c17582ae1c1
+  version: 2.4.1
+  resolution: "safe-stable-stringify@npm:2.4.1"
+  checksum: d8e505c462031301040605a4836ca25b52a1744eff01b0939b4d43136638fb8e88e0cec3d3ab6ab8e26f501086e6ba6bf34b228f57bf2ac56cb8d4061355d723
   languageName: node
   linkType: hard
 
@@ -9540,12 +9571,12 @@ __metadata:
   linkType: hard
 
 "utf-8-validate@npm:^5.0.2":
-  version: 5.0.9
-  resolution: "utf-8-validate@npm:5.0.9"
+  version: 5.0.10
+  resolution: "utf-8-validate@npm:5.0.10"
   dependencies:
     node-gyp: latest
     node-gyp-build: ^4.3.0
-  checksum: 90117f1b65e0a1256c83dfad529983617263b622f2379745311d0438c7ea31db0d134ebd0dca84c3f5847a3560a3d249644e478a9109c616f63c7ea19cac53dc
+  checksum: 5579350a023c66a2326752b6c8804cc7b39dcd251bb088241da38db994b8d78352e388dcc24ad398ab98385ba3c5ffcadb6b5b14b2637e43f767869055e46ba6
   languageName: node
   linkType: hard
 

@@ -1,17 +1,25 @@
-import { GovernancesService } from '@gilder/governances-module';
-import { ProposalsService } from '@gilder/proposals-module';
-import { RealmsRestService, RealmsService } from '@gilder/realms-module';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
-import { tryGetProposalData, tryGetRealmData } from '@gilder/utilities';
 import {
+  GovernancesService,
+  ProposalsService,
+  ProposalTransactionsService,
+  RealmsRestService,
+  RealmsService,
+  SignatoryRecordsService,
+  TokenOwnersService,
+  VoteRecordsService,
+} from '@gilder/gov-service-module';
+import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { AccountType, getAccountType, parseAccount } from '@gilder/utilities';
+import {
+  Inject,
   Injectable,
   Logger,
   OnModuleDestroy,
   OnModuleInit,
 } from '@nestjs/common';
-import { ProposalState } from '@solana/spl-governance';
+import { ProgramAccount, getGovernance } from '@solana/spl-governance';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { DEFAULT_CONNECTION, WS_CONNECTION } from 'src/utils/constants';
+import { DEFAULT_CONNECTION, WS_CONNECTION } from '../utils/constants';
 
 @Injectable()
 export class GovernanceProgramsMonitorService
@@ -23,13 +31,31 @@ export class GovernanceProgramsMonitorService
   private readonly wsConnection: Connection;
   private readonly connection: Connection;
 
-  constructor(
-    private readonly governanceService: GovernancesService,
-    private readonly proposalsService: ProposalsService,
-    private readonly realmsService: RealmsService,
-    private readonly realmsRestService: RealmsRestService,
-    rpcManager: RpcManagerService,
-  ) {
+  @Inject(GovernancesService)
+  private readonly governanceService: GovernancesService;
+
+  @Inject(ProposalsService)
+  private readonly proposalsService: ProposalsService;
+
+  @Inject(RealmsService)
+  private readonly realmsService: RealmsService;
+
+  @Inject(RealmsRestService)
+  private readonly realmsRestService: RealmsRestService;
+
+  @Inject(TokenOwnersService)
+  private readonly tokenOwnersService: TokenOwnersService;
+
+  @Inject(ProposalTransactionsService)
+  private readonly proposalTransactionService: ProposalTransactionsService;
+
+  @Inject(VoteRecordsService)
+  private readonly voteRecordsService: VoteRecordsService;
+
+  @Inject(SignatoryRecordsService)
+  private readonly signatoryRecordsService: SignatoryRecordsService;
+
+  constructor(rpcManager: RpcManagerService) {
     this.wsConnection = rpcManager.getConnection(WS_CONNECTION);
     this.connection = rpcManager.getConnection(DEFAULT_CONNECTION);
   }
@@ -41,36 +67,22 @@ export class GovernanceProgramsMonitorService
       async (keyedAccountInfo) => {
         try {
           const { accountId, accountInfo } = keyedAccountInfo;
+          const parsedData = parseAccount(accountId.toBase58(), {
+            ...accountInfo,
+            data: accountInfo.data,
+            owner: accountInfo.owner.toBase58(),
+          });
 
-          const [realm] = await Promise.all([
-            // tryGetProposalData(accountId, accountInfo),
-            tryGetRealmData(accountId, accountInfo),
-          ]);
-
-          // if (proposal) {
-          //   const governance = await this.governanceService.getGovernanceByPk(
-          //     proposal.account.governance.toBase58(),
-          //   );
-
-          //   if (governance) {
-          //     this.logger.log(
-          //       `Adding/Updating Proposal: ${JSON.stringify(proposal)}`,
-          //     );
-          //     await this.proposalsService.addOrUpdateProposals(
-          //       {
-          //         realmPk: governance.realmPk,
-          //         programPk: programPk.toBase58(),
-          //       },
-          //       [proposal],
-          //       this.connection,
-          //     );
-          //   }
-          // }
-
-          if (realm) {
-            this.logger.log(`Adding/Updating Realm: ${JSON.stringify(realm)}`);
-            await this.realmsService.addOrUpdateRealms([realm]);
+          if (!parsedData) {
+            return;
           }
+
+          const accountType = getAccountType(parsedData?.type);
+          if (!accountType) {
+            return;
+          }
+
+          await this.processData(accountType, parsedData.account);
         } catch (e) {
           this.logger.error(`Something went wrong. Error: ${e}`);
         }
@@ -79,9 +91,45 @@ export class GovernanceProgramsMonitorService
     );
   }
 
+  private async processData(type: AccountType, account: ProgramAccount<any>) {
+    switch (type) {
+      case 'realm':
+        await this.realmsService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'proposal':
+        const governance = await getGovernance(
+          this.connection,
+          account.account.governance,
+        );
+        await this.proposalsService.addOrUpdateFromSolanaEntity(
+          account,
+          governance,
+        );
+        return;
+      case 'governance':
+        await this.governanceService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'token-owner':
+        await this.tokenOwnersService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'proposal-transaction':
+        await this.proposalTransactionService.addOrUpdateFromSolanaEntity(
+          account,
+        );
+        return;
+      case 'signatory-record':
+        await this.signatoryRecordsService.addOrUpdateFromSolanaEntity(account);
+        return;
+      case 'vote-record':
+        await this.voteRecordsService.addOrUpdateFromSolanaEntity(account);
+        return;
+    }
+  }
+
   async onModuleInit() {
     const governanceProgramPks =
       await this.realmsRestService.getSplGovernancePrograms();
+
     for (const programPk of governanceProgramPks) {
       const subId = this.addGovernanceProgramSubscriber(programPk);
       this.subscriptionIds.push(subId);

@@ -2,9 +2,12 @@ import {
   Governance,
   NotificationSubscription,
   Proposal,
+  ProposalTransaction,
   Realm,
+  SignatoryRecord,
   TokenOwner,
-} from '@gilder/db-entities';
+  VoteRecord,
+} from '@gilder/gov-db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -31,6 +34,9 @@ export const getDataConfig = (
       Proposal,
       TokenOwner,
       Governance,
+      SignatoryRecord,
+      ProposalTransaction,
+      VoteRecord,
       NotificationSubscription,
     ],
     migrations: [],

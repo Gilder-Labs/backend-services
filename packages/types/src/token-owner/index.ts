@@ -5,6 +5,7 @@ export interface TokenOwner<TKey = PublicKey, TNum = BN> {
   ownerPk: TKey;
   governanceAccountType: number;
   realmPk: TKey;
+  programPk: TKey;
   governingTokenMintPk: TKey;
   governingTokenOwnerPk: TKey;
   governingTokenDespositAmount: TNum;

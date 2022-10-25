@@ -17,10 +17,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@gilder/rpc-manager": "workspace:*"
-  },
   "devDependencies": {
+    "@gilder/rpc-manager": "workspace:*",
     "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",
     "@nestjs/platform-express": "^9.1.2",
