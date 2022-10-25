@@ -1,8 +1,11 @@
 import {
   Governance,
   Proposal,
+  ProposalTransaction,
   Realm,
+  SignatoryRecord,
   TokenOwner,
+  VoteRecord,
 } from '@gilder/gov-db-entities';
 import { ConfigService } from '@nestjs/config';
 import 'reflect-metadata';
@@ -23,8 +26,16 @@ export const getDataConfig = (
           rejectUnauthorized: false,
         }
       : false,
-    synchronize: true, //configService.getOrThrow<Environment>('NODE_ENV') === 'development',
-    entities: [Realm, Proposal, TokenOwner, Governance],
+    synchronize: true,
+    entities: [
+      Realm,
+      Proposal,
+      TokenOwner,
+      Governance,
+      VoteRecord,
+      ProposalTransaction,
+      SignatoryRecord,
+    ],
     migrations: [],
     subscribers: [],
   };
