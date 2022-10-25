@@ -4,6 +4,7 @@ import type {
   GovernanceConfig as IGovernanceConfig,
   VoteThreshold as IVoteThreshold,
 } from '@gilder/types';
+import { Proposal } from './proposal.model';
 
 @ObjectType()
 export class VoteThreshold implements IVoteThreshold {
@@ -50,6 +51,9 @@ export class GovernanceConfig implements IGovernanceConfig<string> {
 @ObjectType()
 export class Governance implements IGovernance<string, string> {
   @Field()
+  programPk: string;
+
+  @Field()
   governancePk: string;
 
   @Field()
@@ -81,4 +85,7 @@ export class Governance implements IGovernance<string, string> {
 
   @Field()
   isTokenGovernance: boolean;
+
+  @Field(() => [Proposal], { nullable: true })
+  proposals?: Proposal[];
 }

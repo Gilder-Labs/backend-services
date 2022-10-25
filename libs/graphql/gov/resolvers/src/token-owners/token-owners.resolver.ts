@@ -8,11 +8,6 @@ export class TokenOwnersResolver {
 
   @Query(() => [TokenOwner])
   async tokenOwners(): Promise<TokenOwner[]> {
-    return this.tokenOwnersService.getAllTokenOwners();
-  }
-
-  @Query(() => [TokenOwner])
-  async uniqueTokenOwners(): Promise<TokenOwner[]> {
-    return this.tokenOwnersService.getUniqueTokenOwners();
+    return this.tokenOwnersService.getAll();
   }
 }

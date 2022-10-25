@@ -1,4 +1,13 @@
-import { Realm, GovernanceProgram } from '@gilder/graphql-gov-models';
+import {
+  Realm,
+  GovernanceProgram,
+  Proposal,
+  ProposalTransaction,
+  VoteRecord,
+  SignatoryRecord,
+  Governance,
+  TokenOwner,
+} from '@gilder/graphql-gov-models';
 import { IDataLoaders } from '@gilder/graphql-gov-dataloaders';
 import {
   Args,
@@ -11,6 +20,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GetProgramsArgs } from './args/get-programs-args';
+import { distinctBy } from '@gilder/utilities';
 
 @Resolver(GovernanceProgram)
 export class GovernanceProgramResolver {
@@ -49,6 +59,63 @@ export class GovernanceProgramResolver {
     @Context() { loaders }: { loaders: IDataLoaders },
   ): Promise<Realm[]> {
     const { governanceProgramPk } = governanceProgram;
-    return loaders.realmsLoader.load(governanceProgramPk);
+    return loaders.getRealmsByProgramPk.load(governanceProgramPk);
+  }
+
+  @ResolveField('governances', () => [Governance])
+  async governances(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<Governance[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.getGovernancesByProgramPk.load(governanceProgramPk);
+  }
+
+  @ResolveField('tokenOwners', () => [TokenOwner])
+  async tokenOwners(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<TokenOwner[]> {
+    const { governanceProgramPk } = governanceProgram;
+    const tokenOwners = await loaders.getTokenOwnersByProgramPk.load(
+      governanceProgramPk,
+    );
+    return distinctBy(tokenOwners, (x) => x.ownerPk);
+  }
+
+  @ResolveField('proposals', () => [Proposal])
+  async proposals(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<Proposal[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.getProposalsByProgramPk.load(governanceProgramPk);
+  }
+
+  @ResolveField('signatoryRecords', () => [SignatoryRecord])
+  async signatoryRecords(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<SignatoryRecord[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.getSignatoryRecordByProgramPk.load(governanceProgramPk);
+  }
+
+  @ResolveField('voteRecords', () => [VoteRecord])
+  async voteRecords(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<VoteRecord[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.getVoteRecordsByProgramPk.load(governanceProgramPk);
+  }
+
+  @ResolveField('proposalTransactions', () => [ProposalTransaction])
+  async proposalTransactions(
+    @Parent() governanceProgram: GovernanceProgram,
+    @Context() { loaders }: { loaders: IDataLoaders },
+  ): Promise<ProposalTransaction[]> {
+    const { governanceProgramPk } = governanceProgram;
+    return loaders.getProposalTransactionsByProgramPk.load(governanceProgramPk);
   }
 }

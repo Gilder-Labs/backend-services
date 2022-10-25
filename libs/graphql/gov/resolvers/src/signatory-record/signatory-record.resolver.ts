@@ -3,7 +3,7 @@ import { Proposal } from '@gilder/graphql-gov-models';
 import { Query, Resolver } from '@nestjs/graphql';
 
 @Resolver(Proposal)
-export class ProposalsResolver {
+export class SignatoryRecordResolver {
   constructor(private readonly proposalService: ProposalsService) {}
 
   @Query(() => [Proposal])

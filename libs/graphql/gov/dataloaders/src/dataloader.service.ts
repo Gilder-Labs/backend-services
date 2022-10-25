@@ -1,10 +1,21 @@
 import {
   GovernancesService,
   ProposalsService,
+  ProposalTransactionsService,
   RealmsService,
+  SignatoryRecordsService,
   TokenOwnersService,
+  VoteRecordsService,
 } from '@gilder/gov-service-module';
-import { Governance, Proposal, Realm, TokenOwner } from '@gilder/types';
+import {
+  Governance,
+  Proposal,
+  ProposalTransaction,
+  Realm,
+  SignatoryRecord,
+  TokenOwner,
+  VoteRecord,
+} from '@gilder/types';
 import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import type { IDataLoaders } from './types';
@@ -23,43 +34,62 @@ export class DataLoaderService {
   @Inject(RealmsService)
   private realmService!: RealmsService;
 
+  @Inject(ProposalTransactionsService)
+  private proposalTransactionService!: ProposalTransactionsService;
+
+  @Inject(SignatoryRecordsService)
+  private signatoryRecordsService!: SignatoryRecordsService;
+
+  @Inject(VoteRecordsService)
+  private voteRecordsService!: VoteRecordsService;
+
   getLoaders(): IDataLoaders {
-    const tokenOwnersLoader = this._createTokenOwnersLoader();
-    const proposalsLoader = this._createProposalsLoader();
-    const governancesLoader = this._createGovernancesLoader();
-    const realmsLoader = this._createRealmsLoader();
     return {
-      tokenOwnersLoader,
-      proposalsLoader,
-      governancesLoader,
-      realmsLoader,
+      getRealmsByProgramPk: new DataLoader<string, Realm<string, string>[]>(
+        (keys) => this.realmService.getByBatch('programPk', keys),
+      ),
+      getRealmsByRealmPk: new DataLoader<string, Realm<string, string>[]>(
+        (keys) => this.realmService.getByBatch('realmPk', keys),
+      ),
+      getProposalsByProgramPk: new DataLoader<string, Proposal<string>[]>(
+        (keys) => this.proposalsService.getByBatch('programPk', keys),
+      ),
+      getProposalsByRealmPk: new DataLoader<string, Proposal<string>[]>(
+        (keys) => this.proposalsService.getByBatch('realmPk', keys),
+      ),
+      getProposalsByGovernancePk: new DataLoader<string, Proposal<string>[]>(
+        (keys) => this.proposalsService.getByBatch('governancePk', keys),
+      ),
+      getGovernancesByProgramPk: new DataLoader<
+        string,
+        Governance<string, string>[]
+      >((keys) => this.governancesService.getByBatch('programPk', keys)),
+      getGovernancesByRealmPk: new DataLoader<
+        string,
+        Governance<string, string>[]
+      >((keys) => this.governancesService.getByBatch('realmPk', keys)),
+      getTokenOwnersByProgramPk: new DataLoader<
+        string,
+        TokenOwner<string, string>[]
+      >((keys) => this.tokenOwnerService.getByBatch('programPk', keys)),
+      getTokenOwnersByRealmPk: new DataLoader<
+        string,
+        TokenOwner<string, string>[]
+      >((keys) => this.tokenOwnerService.getByBatch('realmPk', keys)),
+      getProposalTransactionsByProgramPk: new DataLoader<
+        string,
+        ProposalTransaction<string, string>[]
+      >((keys) =>
+        this.proposalTransactionService.getByBatch('programPk', keys),
+      ),
+      getSignatoryRecordByProgramPk: new DataLoader<
+        string,
+        SignatoryRecord<string>[]
+      >((keys) => this.signatoryRecordsService.getByBatch('programPk', keys)),
+      getVoteRecordsByProgramPk: new DataLoader<
+        string,
+        VoteRecord<string, string>[]
+      >((keys) => this.voteRecordsService.getByBatch('programPk', keys)),
     };
-  }
-
-  private _createTokenOwnersLoader() {
-    return new DataLoader<string, TokenOwner<string, string>[]>(
-      (keys: readonly string[]) =>
-        this.tokenOwnerService.getRealmTokenOwnersByBatch(keys),
-    );
-  }
-
-  private _createProposalsLoader() {
-    return new DataLoader<string, Proposal<string>[]>(
-      (keys: readonly string[]) =>
-        this.proposalsService.getRealmProposalsByBatch(keys),
-    );
-  }
-
-  private _createGovernancesLoader() {
-    return new DataLoader<string, Governance<string, string>[]>(
-      (keys: readonly string[]) =>
-        this.governancesService.getRealmGovernancesByBatch(keys),
-    );
-  }
-
-  private _createRealmsLoader() {
-    return new DataLoader<string, Realm<string, string>[]>(
-      (keys: readonly string[]) => this.realmService.getRealmsByBatch(keys),
-    );
   }
 }
