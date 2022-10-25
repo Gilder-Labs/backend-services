@@ -22,12 +22,11 @@ export const getDataConfig = (
     password: configService.getOrThrow('DB_PASSWORD'),
     database: configService.getOrThrow('DB_NAME'),
     port: configService.getOrThrow<number>('DB_PORT'),
-    ssl:
-      configService.getOrThrow<Environment>('NODE_ENV') !== 'production'
-        ? false
-        : {
-            rejectUnauthorized: false,
-          },
+    ssl: configService.get<boolean>('USE_SSL')
+      ? {
+          rejectUnauthorized: false,
+        }
+      : false,
     synchronize: true,
     entities: [
       Realm,
