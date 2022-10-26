@@ -644,7 +644,7 @@ __metadata:
     unplugin-swc: ^1.3.2
     vite: ^3.1.4
   peerDependencies:
-    "@gilder/types": ^1.0.3
+    "@gilder/types": "workspace:*"
     "@solana/spl-governance": ^0.3.16
     "@solana/web3.js": ^1.63.1
   languageName: unknown
