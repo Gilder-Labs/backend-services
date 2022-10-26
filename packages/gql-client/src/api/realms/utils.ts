@@ -1,6 +1,6 @@
 import { Realm } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 import { MintMaxVoteWeightSource } from '@solana/spl-governance';
 
 export const transformRealm = ({
