@@ -22,12 +22,12 @@ export const transformRealm = ({
       councilMintPk: config.councilMintPk
         ? new PublicKey(config.councilMintPk)
         : undefined,
-      minCommunityTokensToCreateGovernance: new BN(
+      minCommunityTokensToCreateGovernance: new BN.BN(
         config.minCommunityTokensToCreateGovernance,
       ),
       communityMintMaxVoteWeightSource: new MintMaxVoteWeightSource({
         type: config.communityMintMaxVoteWeightSource.type,
-        value: new BN(config.communityMintMaxVoteWeightSource.value),
+        value: new BN.BN(config.communityMintMaxVoteWeightSource.value),
       }),
     },
   };
