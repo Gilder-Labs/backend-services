@@ -130,10 +130,16 @@ export class SeedService {
                   const gov = governances.find(
                     (x) => x.pubkey.toBase58() === key,
                   ) as ProgramAccount<Governance>;
-                  return this.proposalsService.upsertFromSolanaEntities(
-                    proposals,
-                    ['proposalPk'],
-                    gov,
+
+                  if (gov) {
+                    return this.proposalsService.upsertFromSolanaEntities(
+                      proposals,
+                      ['proposalPk'],
+                      gov,
+                    );
+                  }
+                  this.logger.log(
+                    `Skipping proposal(s) due to missing governance`,
                   );
                 },
               ),
