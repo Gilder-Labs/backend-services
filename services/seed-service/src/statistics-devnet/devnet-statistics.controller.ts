@@ -1,16 +1,17 @@
 import { CalculatedStatistic } from '@gilder/gov-db-entities';
 import { Controller, Get } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DEVNET_DB } from '../utils/constants';
 import { Repository } from 'typeorm';
 
 @Controller({
-  path: 'statistics',
+  path: 'devnet',
 })
-export class StatisticsController {
-  @InjectRepository(CalculatedStatistic)
+export class DevnetStatisticsController {
+  @InjectRepository(CalculatedStatistic, DEVNET_DB)
   private readonly statisticsRepo: Repository<CalculatedStatistic>;
 
-  @Get()
+  @Get('statistics')
   getStatistics() {
     return this.statisticsRepo.find();
   }

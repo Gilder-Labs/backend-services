@@ -7,8 +7,12 @@ import { BaseService } from '../base.service';
 
 @Injectable()
 export class RealmsService extends BaseService<Realm, SolanaRealm> {
-  @InjectRepository(Realm)
-  private readonly realmRepo: Repository<Realm>;
+  constructor(
+    @InjectRepository(Realm)
+    private readonly realmRepo: Repository<Realm>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<Realm> {
     return this.realmRepo;

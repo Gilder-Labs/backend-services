@@ -13,8 +13,12 @@ export class VoteRecordsService extends BaseService<
   VoteRecord,
   SolanaVoteRecord
 > {
-  @InjectRepository(VoteRecord)
-  private readonly voteRecordRepo: Repository<VoteRecord>;
+  constructor(
+    @InjectRepository(VoteRecord)
+    private readonly voteRecordRepo: Repository<VoteRecord>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<VoteRecord> {
     return this.voteRecordRepo;

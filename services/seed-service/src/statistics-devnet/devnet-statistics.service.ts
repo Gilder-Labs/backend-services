@@ -9,13 +9,14 @@ import {
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DEVNET_DB } from '../utils/constants';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class StatisticsService {
-  private readonly logger = new Logger(StatisticsService.name);
+export class DevnetStatisticsService {
+  private readonly logger = new Logger(DevnetStatisticsService.name);
 
-  @InjectRepository(CalculatedStatistic)
+  @InjectRepository(CalculatedStatistic, DEVNET_DB)
   private readonly statisticRepo: Repository<CalculatedStatistic>;
 
   @Inject(GovernancesService)

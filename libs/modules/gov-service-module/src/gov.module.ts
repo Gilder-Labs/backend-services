@@ -1,5 +1,5 @@
 import { ProposalsService, ProposalsServiceModule } from './proposals';
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 import {
   RealmsRestService,
   RealmsService,
@@ -7,7 +7,11 @@ import {
 } from './realms';
 import { TokenOwnersService, TokenOwnersServiceModule } from './token-owners';
 import { GovernancesService, GovernancesServiceModule } from './governances';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  getDataSourceToken,
+  getRepositoryToken,
+  TypeOrmModule,
+} from '@nestjs/typeorm';
 import {
   Governance,
   Proposal,
@@ -69,4 +73,65 @@ import { VoteRecordsService, VoteRecordsServiceModule } from './vote-records';
     VoteRecordsService,
   ],
 })
-export class GovServiceModule {}
+export class GovServiceModule {
+  static register(dataSource?: string): DynamicModule {
+    const providers: Provider<any>[] = [
+      {
+        provide: VoteRecordsService,
+        useFactory: (repo) => new VoteRecordsService(repo),
+        inject: [getRepositoryToken(VoteRecord, dataSource)],
+      },
+      {
+        provide: TokenOwnersService,
+        useFactory: (repo) => new TokenOwnersService(repo),
+        inject: [getRepositoryToken(TokenOwner, dataSource)],
+      },
+      {
+        provide: SignatoryRecordsService,
+        useFactory: (repo) => new SignatoryRecordsService(repo),
+        inject: [getRepositoryToken(SignatoryRecord, dataSource)],
+      },
+      {
+        provide: RealmsService,
+        useFactory: (repo) => new RealmsService(repo),
+        inject: [getRepositoryToken(Realm, dataSource)],
+      },
+      {
+        provide: ProposalsService,
+        useFactory: (repo) => new ProposalsService(repo),
+        inject: [getRepositoryToken(Proposal, dataSource)],
+      },
+      {
+        provide: GovernancesService,
+        useFactory: (repo) => new GovernancesService(repo),
+        inject: [getRepositoryToken(Governance, dataSource)],
+      },
+      {
+        provide: ProposalTransactionsService,
+        useFactory: (repo) => new ProposalTransactionsService(repo),
+        inject: [getRepositoryToken(ProposalTransaction, dataSource)],
+      },
+    ];
+
+    return {
+      module: GovServiceModule,
+      imports: [
+        HttpModule,
+        TypeOrmModule.forFeature(
+          [
+            Realm,
+            Governance,
+            Proposal,
+            TokenOwner,
+            VoteRecord,
+            SignatoryRecord,
+            ProposalTransaction,
+          ],
+          dataSource,
+        ),
+      ],
+      providers: providers,
+      exports: providers,
+    };
+  }
+}
