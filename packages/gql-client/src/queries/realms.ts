@@ -6,6 +6,9 @@ const CORE_REALM_FIELDS = gql`
     realmPk
     programPk
     name
+    communityMintPk
+    authorityPk
+    votingProposalCount
   }
 `;
 
