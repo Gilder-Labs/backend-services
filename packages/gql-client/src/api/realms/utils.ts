@@ -22,9 +22,13 @@ export const transformRealm = ({
       councilMintPk: config.councilMintPk
         ? new PublicKey(config.councilMintPk)
         : undefined,
-      communityMintMaxVoteWeightSource: new MintMaxVoteWeightSource(
-        config.communityMintMaxVoteWeightSource,
+      minCommunityTokensToCreateGovernance: new BN(
+        config.minCommunityTokensToCreateGovernance,
       ),
+      communityMintMaxVoteWeightSource: new MintMaxVoteWeightSource({
+        type: config.communityMintMaxVoteWeightSource.type,
+        value: new BN(config.communityMintMaxVoteWeightSource.value),
+      }),
     },
   };
 };
