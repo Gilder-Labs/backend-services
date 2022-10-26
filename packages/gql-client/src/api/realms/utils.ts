@@ -1,5 +1,7 @@
 import { Realm } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
+import { MintMaxVoteWeightSource } from '@solana/spl-governance';
 
 export const transformRealm = ({
   realmPk,
@@ -8,7 +10,7 @@ export const transformRealm = ({
   communityMintPk,
   config,
   ...rest
-}: Realm<string>): Realm => {
+}: Realm<string>): Realm<PublicKey, BN, MintMaxVoteWeightSource> => {
   return {
     ...rest,
     realmPk: new PublicKey(realmPk),
@@ -20,6 +22,9 @@ export const transformRealm = ({
       councilMintPk: config.councilMintPk
         ? new PublicKey(config.councilMintPk)
         : undefined,
+      communityMintMaxVoteWeightSource: new MintMaxVoteWeightSource(
+        config.communityMintMaxVoteWeightSource,
+      ),
     },
   };
 };
