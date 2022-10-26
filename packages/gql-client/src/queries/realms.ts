@@ -1,7 +1,21 @@
 import gql from 'graphql-tag';
 import { CORE_PROPOSAL_FIELDS } from './proposals';
 
+const CORE_REALM_CONFIG_FIELDS = gql`
+  fragment CoreRealmConfigFields on RealmConfig {
+    councilMintPk
+    communityMintMaxVoteWeightSource {
+      type
+      value
+    }
+    minCommunityTokensToCreateGovernance
+    useCommunityVoterWeightAddin
+    useMaxCommunityVoterWeightAddin
+  }
+`;
+
 const CORE_REALM_FIELDS = gql`
+  ${CORE_REALM_CONFIG_FIELDS}
   fragment CoreRealmFields on Realm {
     realmPk
     programPk
@@ -9,6 +23,9 @@ const CORE_REALM_FIELDS = gql`
     communityMintPk
     authorityPk
     votingProposalCount
+    config {
+      ...CoreRealmConfigFields
+    }
   }
 `;
 
@@ -57,6 +74,7 @@ const GET_REALM_WITH_PROPOSALS = gql`
 `;
 
 export {
+  CORE_REALM_CONFIG_FIELDS,
   CORE_REALM_FIELDS,
   GET_ALL_REALMS,
   GET_ALL_REALMS_WITH_PROPOSALS,
