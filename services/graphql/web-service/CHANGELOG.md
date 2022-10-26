@@ -1,4 +1,4 @@
-# @gilder/types
+# @gilder/graphql-web-service
 
 ## 1.0.3
 
@@ -6,8 +6,6 @@
 
 - [#4](https://github.com/Gilder-Labs/backend-services/pull/4) [`bc6b419`](https://github.com/Gilder-Labs/backend-services/commit/bc6b4195760b7e142a80b0d203be83fb332baa19) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding some new properties to realm transform
 
-## 1.0.2
-
-### Patch Changes
-
-- [`b8af17b`](https://github.com/Gilder-Labs/backend-services/commit/b8af17b3e92501702f61728c71278b12f7a736db) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Package renaming
+- Updated dependencies [[`bc6b419`](https://github.com/Gilder-Labs/backend-services/commit/bc6b4195760b7e142a80b0d203be83fb332baa19)]:
+  - @gilder/graphql-gov-dataloaders@1.0.1
+  - @gilder/graphql-gov-resolvers@1.0.2
