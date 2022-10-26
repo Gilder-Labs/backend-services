@@ -1,5 +1,11 @@
 # @gilder/graphql-gov-dataloaders
 
+## 1.0.2
+
+### Patch Changes
+
+- [#6](https://github.com/Gilder-Labs/backend-services/pull/6) [`2bfd94c`](https://github.com/Gilder-Labs/backend-services/commit/2bfd94ce784c2dcb06910dd12a586c90adf25a47) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding MintMaxVoteWeightSource support
+
 ## 1.0.1
 
 ### Patch Changes
