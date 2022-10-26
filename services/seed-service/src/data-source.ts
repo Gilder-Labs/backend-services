@@ -1,4 +1,5 @@
 import {
+  CalculatedStatistic,
   Governance,
   Proposal,
   ProposalTransaction,
@@ -36,6 +37,7 @@ export const getDataConfig = (
       SignatoryRecord,
       ProposalTransaction,
       VoteRecord,
+      CalculatedStatistic,
     ],
     migrations: [],
     subscribers: [],

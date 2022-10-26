@@ -49,6 +49,10 @@ export abstract class BaseService<
     return this.addOrUpdateFromSolanaEntities([entity], ...additionalArgs);
   }
 
+  public async getCount(where?: FindOptionsWhere<TEntity>) {
+    return this.getRepo().count({ where });
+  }
+
   public async addOrUpdateFromSolanaEntities(
     entities: ProgramAccount<TSolanaEntity>[],
     ...additionalArgs: any[]
