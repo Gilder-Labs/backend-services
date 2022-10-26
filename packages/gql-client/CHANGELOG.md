@@ -1,5 +1,14 @@
 # @gilder/gql-client
 
+## 1.0.7
+
+### Patch Changes
+
+- [#6](https://github.com/Gilder-Labs/backend-services/pull/6) [`2bfd94c`](https://github.com/Gilder-Labs/backend-services/commit/2bfd94ce784c2dcb06910dd12a586c90adf25a47) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding MintMaxVoteWeightSource support
+
+- Updated dependencies [[`2bfd94c`](https://github.com/Gilder-Labs/backend-services/commit/2bfd94ce784c2dcb06910dd12a586c90adf25a47)]:
+  - @gilder/types@1.0.4
+
 ## 1.0.6
 
 ### Patch Changes

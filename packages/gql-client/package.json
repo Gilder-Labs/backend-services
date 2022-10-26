@@ -1,6 +1,6 @@
 {
   "name": "@gilder/gql-client",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -44,7 +44,7 @@
     "vite": "^3.1.4"
   },
   "peerDependencies": {
-    "@gilder/types": "^1.0.3",
+    "@gilder/types": "^1.0.4",
     "@solana/spl-governance": "^0.3.16",
     "@solana/web3.js": "^1.63.1"
   }

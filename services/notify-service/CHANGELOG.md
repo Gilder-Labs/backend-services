@@ -1,5 +1,15 @@
 # @gilder/notify-service
 
+## 1.0.4
+
+### Patch Changes
+
+- [#6](https://github.com/Gilder-Labs/backend-services/pull/6) [`2bfd94c`](https://github.com/Gilder-Labs/backend-services/commit/2bfd94ce784c2dcb06910dd12a586c90adf25a47) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding MintMaxVoteWeightSource support
+
+- Updated dependencies [[`2bfd94c`](https://github.com/Gilder-Labs/backend-services/commit/2bfd94ce784c2dcb06910dd12a586c90adf25a47)]:
+  - @gilder/gov-db-entities@1.0.4
+  - @gilder/notification-subscriptions-module@1.0.3
+
 ## 1.0.3
 
 ### Patch Changes
