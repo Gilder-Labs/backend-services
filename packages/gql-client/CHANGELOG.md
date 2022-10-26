@@ -1,5 +1,11 @@
 # @gilder/gql-client
 
+## 1.0.8
+
+### Patch Changes
+
+- [#8](https://github.com/Gilder-Labs/backend-services/pull/8) [`45334a1`](https://github.com/Gilder-Labs/backend-services/commit/45334a1a13479316e2fa883027462ead0474c323) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Fixing type issue
+
 ## 1.0.7
 
 ### Patch Changes
