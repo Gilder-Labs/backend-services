@@ -26,11 +26,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@solana/spl-governance": "^0.3.16",
     "@solana/web3.js": "^1.63.1",
     "bn.js": "^5.2.1",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
+    "@solana/spl-governance": "^0.3.16",
     "@solana/web3.js": "^1.63.1",
     "bn.js": "^5.2.1"
   }
