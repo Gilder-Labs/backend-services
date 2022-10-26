@@ -4,6 +4,9 @@ import type { TokenOwner as ITokenOwner } from '@gilder/types';
 @ObjectType()
 export class TokenOwner implements ITokenOwner<string, string> {
   @Field()
+  programPk: string;
+
+  @Field()
   ownerPk: string;
 
   @Field()

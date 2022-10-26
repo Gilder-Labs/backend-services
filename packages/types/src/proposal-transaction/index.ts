@@ -1,7 +1,7 @@
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
 
-export interface AccountMetaData<TKey = PublicKey> {
+export interface AccountMetadata<TKey = PublicKey> {
   pubkey: TKey;
   isSigner: boolean;
   isWritable: boolean;
@@ -9,7 +9,7 @@ export interface AccountMetaData<TKey = PublicKey> {
 
 export interface InstructionData<TKey = PublicKey> {
   programId: TKey;
-  accounts: AccountMetaData<TKey>[];
+  accounts: AccountMetadata<TKey>[];
 }
 
 export interface ProposalTransaction<TKey = PublicKey, TNum = BN> {

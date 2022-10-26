@@ -44,7 +44,7 @@ export class RealmsResolver {
     @Context() { loaders }: { loaders: IDataLoaders },
   ): Promise<Proposal[]> {
     const { realmPk } = realm;
-    return loaders.proposalsLoader.load(realmPk);
+    return loaders.getProposalsByRealmPk.load(realmPk);
   }
 
   @ResolveField('governances', () => [Governance])
@@ -53,7 +53,7 @@ export class RealmsResolver {
     @Context() { loaders }: { loaders: IDataLoaders },
   ): Promise<Governance[]> {
     const { realmPk } = realm;
-    return loaders.governancesLoader.load(realmPk);
+    return loaders.getGovernancesByRealmPk.load(realmPk);
   }
 
   @ResolveField('tokenOwners', () => [TokenOwner])
@@ -62,6 +62,6 @@ export class RealmsResolver {
     @Context() { loaders }: { loaders: IDataLoaders },
   ): Promise<TokenOwner[]> {
     const { realmPk } = realm;
-    return loaders.tokenOwnersLoader.load(realmPk);
+    return loaders.getTokenOwnersByRealmPk.load(realmPk);
   }
 }

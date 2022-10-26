@@ -1,6 +1,7 @@
 import {
   FindOptionsSelect,
   FindOptionsWhere,
+  In,
   ObjectLiteral,
   Repository,
 } from 'typeorm';
@@ -63,6 +64,29 @@ export abstract class BaseService<
     );
 
     return repo.save(dbEntities);
+  }
+
+  public getAllBy(key: keyof TEntity, keys: string[]) {
+    return this.getRepo().find({
+      where: {
+        [key]: In(keys),
+      } as any,
+    });
+  }
+
+  public async getByBatch(key: keyof TEntity, keys: readonly string[]) {
+    const entities = await this.getAllBy(key, keys as string[]);
+    return this._mapResultToIds(key, keys as string[], entities);
+  }
+
+  private _mapResultToIds(
+    key: keyof TEntity,
+    keys: string[],
+    entities: TEntity[],
+  ) {
+    return keys.map(
+      (x) => entities.filter((entity) => entity[key] === x) || null,
+    );
   }
 
   public async upsertFromSolanaEntities(

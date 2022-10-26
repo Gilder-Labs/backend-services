@@ -92,6 +92,8 @@ export class GovernanceProgramsMonitorService
   }
 
   private async processData(type: AccountType, account: ProgramAccount<any>) {
+    this.logger.log(`Adding/Updating entity type: ${type}`);
+
     switch (type) {
       case 'realm':
         await this.realmsService.addOrUpdateFromSolanaEntity(account);

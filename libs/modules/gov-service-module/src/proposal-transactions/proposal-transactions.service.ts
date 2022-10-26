@@ -5,9 +5,9 @@ import {
   ProgramAccount,
   ProposalTransaction as SolanaProposalTransaction,
 } from '@solana/spl-governance';
-import { ProposalTransaction, SignatoryRecord } from '@gilder/gov-db-entities';
+import { ProposalTransaction } from '@gilder/gov-db-entities';
 import { BaseService } from '../base.service';
-import { AccountMetaData } from '@gilder/types';
+import { AccountMetadata } from '@gilder/types';
 
 @Injectable()
 export class ProposalTransactionsService extends BaseService<
@@ -46,7 +46,7 @@ export class ProposalTransactionsService extends BaseService<
         })),
       },
       instructions: instructions.map((instruct) => ({
-        accounts: instruct.accounts.map<AccountMetaData<string>>((a) => ({
+        accounts: instruct.accounts.map<AccountMetadata<string>>((a) => ({
           isSigner: a.isSigner,
           isWritable: a.isWritable,
           pubkey: a.pubkey.toBase58(),

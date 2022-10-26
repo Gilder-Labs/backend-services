@@ -19,8 +19,13 @@ import {
   VoteRecord,
   SignatoryRecord,
   ProposalTransaction,
-  ProgramMetadata,
 } from '@gilder/gov-db-entities';
+import { ProposalTransactionsGraphQLModule } from './proposal-transaction';
+import { SignatoryRecordsGraphQLModule } from './signatory-record';
+import { VoteRecordsGraphQLModule } from './vote-record';
+import { ProposalTransactionResolver } from './proposal-transaction/proposal-transaction.resolver';
+import { SignatoryRecordResolver } from './signatory-record/signatory-record.resolver';
+import { VoteRecordResolver } from './vote-record/vote-record.resolver';
 
 @Module({
   imports: [
@@ -32,7 +37,6 @@ import {
       VoteRecord,
       SignatoryRecord,
       ProposalTransaction,
-      ProgramMetadata,
     ]),
     GovServiceModule,
     GovernancesGraphQLModule,
@@ -40,6 +44,9 @@ import {
     ProposalsGraphQLModule,
     RealmsGraphQLModule,
     TokenOwnersGraphQLModule,
+    ProposalTransactionsGraphQLModule,
+    SignatoryRecordsGraphQLModule,
+    VoteRecordsGraphQLModule,
   ],
   providers: [
     RealmsResolver,
@@ -47,6 +54,9 @@ import {
     GovernanceProgramResolver,
     TokenOwnersResolver,
     GovernancesResolver,
+    ProposalTransactionResolver,
+    SignatoryRecordResolver,
+    VoteRecordResolver,
   ],
   exports: [
     RealmsResolver,
@@ -54,6 +64,9 @@ import {
     GovernanceProgramResolver,
     TokenOwnersResolver,
     GovernancesResolver,
+    ProposalTransactionResolver,
+    SignatoryRecordResolver,
+    VoteRecordResolver,
   ],
 })
 export class GovResolversModule {}

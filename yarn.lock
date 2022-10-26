@@ -1016,6 +1016,7 @@ __metadata:
     "@gilder/gov-db-entities": "workspace:*"
     "@gilder/gov-service-module": "workspace:*"
     "@gilder/internal-types": "workspace:*"
+    "@gilder/rpc-manager": "workspace:*"
     "@gilder/rpc-manager-module": "workspace:*"
     "@gilder/types": "workspace:*"
     "@gilder/utilities": "workspace:*"

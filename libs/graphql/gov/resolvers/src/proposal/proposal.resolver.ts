@@ -8,6 +8,6 @@ export class ProposalsResolver {
 
   @Query(() => [Proposal])
   async proposals(): Promise<Proposal[]> {
-    return this.proposalService.getAllProposals();
+    return this.proposalService.getAll();
   }
 }

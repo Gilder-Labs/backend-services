@@ -17,6 +17,7 @@
   "dependencies": {
     "@gilder/gov-db-entities": "workspace:*",
     "@gilder/gov-service-module": "workspace:*",
+    "@gilder/rpc-manager": "workspace:*",
     "@gilder/rpc-manager-module": "workspace:*",
     "@gilder/utilities": "workspace:*",
     "@nestjs/common": "^9.1.2",
