@@ -2,9 +2,19 @@ import gql from 'graphql-tag';
 
 const CORE_PROPOSAL_FIELDS = gql`
   fragment CoreProposalFields on Proposal {
+    governancePk
+    realmPk
     proposalPk
     state
     name
+    descriptionLink
+    draftAt
+    startVotingAt
+    votingCompletedAt
+    estimatedVoteCompletionAt
+    closedAt
+    executingAt
+    signingOffAt
   }
 `;
 
