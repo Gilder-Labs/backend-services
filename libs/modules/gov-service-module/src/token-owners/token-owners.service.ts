@@ -10,8 +10,12 @@ export class TokenOwnersService extends BaseService<
   TokenOwner,
   TokenOwnerRecord
 > {
-  @InjectRepository(TokenOwner)
-  private readonly tokenOwnerRepo: Repository<TokenOwner>;
+  constructor(
+    @InjectRepository(TokenOwner)
+    private readonly tokenOwnerRepo: Repository<TokenOwner>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<TokenOwner> {
     return this.tokenOwnerRepo;

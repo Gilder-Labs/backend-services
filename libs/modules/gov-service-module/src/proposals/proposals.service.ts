@@ -11,8 +11,12 @@ import { BaseService } from '../base.service';
 
 @Injectable()
 export class ProposalsService extends BaseService<Proposal, SolanaProposal> {
-  @InjectRepository(Proposal)
-  private readonly proposalRepo: Repository<Proposal>;
+  constructor(
+    @InjectRepository(Proposal)
+    private readonly proposalRepo: Repository<Proposal>,
+  ) {
+    super();
+  }
 
   protected getRepo(): Repository<Proposal> {
     return this.proposalRepo;

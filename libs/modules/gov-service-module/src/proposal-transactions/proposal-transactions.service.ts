@@ -14,8 +14,12 @@ export class ProposalTransactionsService extends BaseService<
   ProposalTransaction,
   SolanaProposalTransaction
 > {
-  @InjectRepository(ProposalTransaction)
-  private readonly proposalTransactionRepo: Repository<ProposalTransaction>;
+  constructor(
+    @InjectRepository(ProposalTransaction)
+    private readonly proposalTransactionRepo: Repository<ProposalTransaction>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<ProposalTransaction> {
     return this.proposalTransactionRepo;

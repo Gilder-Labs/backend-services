@@ -13,8 +13,12 @@ export class SignatoryRecordsService extends BaseService<
   SignatoryRecord,
   SolanaSignatoryRecord
 > {
-  @InjectRepository(SignatoryRecord)
-  private readonly signatoryRecordRepo: Repository<SignatoryRecord>;
+  constructor(
+    @InjectRepository(SignatoryRecord)
+    private readonly signatoryRecordRepo: Repository<SignatoryRecord>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<SignatoryRecord> {
     return this.signatoryRecordRepo;

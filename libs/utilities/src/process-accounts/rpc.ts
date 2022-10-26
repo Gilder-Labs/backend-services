@@ -55,21 +55,26 @@ const getAllProgramAccounts = async (
   const filteredData = allProgramData.flatMap((x) => x);
 
   for (const { pubkey, account } of filteredData) {
-    const parsedData = parseAccount(pubkey, account);
-    if (!parsedData) {
-      continue;
-    }
+    try {
+      const parsedData = parseAccount(pubkey, account);
+      if (!parsedData) {
+        continue;
+      }
 
-    const accountType = getAccountType(parsedData?.type);
-    if (!accountType) {
-      continue;
-    }
+      const accountType = getAccountType(parsedData?.type);
+      if (!accountType) {
+        continue;
+      }
 
-    const { account: parsedAccount } = parsedData;
-    if (programParsedData[accountType]) {
-      programParsedData[accountType].push(parsedAccount);
-    } else {
-      programParsedData[accountType] = [parsedAccount];
+      const { account: parsedAccount } = parsedData;
+
+      if (programParsedData[accountType]) {
+        programParsedData[accountType].push(parsedAccount);
+      } else {
+        programParsedData[accountType] = [parsedAccount];
+      }
+    } catch {
+      continue;
     }
   }
 

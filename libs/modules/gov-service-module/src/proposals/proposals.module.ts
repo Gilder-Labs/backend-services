@@ -1,12 +1,25 @@
 import { Proposal } from '@gilder/gov-db-entities';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProposalRPCService } from './proposals.rpc-service';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { ProposalsService } from './proposals.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Proposal])],
-  providers: [ProposalRPCService, ProposalsService],
-  exports: [ProposalRPCService, ProposalsService],
+  providers: [ProposalsService],
+  exports: [ProposalsService],
 })
-export class ProposalsServiceModule {}
+export class ProposalsServiceModule {
+  static register(dataSource?: string): DynamicModule {
+    const provider: Provider<any> = {
+      provide: 'PROPOSAL_SERVICE',
+      useFactory: (repo) => new ProposalsService(repo),
+      inject: [getRepositoryToken(Proposal, dataSource)],
+    };
+    return {
+      module: ProposalsServiceModule,
+      imports: [TypeOrmModule.forFeature([Proposal], dataSource)],
+      providers: [provider],
+      exports: [provider],
+    };
+  }
+}

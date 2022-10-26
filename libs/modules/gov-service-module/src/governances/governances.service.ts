@@ -13,8 +13,12 @@ export class GovernancesService extends BaseService<
   Governance,
   SolanaGovernance
 > {
-  @InjectRepository(Governance)
-  private readonly governanceRepo: Repository<Governance>;
+  constructor(
+    @InjectRepository(Governance)
+    private readonly governanceRepo: Repository<Governance>,
+  ) {
+    super();
+  }
 
   getRepo(): Repository<Governance> {
     return this.governanceRepo;
