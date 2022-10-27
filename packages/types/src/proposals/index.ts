@@ -4,6 +4,8 @@ import {
   VoteTypeKind,
   OptionVoteResult,
   GovernanceAccountType,
+  VoteType as SolanaVoteType,
+  ProposalOption as SolanaProposalOption,
 } from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
@@ -23,7 +25,12 @@ export interface ProposalOption<TNum = BN> {
   instructionsNextIndex: number;
 }
 
-export interface Proposal<TKey = PublicKey, TNum = BN> {
+export interface Proposal<
+  TKey = PublicKey,
+  TNum = BN,
+  TVote = SolanaVoteType,
+  TOption = SolanaProposalOption,
+> {
   accountType: GovernanceAccountType;
   programPk: TKey;
   proposalPk: TKey;
@@ -42,27 +49,27 @@ export interface Proposal<TKey = PublicKey, TNum = BN> {
   closedAt?: Date;
   executingAt?: Date;
   tokenOwnerRecordPk: TKey;
-  signatoriesCount: number;
-  signatoriesSignedOffCount: number;
-  instructionsExecutedCount: number;
-  instructionsCount: number;
-  instructionsNextIndex: number;
-  voteType: VoteType;
-  options: ProposalOption<TNum>[];
+  signatoriesCount?: number;
+  signatoriesSignedOffCount?: number;
+  instructionsExecutedCount?: number;
+  instructionsCount?: number;
+  instructionsNextIndex?: number;
+  voteType?: TVote;
+  options?: TOption[];
   denyVoteWeight?: TNum;
   abstainVoteWeight?: TNum;
   maxVotingTime?: number;
   votingAtSlot?: TNum;
   executionFlags: InstructionExecutionFlags;
   maxVoteWeight?: TNum;
-  voteThreshold: VoteThreshold;
-  vetoVoteWeight: TNum;
+  voteThreshold?: VoteThreshold;
+  vetoVoteWeight?: TNum;
   isVoteFinalized: boolean;
   isFinalState: boolean;
   stateTimestamp: Date;
   stateSortRank: number;
   isPreVotingState: boolean;
-  yesVoteOption: ProposalOption<TNum>;
+  yesVoteOption?: TOption;
   yesVoteCount: TNum;
   noVoteCount: TNum;
   timeToVoteEnd: number;

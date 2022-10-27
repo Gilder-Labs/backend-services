@@ -8,6 +8,8 @@ import type {
   VoteRecord,
   SignatoryRecord,
   RawMintMaxVoteWeightSource,
+  VoteType,
+  ProposalOption,
 } from '@gilder/types';
 
 export interface IDataLoaders {
@@ -20,9 +22,18 @@ export interface IDataLoaders {
     Realm<string, string, RawMintMaxVoteWeightSource<string>>[]
   >;
 
-  getProposalsByProgramPk: DataLoader<string, Proposal<string>[]>;
-  getProposalsByRealmPk: DataLoader<string, Proposal<string>[]>;
-  getProposalsByGovernancePk: DataLoader<string, Proposal<string>[]>;
+  getProposalsByProgramPk: DataLoader<
+    string,
+    Proposal<string, string, VoteType, ProposalOption<string>>[]
+  >;
+  getProposalsByRealmPk: DataLoader<
+    string,
+    Proposal<string, string, VoteType, ProposalOption<string>>[]
+  >;
+  getProposalsByGovernancePk: DataLoader<
+    string,
+    Proposal<string, string, VoteType, ProposalOption<string>>[]
+  >;
 
   getGovernancesByProgramPk: DataLoader<string, Governance<string, string>[]>;
   getGovernancesByRealmPk: DataLoader<string, Governance<string, string>[]>;

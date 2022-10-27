@@ -22,6 +22,8 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^10.1.2",
+    "@solana/spl-governance": "^0.3.16",
+    "@solana/web3.js": "^1.63.1",
     "@swc/core": "^1.3.0",
     "graphql": "^16.6.0",
     "reflect-metadata": "^0.1.13",
@@ -35,6 +37,8 @@
   "peerDependencies": {
     "@nestjs/graphql": "^10.1.2",
     "@nestjs/typeorm": "^9.0.1",
+    "@solana/spl-governance": "^0.3.16",
+    "@solana/web3.js": "^1.63.1",
     "graphql": "^16.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.6",

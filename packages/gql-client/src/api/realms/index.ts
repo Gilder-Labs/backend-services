@@ -1,4 +1,4 @@
-import type { Realm } from '@gilder/types';
+import type { RawMintMaxVoteWeightSource, Realm } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
 import { ApiClient } from '../../client';
 import {
@@ -13,9 +13,9 @@ import { GetRealmArgs, RealmWithProposals } from './types';
 import { transformRealm } from './utils';
 
 const getAllRealms = async (client: ApiClient) => {
-  return getResults<Realm<string>[]>({ query: GET_ALL_REALMS }, client).then(
-    (data) => data.map(transformRealm),
-  );
+  return getResults<
+    Realm<string, string, RawMintMaxVoteWeightSource<string>>[]
+  >({ query: GET_ALL_REALMS }, client).then((data) => data.map(transformRealm));
 };
 
 const getAllRealmsWithProposals = async (client: ApiClient) => {

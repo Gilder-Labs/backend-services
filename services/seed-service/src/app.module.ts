@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { SeedModule } from './seed';
-import { StatisticsModule } from './statistics';
+import { MetricsModule } from './metrics';
 import { DEFAULT_CONNECTION } from './utils/constants';
 
 @Module({
@@ -48,7 +48,7 @@ import { DEFAULT_CONNECTION } from './utils/constants';
       },
     }),
     SeedModule,
-    StatisticsModule,
+    MetricsModule,
   ],
 })
 export class AppModule {}

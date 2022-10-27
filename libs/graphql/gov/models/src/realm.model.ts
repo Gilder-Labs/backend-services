@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import type {
   RawMintMaxVoteWeightSource,
   Realm as IRealm,
@@ -7,9 +7,12 @@ import type {
 import { TokenOwner } from './token-owner.model';
 import { Proposal } from './proposal.model';
 import { Governance } from './governance.model';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
-export class MintMaxVoteWeightSource {
+export class MintMaxVoteWeightSource
+  implements RawMintMaxVoteWeightSource<string>
+{
   @Field()
   type: number;
 
@@ -18,7 +21,9 @@ export class MintMaxVoteWeightSource {
 }
 
 @ObjectType()
-export class RealmConfig implements IRealmConfig<string, string> {
+export class RealmConfig
+  implements IRealmConfig<string, string, RawMintMaxVoteWeightSource<string>>
+{
   @Field(() => String, { nullable: true })
   councilMintPk?: string | undefined;
 
@@ -39,6 +44,9 @@ export class RealmConfig implements IRealmConfig<string, string> {
 export class Realm
   implements IRealm<string, string, RawMintMaxVoteWeightSource<string>>
 {
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
+
   @Field()
   realmPk: string;
 
@@ -63,9 +71,9 @@ export class Realm
   @Field()
   votingProposalCount: number;
 
-  @Field(() => String, { nullable: true })
-  authorityPk?: string | undefined;
+  @Field({ nullable: true })
+  authorityPk?: string;
 
   @Field(() => RealmConfig)
-  config: IRealmConfig<string, string>;
+  config: RealmConfig;
 }

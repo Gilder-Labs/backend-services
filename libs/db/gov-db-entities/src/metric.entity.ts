@@ -11,19 +11,19 @@ export class Metric {
   metricId: string;
 
   @Column('int')
-  numberRealms: number;
+  totalRealms: number;
 
   @Column('int')
-  numberProposals: number;
+  totalProposals: number;
 
   @Column('int')
-  numberVotes: number;
+  totalVotes: number;
 
   @Column('int')
-  numberGovernances: number;
+  totalGovernances: number;
 
   @Column('int')
-  numTokenOwners: number;
+  totalUniqueTokenOwners: number;
 
   @CreateDateColumn({
     type: 'timestamp',

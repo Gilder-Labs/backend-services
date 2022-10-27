@@ -1,10 +1,11 @@
 import type { SignatoryRecord as ISignatoryRecord } from '@gilder/types';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class SignatoryRecord implements ISignatoryRecord<string> {
-  @Field()
-  accountType: number;
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
 
   @Field()
   proposalPk: string;

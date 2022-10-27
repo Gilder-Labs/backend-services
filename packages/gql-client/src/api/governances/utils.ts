@@ -1,5 +1,5 @@
 import { Governance } from '@gilder/types';
-import { VoteThreshold, VoteTipping } from '@solana/spl-governance';
+import { VoteThreshold } from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import * as BN from 'bn.js';
 

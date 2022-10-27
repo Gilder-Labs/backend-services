@@ -67,11 +67,11 @@ export class SeedService {
     this.isSeeding = true;
 
     try {
+      this.logger.log('Starting seeding process...');
+
       const programPks = (
         await this.realmsRestService.getSplGovernancePrograms()
       ).map((x) => x.toBase58());
-
-      this.logger.log('Starting seeding process...');
 
       this.logger.log('Querying all program account data...');
       const allData = await getAllProgramAccounts(programPks, this.connection);
@@ -177,7 +177,10 @@ export class SeedService {
 
       this.logger.log('Finished seeding the database!');
     } catch (err) {
-      this.logger.error(`Unable to seed database... Error: ${err}`);
+      this.logger.error(
+        `Unable to seed database... Error: ${err} Stack: ${err?.stack}`,
+      );
+      throw err;
     } finally {
       this.isSeeding = false;
     }

@@ -26,6 +26,7 @@ export class RealmsService extends BaseService<Realm, SolanaRealm> {
     const { config } = account;
     return {
       name: account.name,
+      accountType: account.accountType,
       programPk: owner.toBase58(),
       realmPk: pubkey.toBase58(),
       authorityPk: account.authority?.toBase58(),

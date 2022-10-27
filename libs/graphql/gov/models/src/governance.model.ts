@@ -1,10 +1,11 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import type {
   Governance as IGovernance,
   GovernanceConfig as IGovernanceConfig,
   VoteThreshold as IVoteThreshold,
 } from '@gilder/types';
 import { Proposal } from './proposal.model';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class VoteThreshold implements IVoteThreshold {
@@ -56,8 +57,8 @@ export class Governance implements IGovernance<string, string> {
   @Field()
   governancePk: string;
 
-  @Field()
-  accountType: number;
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
 
   @Field()
   realmPk: string;
@@ -66,7 +67,7 @@ export class Governance implements IGovernance<string, string> {
   governedAccountPk: string;
 
   @Field(() => GovernanceConfig)
-  config: IGovernanceConfig<string>;
+  config: GovernanceConfig;
 
   @Field()
   proposalCount: number;

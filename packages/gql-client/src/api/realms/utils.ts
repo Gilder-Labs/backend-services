@@ -1,16 +1,20 @@
-import { Realm } from '@gilder/types';
+import { RawMintMaxVoteWeightSource, Realm } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
 import * as BN from 'bn.js';
 import { MintMaxVoteWeightSource } from '@solana/spl-governance';
 
-export const transformRealm = ({
+export const transformRealm = <
+  TReturn extends Partial<
+    Realm<PublicKey, BN, MintMaxVoteWeightSource>
+  > = Realm,
+>({
   realmPk,
   programPk,
   authorityPk,
   communityMintPk,
   config,
   ...rest
-}: Realm<string>): Realm<PublicKey, BN, MintMaxVoteWeightSource> => {
+}: Realm<string, string, RawMintMaxVoteWeightSource<string>>): TReturn => {
   return {
     ...rest,
     realmPk: new PublicKey(realmPk),
@@ -30,5 +34,5 @@ export const transformRealm = ({
         value: new BN.BN(config.communityMintMaxVoteWeightSource.value),
       }),
     },
-  };
+  } as TReturn;
 };

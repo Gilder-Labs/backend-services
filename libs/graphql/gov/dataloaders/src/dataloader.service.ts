@@ -10,12 +10,14 @@ import {
 import {
   Governance,
   Proposal,
+  ProposalOption,
   ProposalTransaction,
   RawMintMaxVoteWeightSource,
   Realm,
   SignatoryRecord,
   TokenOwner,
   VoteRecord,
+  VoteType,
 } from '@gilder/types';
 import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
@@ -54,15 +56,18 @@ export class DataLoaderService {
         string,
         Realm<string, string, RawMintMaxVoteWeightSource<string>>[]
       >((keys) => this.realmService.getByBatch('realmPk', keys)),
-      getProposalsByProgramPk: new DataLoader<string, Proposal<string>[]>(
-        (keys) => this.proposalsService.getByBatch('programPk', keys),
-      ),
-      getProposalsByRealmPk: new DataLoader<string, Proposal<string>[]>(
-        (keys) => this.proposalsService.getByBatch('realmPk', keys),
-      ),
-      getProposalsByGovernancePk: new DataLoader<string, Proposal<string>[]>(
-        (keys) => this.proposalsService.getByBatch('governancePk', keys),
-      ),
+      getProposalsByProgramPk: new DataLoader<
+        string,
+        Proposal<string, string, VoteType, ProposalOption<string>>[]
+      >((keys) => this.proposalsService.getByBatch('programPk', keys)),
+      getProposalsByRealmPk: new DataLoader<
+        string,
+        Proposal<string, string, VoteType, ProposalOption<string>>[]
+      >((keys) => this.proposalsService.getByBatch('realmPk', keys)),
+      getProposalsByGovernancePk: new DataLoader<
+        string,
+        Proposal<string, string, VoteType, ProposalOption<string>>[]
+      >((keys) => this.proposalsService.getByBatch('governancePk', keys)),
       getGovernancesByProgramPk: new DataLoader<
         string,
         Governance<string, string>[]

@@ -3,7 +3,8 @@ import type {
   InstructionData as IInstructionData,
   ProposalTransaction as IProposalTransaction,
 } from '@gilder/types';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class AccountMetadata implements IAccountMetadata<string> {
@@ -30,8 +31,8 @@ export class InstructionData implements IInstructionData<string> {
 export class ProposalTransaction
   implements IProposalTransaction<string, string>
 {
-  @Field()
-  accountType: number;
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
 
   @Field()
   proposalPk: string;
@@ -54,7 +55,7 @@ export class ProposalTransaction
   @Field()
   holdUpTime: number;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   executedAt?: string;
 
   @Field()

@@ -4,7 +4,8 @@ import type {
   Vote as IVote,
   VoteChoice as IVoteChoice,
 } from '@gilder/types';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class VoteChoice implements IVoteChoice {
@@ -41,8 +42,8 @@ export class VoteWeight implements IVoteWeight<string> {
 
 @ObjectType()
 export class VoteRecord implements IVoteRecord<string, string> {
-  @Field()
-  accountType: number;
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
 
   @Field()
   proposalPk: string;
@@ -59,15 +60,15 @@ export class VoteRecord implements IVoteRecord<string, string> {
   @Field(() => VoteWeight, { nullable: true })
   voteWeight?: VoteWeight;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   voterWeight?: string;
 
   @Field(() => Vote, { nullable: true })
   vote?: Vote;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   noVoteWeight?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   yesVoteWeight?: string;
 }

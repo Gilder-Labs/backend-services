@@ -1,12 +1,15 @@
-import { GovernanceAccountType } from '@solana/spl-governance';
+import {
+  GovernanceAccountType,
+  MintMaxVoteWeightSource,
+} from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
-import type { RealmConfig, RawMintMaxVoteWeightSource } from '../realm-config';
+import type { RealmConfig } from '../realm-config';
 
 export interface Realm<
   TKey = PublicKey,
   TNum = BN,
-  TMint = RawMintMaxVoteWeightSource,
+  TMint = MintMaxVoteWeightSource,
 > {
   accountType: GovernanceAccountType;
   realmPk: TKey;
