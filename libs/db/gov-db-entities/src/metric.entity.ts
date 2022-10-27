@@ -6,9 +6,9 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class CalculatedStatistic {
+export class Metric {
   @PrimaryGeneratedColumn('uuid')
-  statisticId: string;
+  metricId: string;
 
   @Column('int')
   numberRealms: number;

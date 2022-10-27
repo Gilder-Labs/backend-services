@@ -11,6 +11,7 @@ import {
   Governance,
   Proposal,
   ProposalTransaction,
+  RawMintMaxVoteWeightSource,
   Realm,
   SignatoryRecord,
   TokenOwner,
@@ -45,12 +46,14 @@ export class DataLoaderService {
 
   getLoaders(): IDataLoaders {
     return {
-      getRealmsByProgramPk: new DataLoader<string, Realm<string, string>[]>(
-        (keys) => this.realmService.getByBatch('programPk', keys),
-      ),
-      getRealmsByRealmPk: new DataLoader<string, Realm<string, string>[]>(
-        (keys) => this.realmService.getByBatch('realmPk', keys),
-      ),
+      getRealmsByProgramPk: new DataLoader<
+        string,
+        Realm<string, string, RawMintMaxVoteWeightSource<string>>[]
+      >((keys) => this.realmService.getByBatch('programPk', keys)),
+      getRealmsByRealmPk: new DataLoader<
+        string,
+        Realm<string, string, RawMintMaxVoteWeightSource<string>>[]
+      >((keys) => this.realmService.getByBatch('realmPk', keys)),
       getProposalsByProgramPk: new DataLoader<string, Proposal<string>[]>(
         (keys) => this.proposalsService.getByBatch('programPk', keys),
       ),

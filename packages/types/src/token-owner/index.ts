@@ -1,9 +1,10 @@
 import { PublicKey } from '@solana/web3.js';
+import { GovernanceAccountType } from '@solana/spl-governance';
 import BN from 'bn.js';
 
 export interface TokenOwner<TKey = PublicKey, TNum = BN> {
+  accountType: GovernanceAccountType;
   ownerPk: TKey;
-  governanceAccountType: number;
   realmPk: TKey;
   programPk: TKey;
   governingTokenMintPk: TKey;
@@ -14,5 +15,3 @@ export interface TokenOwner<TKey = PublicKey, TNum = BN> {
   outstandingProposalCount: number;
   governanceDelegatePk?: TKey;
 }
-
-export type Member = TokenOwner;

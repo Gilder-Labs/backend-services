@@ -1,5 +1,7 @@
+import { GovernanceAccountType } from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
+import { VoteThreshold } from '../common';
 
 export interface GovernanceConfig<TNum = BN> {
   communityVoteThreshold: VoteThreshold;
@@ -14,14 +16,9 @@ export interface GovernanceConfig<TNum = BN> {
   councilVoteTipping: number;
 }
 
-export interface VoteThreshold {
-  type: number;
-  value?: number;
-}
-
 export interface Governance<TKey = PublicKey, TNum = BN> {
   governancePk: TKey;
-  accountType: number;
+  accountType: GovernanceAccountType;
   programPk: TKey;
   realmPk: TKey;
   governedAccountPk: TKey;

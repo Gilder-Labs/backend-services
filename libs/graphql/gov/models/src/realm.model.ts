@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import type {
+  RawMintMaxVoteWeightSource,
   Realm as IRealm,
   RealmConfig as IRealmConfig,
 } from '@gilder/types';
@@ -35,7 +36,9 @@ export class RealmConfig implements IRealmConfig<string, string> {
 }
 
 @ObjectType()
-export class Realm implements IRealm<string, string> {
+export class Realm
+  implements IRealm<string, string, RawMintMaxVoteWeightSource<string>>
+{
   @Field()
   realmPk: string;
 
