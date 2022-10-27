@@ -8,14 +8,14 @@ import {
   TokenOwnersService,
   VoteRecordsService,
 } from '@gilder/gov-service-module';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
-import { AccountType, getAllProgramAccounts } from '@gilder/utilities';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Proposal, Governance, ProgramAccount } from '@solana/spl-governance';
 import { Connection } from '@solana/web3.js';
 import { groupBy } from 'lodash';
 import { DEFAULT_CONNECTION } from '../utils/constants';
+import { RpcManagerService } from '@gilder/connection-manager-module';
+import { AccountType, getAllProgramAccounts } from '@gilder/utilities';
 
 @Injectable()
 export class SeedService {

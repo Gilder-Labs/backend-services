@@ -15,11 +15,11 @@
   },
   "scripts": {
     "dev": "turbo run watch --filter \"./services/**/*\" dev",
-    "dev:monitor": "turbo run watch --filter \"./services/monitor-service...\" dev",
     "dev:graphql-gov": "turbo run watch --filter \"./services/graphql/gov-service...\" dev",
     "dev:graphql-web": "turbo run watch --filter \"./services/graphql/web-service...\" dev",
     "dev:notify": "turbo run watch --filter \"./services/notify-service...\" dev",
     "dev:seed": "turbo run watch --filter \"./services/seed-service...\" dev",
+    "dev:monitor": "turbo run watch --filter \"./services/monitor-service...\" dev",
     "build:libs": "turbo run --filter=\"./libs/**\" --filter=\"./packages/**\" build",
     "watch:libs": "turbo run --filter \"./libs/**\" --filter=\"./packages/**\" watch",
     "ci:version": "changeset version",
@@ -33,12 +33,11 @@
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
     "@nestjs/cli": "^9.1.3",
-    "concurrently": "^7.4.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
-    "turbo": "^1.5.5",
+    "turbo": "^1.6.1",
     "typescript": "^4.8.4",
-    "vite": "^3.1.4",
+    "vite": "^3.2.0",
     "zx": "^7.0.8"
   },
   "resolutions": {

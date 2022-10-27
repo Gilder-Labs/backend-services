@@ -8,7 +8,7 @@ import {
   TokenOwnersService,
   VoteRecordsService,
 } from '@gilder/gov-service-module';
-import { RpcManagerService } from '@gilder/rpc-manager-module';
+import { RpcManagerService } from '@gilder/connection-manager-module';
 import { AccountType, getAccountType, parseAccount } from '@gilder/utilities';
 import {
   Inject,

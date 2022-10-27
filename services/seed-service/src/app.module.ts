@@ -1,4 +1,3 @@
-import { RpcManagerModule } from '@gilder/rpc-manager-module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -8,6 +7,7 @@ import { getDataConfig } from './data-source';
 import { SeedModule } from './seed';
 import { MetricsModule } from './metrics';
 import { DEFAULT_CONNECTION } from './utils/constants';
+import { RpcManagerModule } from '@gilder/connection-manager-module';
 
 @Module({
   imports: [
@@ -28,12 +28,6 @@ import { DEFAULT_CONNECTION } from './utils/constants';
     }),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) =>
-        getDataConfig(configService),
-    }),
     RpcManagerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -47,6 +41,13 @@ import { DEFAULT_CONNECTION } from './utils/constants';
         };
       },
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        getDataConfig(configService),
+    }),
+
     SeedModule,
     MetricsModule,
   ],

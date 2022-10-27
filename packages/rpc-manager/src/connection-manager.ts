@@ -2,7 +2,7 @@ import { Connection } from '@solana/web3.js';
 import fetch from 'node-fetch';
 import throttledQueue from 'throttled-queue';
 
-type Endpoint = {
+export type Endpoint = {
   rps: number;
   uri: string;
 };
@@ -47,7 +47,7 @@ type ConnectionState = {
   currentIndex: number;
 };
 
-class ConnectionManager {
+export class ConnectionManager {
   private _connections: Map<string, ConnectionState> = new Map();
 
   constructor(endpoints: Record<string, Endpoint[]>) {
@@ -100,6 +100,3 @@ class ConnectionManager {
     });
   }
 }
-
-export { ConnectionManager };
-export type { Endpoint };

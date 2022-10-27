@@ -1,4 +1,4 @@
-# @gilder/rpc-manager-module
+# @gilder/connection-manager-module
 
 ## 1.0.4
 

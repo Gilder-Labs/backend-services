@@ -5,7 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { getDataConfig } from './data-source';
 import { ScheduleModule } from '@nestjs/schedule';
 import { BullModule } from '@nestjs/bull';
-import { RpcManagerModule } from '@gilder/rpc-manager-module';
+import { RpcManagerModule } from '@gilder/connection-manager-module';
 import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 import { GovernanceProgramsMonitorModule } from './governance-programs';
 import { RealmSubscriber, ProposalSubscriber } from './subscribers';
