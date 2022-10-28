@@ -50,7 +50,5 @@ import { SubscriptionsModule } from './subscriptions';
     SubscriptionsModule,
     NotificationsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
