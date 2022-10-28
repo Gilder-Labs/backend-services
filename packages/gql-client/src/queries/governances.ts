@@ -2,8 +2,10 @@ import gql from 'graphql-tag';
 
 const CORE_GOVERNANCE_FIELDS = gql`
   fragment CoreGovernanceFields on Governance {
-    accountType
+    programPk
     governancePk
+    accountType
+    realmPk
     governedAccountPk
     config {
       minCommunityTokensToCreateProposal
@@ -29,6 +31,8 @@ const CORE_GOVERNANCE_FIELDS = gql`
       minInstructionHoldUpTime
       maxVotingTime
     }
+    proposalCount
+    votingProposalCount
     isProgramGovernance
     isTokenGovernance
     isAccountGovernance

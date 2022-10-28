@@ -1,12 +1,23 @@
 import { Entity, Column, Unique, PrimaryColumn } from 'typeorm';
-import type { Realm as IRealm, RealmConfig } from '@gilder/types';
+import type {
+  RawMintMaxVoteWeightSource,
+  Realm as IRealm,
+  RealmConfig,
+} from '@gilder/types';
 import { BaseGovEntity } from './base.entity';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @Entity()
 @Unique('realm-constraint', ['realmPk'])
-export class Realm extends BaseGovEntity implements IRealm<string, string> {
+export class Realm
+  extends BaseGovEntity
+  implements IRealm<string, string, RawMintMaxVoteWeightSource<string>>
+{
   @PrimaryColumn('text')
   realmPk: string;
+
+  @Column('int')
+  accountType: GovernanceAccountType;
 
   @Column('text')
   name: string;
@@ -21,5 +32,5 @@ export class Realm extends BaseGovEntity implements IRealm<string, string> {
   authorityPk?: string;
 
   @Column('jsonb')
-  config: RealmConfig<string, string>;
+  config: RealmConfig<string, string, RawMintMaxVoteWeightSource<string>>;
 }

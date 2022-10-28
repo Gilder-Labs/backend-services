@@ -16,7 +16,27 @@ export class GovernancesResolver {
 
   @Query(() => [Governance])
   async governances(): Promise<Governance[]> {
-    return await this.governancesService.getAll();
+    return this.governancesService.getAll();
+  }
+
+  @Query(() => [Governance])
+  async mintGovernances(): Promise<Governance[]> {
+    return this.governancesService.filterBy({ isMintGovernance: true });
+  }
+
+  @Query(() => [Governance])
+  async accountGovernances(): Promise<Governance[]> {
+    return this.governancesService.filterBy({ isAccountGovernance: true });
+  }
+
+  @Query(() => [Governance])
+  async programGovernances(): Promise<Governance[]> {
+    return this.governancesService.filterBy({ isProgramGovernance: true });
+  }
+
+  @Query(() => [Governance])
+  async tokenGovernances(): Promise<Governance[]> {
+    return this.governancesService.filterBy({ isTokenGovernance: true });
   }
 
   @ResolveField('proposals', () => [Proposal])

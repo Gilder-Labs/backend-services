@@ -8,6 +8,20 @@ import {
   Governance as SolanaGovernance,
 } from '@solana/spl-governance';
 import { BaseService } from '../base.service';
+import { ProposalOption } from '@gilder/types';
+
+// Doing this cause there is a weird bug that claims options is null and throws an error
+const getYesVoteOption = ({ options, voteType }: SolanaProposal) => {
+  if (!voteType) {
+    return null;
+  }
+
+  if (options?.length !== 1 && !voteType.isSingleChoice()) {
+    return null;
+  }
+
+  return options[0];
+};
 
 @Injectable()
 export class ProposalsService extends BaseService<Proposal, SolanaProposal> {
@@ -34,7 +48,10 @@ export class ProposalsService extends BaseService<Proposal, SolanaProposal> {
         account.getTimeToVoteEnd(governance.account);
     }
 
+    const yesVoteOption = getYesVoteOption(account);
+
     return {
+      accountType: account.accountType,
       governancePk: account.governance.toBase58(),
       programPk: owner.toBase58(),
       realmPk: governance.account.realm.toBase58(),
@@ -42,6 +59,55 @@ export class ProposalsService extends BaseService<Proposal, SolanaProposal> {
       descriptionLink: account.descriptionLink,
       name: account.name,
       state: account.state,
+      executionFlags: account.executionFlags,
+      governingTokenMintPk: account.governingTokenMint.toBase58(),
+      instructionsCount: account.instructionsCount,
+      instructionsExecutedCount: account.instructionsExecutedCount,
+      instructionsNextIndex: account.instructionsNextIndex,
+      isFinalState: account.isFinalState(),
+      isPreVotingState: account.isPreVotingState(),
+      isVoteFinalized: account.isVoteFinalized(),
+      noVoteCount: account.getNoVoteCount().toString(),
+      yesVoteCount: account.getYesVoteCount().toString(),
+      signatoriesCount: account.signatoriesCount,
+      signatoriesSignedOffCount: account.signatoriesSignedOffCount,
+      stateSortRank: account.getStateSortRank(),
+      stateTimestamp: new Date(account.getStateTimestamp() * 1000),
+      timeToVoteEnd: account.getTimeToVoteEnd(governance.account),
+      tokenOwnerRecordPk: account.tokenOwnerRecord.toBase58(),
+      vetoVoteWeight: account.vetoVoteWeight?.toString(),
+      // Options are jank and can be null even though the spl-governance claims it won't be
+      options: account.options
+        ? account.options.map<ProposalOption<string>>((o) => ({
+            ...o,
+            voteWeight: o.voteWeight.toString(),
+          }))
+        : undefined,
+      voteThreshold: account.voteThreshold
+        ? {
+            type: account.voteThreshold.type,
+            value: account.voteThreshold.value,
+          }
+        : undefined,
+      // Vote type is jank and can be null even though the spl-governance claims it won't be
+      voteType: account.voteType
+        ? {
+            type: account.voteType.type,
+            choiceCount: account.voteType.choiceCount,
+          }
+        : undefined,
+      voteTimeEnded: account.hasVoteTimeEnded(governance.account),
+      yesVoteOption: yesVoteOption
+        ? {
+            ...yesVoteOption,
+            voteWeight: yesVoteOption.voteWeight.toString(),
+          }
+        : undefined,
+      abstainVoteWeight: account.abstainVoteWeight?.toString(),
+      denyVoteWeight: account.denyVoteWeight?.toString(),
+      maxVoteWeight: account.maxVoteWeight?.toString(),
+      maxVotingTime: account.maxVotingTime ?? undefined,
+      votingAtSlot: account.votingAtSlot?.toString(),
       draftAt: new Date(account.draftAt.toNumber() * 1000),
       startVotingAt:
         (account.startVotingAt &&

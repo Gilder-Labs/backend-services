@@ -8,7 +8,7 @@ import { BaseGovEntity } from './base.entity';
 @Entity()
 export class ProposalTransaction
   extends BaseGovEntity
-  implements IProposalTransaction<string, string>
+  implements IProposalTransaction<string>
 {
   @Column('int')
   accountType: number;
@@ -19,8 +19,8 @@ export class ProposalTransaction
   @PrimaryColumn('int')
   instructionIndex: number;
 
-  @Column('jsonb')
-  instruction: InstructionData<string>;
+  @Column('jsonb', { nullable: true })
+  instruction?: InstructionData<string>;
 
   @Column('int')
   optionIndex: number;
@@ -31,8 +31,8 @@ export class ProposalTransaction
   @Column('int')
   holdUpTime: number;
 
-  @Column('text', { nullable: true })
-  executedAt?: string | undefined;
+  @Column('timestamp without time zone', { nullable: true })
+  executedAt?: Date;
 
   @Column('int')
   executionStatus: number;

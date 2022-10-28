@@ -15,6 +15,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { GovernanceAccountType } from '@solana/spl-governance';
 import { GetRealmArgs } from './args/get-realm-args';
 
 @Resolver(Realm)
@@ -25,6 +26,20 @@ export class RealmsResolver {
   @Query(() => [Realm])
   async realms(): Promise<Realm[]> {
     return this.realmsService.getAll();
+  }
+
+  @Query(() => [Realm])
+  async realmsV1(): Promise<Realm[]> {
+    return this.realmsService.filterBy({
+      accountType: GovernanceAccountType.RealmV1,
+    });
+  }
+
+  @Query(() => [Realm])
+  async realmsV2(): Promise<Realm[]> {
+    return this.realmsService.filterBy({
+      accountType: GovernanceAccountType.RealmV2,
+    });
   }
 
   @Query(() => Realm, { nullable: true })

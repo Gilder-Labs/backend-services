@@ -28,10 +28,10 @@ export class TokenOwnersService extends BaseService<
   }: ProgramAccount<TokenOwnerRecord>): TokenOwner | Promise<TokenOwner> {
     const { realm } = account;
     return {
+      accountType: account.accountType,
       ownerPk: pubkey.toBase58(),
       programPk: owner.toBase58(),
       realmPk: realm.toBase58(),
-      governanceAccountType: account.accountType,
       governanceDelegatePk: account.governanceDelegate?.toBase58(),
       governingTokenDespositAmount:
         account.governingTokenDepositAmount.toString(),

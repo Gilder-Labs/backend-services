@@ -1,3 +1,4 @@
+import { MintMaxVoteWeightSource } from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
 
@@ -9,7 +10,7 @@ export type RawMintMaxVoteWeightSource<TNum = BN> = {
 export interface RealmConfig<
   TKey = PublicKey,
   TNum = BN,
-  TMint = RawMintMaxVoteWeightSource<TNum>,
+  TMint = MintMaxVoteWeightSource,
 > {
   councilMintPk?: TKey;
   communityMintMaxVoteWeightSource: TMint;

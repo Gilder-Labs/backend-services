@@ -6,24 +6,24 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class CalculatedStatistic {
+export class Metric {
   @PrimaryGeneratedColumn('uuid')
-  statisticId: string;
+  metricId: string;
 
   @Column('int')
-  numberRealms: number;
+  totalRealms: number;
 
   @Column('int')
-  numberProposals: number;
+  totalProposals: number;
 
   @Column('int')
-  numberVotes: number;
+  totalVotes: number;
 
   @Column('int')
-  numberGovernances: number;
+  totalGovernances: number;
 
   @Column('int')
-  numTokenOwners: number;
+  totalUniqueTokenOwners: number;
 
   @CreateDateColumn({
     type: 'timestamp',

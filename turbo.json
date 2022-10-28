@@ -2,25 +2,20 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     },
     "test": {
-      "outputs": [
-        "coverage/**"
-      ],
+      "outputs": ["coverage/**"],
       "dependsOn": []
     },
     "dev": {
       "cache": false
+    },
+    "watch": {
+      "cache": false
     }
   },
   "globalDependencies": [],
-  "globalEnv": [
-    "GITHUB_TOKEN"
-  ]
+  "globalEnv": ["GITHUB_TOKEN"]
 }

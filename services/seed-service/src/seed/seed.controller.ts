@@ -30,7 +30,6 @@ export class SeedController {
         message: 'Successfully seeded',
       };
     } catch (e) {
-      this.logger.error(`Something went wrong. Error: ${e}`);
       throw new BadRequestException();
     }
   }

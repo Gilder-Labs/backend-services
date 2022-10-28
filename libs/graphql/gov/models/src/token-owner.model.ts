@@ -1,16 +1,17 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import type { TokenOwner as ITokenOwner } from '@gilder/types';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class TokenOwner implements ITokenOwner<string, string> {
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
+
   @Field()
   programPk: string;
 
   @Field()
   ownerPk: string;
-
-  @Field()
-  governanceAccountType: number;
 
   @Field()
   realmPk: string;

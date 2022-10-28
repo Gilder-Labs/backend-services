@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import path from 'path';
 import swc from 'unplugin-swc';
@@ -57,4 +58,5 @@ export default defineConfig({
       },
     },
   ],
+  test: {},
 });

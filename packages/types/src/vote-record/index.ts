@@ -1,3 +1,4 @@
+import { GovernanceAccountType } from '@solana/spl-governance';
 import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
 
@@ -19,7 +20,7 @@ export interface VoteWeight<TNum = BN> {
 }
 
 export interface VoteRecord<TKey = PublicKey, TNum = BN> {
-  accountType: number;
+  accountType: GovernanceAccountType;
   proposalPk: TKey;
   programPk: TKey;
   governingTokenOwnerPk: TKey;

@@ -3,7 +3,8 @@ import type {
   InstructionData as IInstructionData,
   ProposalTransaction as IProposalTransaction,
 } from '@gilder/types';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GovernanceAccountType } from '@solana/spl-governance';
 
 @ObjectType()
 export class AccountMetadata implements IAccountMetadata<string> {
@@ -19,19 +20,17 @@ export class AccountMetadata implements IAccountMetadata<string> {
 
 @ObjectType()
 export class InstructionData implements IInstructionData<string> {
-  @Field()
+  @Field({ nullable: true })
   programId: string;
 
-  @Field(() => [AccountMetadata])
+  @Field(() => [AccountMetadata], { nullable: true })
   accounts: AccountMetadata[];
 }
 
 @ObjectType()
-export class ProposalTransaction
-  implements IProposalTransaction<string, string>
-{
-  @Field()
-  accountType: number;
+export class ProposalTransaction implements IProposalTransaction<string> {
+  @Field(() => Int)
+  accountType: GovernanceAccountType;
 
   @Field()
   proposalPk: string;
@@ -42,8 +41,8 @@ export class ProposalTransaction
   @Field()
   instructionIndex: number;
 
-  @Field(() => InstructionData)
-  instruction: InstructionData;
+  @Field(() => InstructionData, { nullable: true })
+  instruction?: InstructionData;
 
   @Field()
   optionIndex: number;
@@ -54,8 +53,8 @@ export class ProposalTransaction
   @Field()
   holdUpTime: number;
 
-  @Field(() => String, { nullable: true })
-  executedAt?: string;
+  @Field({ nullable: true })
+  executedAt?: Date;
 
   @Field()
   executionStatus: number;

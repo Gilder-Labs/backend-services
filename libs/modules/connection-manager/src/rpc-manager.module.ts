@@ -1,8 +1,11 @@
-import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
+import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { RpcManagerService } from './rpc-manager.service';
 import type { Endpoint } from '@gilder/rpc-manager';
 import { ConnectionManager } from '@gilder/rpc-manager';
-import { RPC_MANAGER_INSTANCE_TOKEN, RPC_MANAGER_MODULE_OPTIONS } from './constants';
+import {
+  RPC_MANAGER_INSTANCE_TOKEN,
+  RPC_MANAGER_MODULE_OPTIONS,
+} from './constants';
 import { RpcManagerModuleAsyncOptions } from './types';
 
 @Global()
@@ -35,14 +38,12 @@ export class RpcManagerModule {
 
     const rpcManagerProvider = {
       provide: RPC_MANAGER_INSTANCE_TOKEN,
-      useFactory: async (endpoints: Record<string, Endpoint[]>) => new ConnectionManager(endpoints),
-      inject: [RPC_MANAGER_MODULE_OPTIONS]
+      useFactory: async (endpoints: Record<string, Endpoint[]>) =>
+        new ConnectionManager(endpoints),
+      inject: [RPC_MANAGER_MODULE_OPTIONS],
     };
 
-    const providers: Provider[] = [
-      moduleOptions,
-      rpcManagerProvider
-    ];
+    const providers: Provider[] = [moduleOptions, rpcManagerProvider];
 
     return {
       module: RpcManagerModule,

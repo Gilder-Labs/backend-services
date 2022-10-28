@@ -1,1 +1,1 @@
-schema: 'https://api.gilder.xyz/graphql'
+schema: 'http://localhost:4000/graphql'

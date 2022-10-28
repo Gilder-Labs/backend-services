@@ -38,17 +38,21 @@ export class ProposalTransactionsService extends BaseService<
       executionStatus: account.executionStatus,
       holdUpTime: account.holdUpTime,
       programPk: owner.toBase58(),
-      executedAt: account.executedAt?.toString(),
+      executedAt: account.executedAt
+        ? new Date(account.executedAt.toNumber() * 1000)
+        : undefined,
       optionIndex: account.optionIndex,
       instructionIndex: account.instructionIndex,
-      instruction: {
-        programId: instruction?.programId.toBase58(),
-        accounts: instruction?.accounts.map((x) => ({
-          isSigner: x?.isSigner,
-          isWritable: x?.isWritable,
-          pubkey: x?.pubkey.toBase58(),
-        })),
-      },
+      instruction: account.instruction
+        ? {
+            programId: instruction?.programId.toBase58(),
+            accounts: instruction?.accounts.map((x) => ({
+              isSigner: x?.isSigner,
+              isWritable: x?.isWritable,
+              pubkey: x?.pubkey.toBase58(),
+            })),
+          }
+        : undefined,
       instructions: instructions.map((instruct) => ({
         accounts: instruct.accounts.map<AccountMetadata<string>>((a) => ({
           isSigner: a.isSigner,

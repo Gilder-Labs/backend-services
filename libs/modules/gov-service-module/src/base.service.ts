@@ -27,8 +27,11 @@ export abstract class BaseService<
     return this.getRepo().find({ where, select });
   }
 
-  public getAll(select?: FindOptionsSelect<TEntity>): Promise<TEntity[]> {
-    return this.getRepo().find({ select });
+  public getAll(select?: (keyof TEntity)[]): Promise<TEntity[]> {
+    return this.getRepo()
+      .createQueryBuilder()
+      .select(select as string[])
+      .getMany();
   }
 
   public getAllByProgramPk(programPk: string): Promise<TEntity[]> {
@@ -52,6 +55,14 @@ export abstract class BaseService<
 
   public async getCount(where?: FindOptionsWhere<TEntity>) {
     return this.getRepo().count({ where });
+  }
+
+  public async getDistinctCount(distinctKey: keyof TEntity): Promise<number> {
+    const { count } = await this.getRepo()
+      .createQueryBuilder()
+      .select(`COUNT(DISTINCT("${distinctKey as string}"))`, 'count')
+      .getRawOne();
+    return count;
   }
 
   public async addOrUpdateFromSolanaEntities(
