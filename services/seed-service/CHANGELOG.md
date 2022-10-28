@@ -1,5 +1,19 @@
 # @gilder/seed-service
 
+## 1.0.3
+
+### Patch Changes
+
+- [#10](https://github.com/Gilder-Labs/backend-services/pull/10) [`7439f3d`](https://github.com/Gilder-Labs/backend-services/commit/7439f3d540b0a800ed3815f37dedd2b6110cf80f) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Small bug fixes, adding new types, adding new properties and entities to graphql
+
+- Updated dependencies [[`7439f3d`](https://github.com/Gilder-Labs/backend-services/commit/7439f3d540b0a800ed3815f37dedd2b6110cf80f)]:
+  - @gilder/constants@1.0.2
+  - @gilder/gov-db-entities@1.0.5
+  - @gilder/connection-manager-module@1.0.5
+  - @gilder/gov-service-module@1.0.5
+  - @gilder/utilities@1.0.5
+  - @gilder/rpc-manager@1.0.4
+
 ## 1.0.2
 
 ### Patch Changes
