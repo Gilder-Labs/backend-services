@@ -1,5 +1,16 @@
 # @gilder/gql-client
 
+## 1.1.0
+
+### Minor Changes
+
+- [#10](https://github.com/Gilder-Labs/backend-services/pull/10) [`7439f3d`](https://github.com/Gilder-Labs/backend-services/commit/7439f3d540b0a800ed3815f37dedd2b6110cf80f) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Small bug fixes, adding new types, adding new properties and entities to graphql
+
+### Patch Changes
+
+- Updated dependencies [[`7439f3d`](https://github.com/Gilder-Labs/backend-services/commit/7439f3d540b0a800ed3815f37dedd2b6110cf80f)]:
+  - @gilder/types@1.0.5
+
 ## 1.0.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @gilder/graphql-gov-models
 
+## 1.0.4
+
+### Patch Changes
+
+- [#10](https://github.com/Gilder-Labs/backend-services/pull/10) [`7439f3d`](https://github.com/Gilder-Labs/backend-services/commit/7439f3d540b0a800ed3815f37dedd2b6110cf80f) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Small bug fixes, adding new types, adding new properties and entities to graphql
+
 ## 1.0.3
 
 ### Patch Changes
