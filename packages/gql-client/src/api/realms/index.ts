@@ -1,5 +1,6 @@
 import type { RawMintMaxVoteWeightSource, Realm } from '@gilder/types';
 import { PublicKey } from '@solana/web3.js';
+import { DocumentNode } from 'graphql';
 import { ApiClient } from '../../client';
 import {
   GET_ALL_REALMS,

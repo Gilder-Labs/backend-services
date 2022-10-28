@@ -3,11 +3,11 @@ import { PublicKey } from '@solana/web3.js';
 import * as BN from 'bn.js';
 import { MintMaxVoteWeightSource } from '@solana/spl-governance';
 
-export const transformRealm = <
-  TReturn extends Partial<
-    Realm<PublicKey, BN, MintMaxVoteWeightSource>
-  > = Realm,
->({
+export type RealmReturnType = Partial<
+  Realm<PublicKey, BN, MintMaxVoteWeightSource>
+>;
+
+export const transformRealm = <TReturn extends RealmReturnType = Realm>({
   realmPk,
   programPk,
   authorityPk,
