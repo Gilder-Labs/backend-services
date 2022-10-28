@@ -1,6 +1,9 @@
-import type { RawMintMaxVoteWeightSource, Realm } from '@gilder/types';
-import { PublicKey } from '@solana/web3.js';
-import { DocumentNode } from 'graphql';
+import type {
+  ProposalOption,
+  RawMintMaxVoteWeightSource,
+  Realm,
+  VoteType,
+} from '@gilder/types';
 import { ApiClient } from '../../client';
 import {
   GET_ALL_REALMS,
@@ -20,7 +23,15 @@ const getAllRealms = async (client: ApiClient) => {
 };
 
 const getAllRealmsWithProposals = async (client: ApiClient) => {
-  return getResults<RealmWithProposals<string>[]>(
+  return getResults<
+    RealmWithProposals<
+      string,
+      string,
+      RawMintMaxVoteWeightSource<string>,
+      VoteType,
+      ProposalOption<string>
+    >[]
+  >(
     {
       query: GET_ALL_REALMS_WITH_PROPOSALS,
     },
@@ -34,20 +45,28 @@ const getAllRealmsWithProposals = async (client: ApiClient) => {
 };
 
 const getRealm = async (variables: GetRealmArgs, client: ApiClient) => {
-  return getResults<Realm<string>, GetRealmArgs>(
-    { query: GET_REALM, variables },
-    client,
-  ).then((data) => transformRealm(data));
+  return getResults<
+    Realm<string, string, RawMintMaxVoteWeightSource<string>>,
+    GetRealmArgs
+  >({ query: GET_REALM, variables }, client).then((data) =>
+    transformRealm(data),
+  );
 };
 
 const getRealmWithProposals = async (
   variables: GetRealmArgs,
   client: ApiClient,
 ) => {
-  return getResults<RealmWithProposals<string>, GetRealmArgs>(
-    { query: GET_REALM_WITH_PROPOSALS, variables },
-    client,
-  ).then((data) => ({
+  return getResults<
+    RealmWithProposals<
+      string,
+      string,
+      RawMintMaxVoteWeightSource<string>,
+      VoteType,
+      ProposalOption<string>
+    >,
+    GetRealmArgs
+  >({ query: GET_REALM_WITH_PROPOSALS, variables }, client).then((data) => ({
     ...transformRealm(data),
     proposals: data.proposals.map(transformProposal),
   }));

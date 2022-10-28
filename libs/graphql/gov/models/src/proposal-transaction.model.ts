@@ -20,17 +20,15 @@ export class AccountMetadata implements IAccountMetadata<string> {
 
 @ObjectType()
 export class InstructionData implements IInstructionData<string> {
-  @Field()
+  @Field({ nullable: true })
   programId: string;
 
-  @Field(() => [AccountMetadata])
+  @Field(() => [AccountMetadata], { nullable: true })
   accounts: AccountMetadata[];
 }
 
 @ObjectType()
-export class ProposalTransaction
-  implements IProposalTransaction<string, string>
-{
+export class ProposalTransaction implements IProposalTransaction<string> {
   @Field(() => Int)
   accountType: GovernanceAccountType;
 
@@ -43,8 +41,8 @@ export class ProposalTransaction
   @Field()
   instructionIndex: number;
 
-  @Field(() => InstructionData)
-  instruction: InstructionData;
+  @Field(() => InstructionData, { nullable: true })
+  instruction?: InstructionData;
 
   @Field()
   optionIndex: number;
@@ -56,7 +54,7 @@ export class ProposalTransaction
   holdUpTime: number;
 
   @Field({ nullable: true })
-  executedAt?: string;
+  executedAt?: Date;
 
   @Field()
   executionStatus: number;

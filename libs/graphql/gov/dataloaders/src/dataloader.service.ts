@@ -86,7 +86,7 @@ export class DataLoaderService {
       >((keys) => this.tokenOwnerService.getByBatch('realmPk', keys)),
       getProposalTransactionsByProgramPk: new DataLoader<
         string,
-        ProposalTransaction<string, string>[]
+        ProposalTransaction<string>[]
       >((keys) =>
         this.proposalTransactionService.getByBatch('programPk', keys),
       ),

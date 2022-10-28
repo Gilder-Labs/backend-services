@@ -42,7 +42,7 @@ export interface IDataLoaders {
   getTokenOwnersByRealmPk: DataLoader<string, TokenOwner<string, string>[]>;
   getProposalTransactionsByProgramPk: DataLoader<
     string,
-    ProposalTransaction<string, string>[]
+    ProposalTransaction<string>[]
   >;
   getVoteRecordsByProgramPk: DataLoader<string, VoteRecord<string, string>[]>;
   getSignatoryRecordByProgramPk: DataLoader<string, SignatoryRecord<string>[]>;

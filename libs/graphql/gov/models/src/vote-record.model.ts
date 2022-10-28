@@ -33,10 +33,10 @@ export class Vote implements IVote {
 
 @ObjectType()
 export class VoteWeight implements IVoteWeight<string> {
-  @Field()
+  @Field({ nullable: true })
   yes: string;
 
-  @Field()
+  @Field({ nullable: true })
   no: string;
 }
 
