@@ -1,5 +1,11 @@
 # @gilder/gql-client
 
+## 1.1.1
+
+### Patch Changes
+
+- [#12](https://github.com/Gilder-Labs/backend-services/pull/12) [`2591bb6`](https://github.com/Gilder-Labs/backend-services/commit/2591bb6ecae6efc0695cead20e278e3c2a490a0d) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Fixing peerdependency
+
 ## 1.1.0
 
 ### Minor Changes
