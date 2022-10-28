@@ -48,7 +48,7 @@
     "vitest": "^0.24.3"
   },
   "peerDependencies": {
-    "@gilder/types": "^1.0.5",
+    "@gilder/types": "workspace:^",
     "@solana/spl-governance": "^0.3.16",
     "@solana/web3.js": "^1.63.1"
   }
