@@ -1,5 +1,14 @@
 # @gilder/seed-service
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`1fc4c11`](https://github.com/Gilder-Labs/backend-services/commit/1fc4c119d548f29481baa523dee1485eac8395ad)]:
+  - @gilder/constants@1.0.3
+  - @gilder/gov-db-entities@1.0.6
+  - @gilder/gov-service-module@1.0.6
+
 ## 1.0.3
 
 ### Patch Changes
