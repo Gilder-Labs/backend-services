@@ -4,7 +4,7 @@
   "version": "1.0.4",
   "description": "",
   "author": "",
-  "license": "UNLICENSED",
+  "license": "ISC",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
