@@ -1,5 +1,11 @@
 # @gilder/constants
 
+## 1.0.3
+
+### Patch Changes
+
+- [#14](https://github.com/Gilder-Labs/backend-services/pull/14) [`1fc4c11`](https://github.com/Gilder-Labs/backend-services/commit/1fc4c119d548f29481baa523dee1485eac8395ad) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding some quick fixes
+
 ## 1.0.2
 
 ### Patch Changes

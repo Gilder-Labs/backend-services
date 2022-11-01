@@ -1,5 +1,11 @@
 # @gilder/gov-db-entities
 
+## 1.0.6
+
+### Patch Changes
+
+- [#14](https://github.com/Gilder-Labs/backend-services/pull/14) [`1fc4c11`](https://github.com/Gilder-Labs/backend-services/commit/1fc4c119d548f29481baa523dee1485eac8395ad) Thanks [@rszemplinski](https://github.com/rszemplinski)! - Adding some quick fixes
+
 ## 1.0.5
 
 ### Patch Changes
