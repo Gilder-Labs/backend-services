@@ -1,0 +1,246 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type VoteThreshold {
+  type: Float!
+  value: Float
+}
+
+type GovernanceConfig {
+  communityVoteThreshold: VoteThreshold!
+  minCommunityTokensToCreateProposal: String!
+  minInstructionHoldUpTime: Float!
+  maxVotingTime: Float!
+  communityVoteTipping: Float!
+  minCouncilTokensToCreateProposal: String!
+  councilVoteThreshold: VoteThreshold!
+  councilVetoVoteThreshold: VoteThreshold!
+  communityVetoVoteThreshold: VoteThreshold!
+  councilVoteTipping: Float!
+}
+
+type Governance {
+  programPk: String!
+  governancePk: String!
+  accountType: Int!
+  realmPk: String!
+  governedAccountPk: String!
+  config: GovernanceConfig!
+  proposalCount: Float!
+  votingProposalCount: Float!
+  isProgramGovernance: Boolean!
+  isAccountGovernance: Boolean!
+  isMintGovernance: Boolean!
+  isTokenGovernance: Boolean!
+  proposals: [Proposal!]
+}
+
+type VoteType {
+  type: Int!
+  choiceCount: Int
+}
+
+type ProposalOption {
+  label: String!
+  voteWeight: String!
+  voteResult: Int!
+  instructionsExecutedCount: Int!
+  instructionsCount: Int!
+  instructionsNextIndex: Int!
+}
+
+type Proposal {
+  accountType: Int!
+  governingTokenMintPk: String!
+  governancePk: String!
+  proposalPk: String!
+  programPk: String!
+  realmPk: String!
+  name: String!
+  tokenOwnerRecordPk: String!
+  signatoriesCount: Int
+  signatoriesSignedOffCount: Int
+  instructionsExecutedCount: Int
+  instructionsCount: Int
+  instructionsNextIndex: Int
+  voteType: VoteType
+  options: [ProposalOption!]
+  denyVoteWeight: String
+  abstainVoteWeight: String
+  maxVotingTime: Int
+  votingAtSlot: String
+  executionFlags: Int!
+  maxVoteWeight: String
+  voteThreshold: VoteThreshold
+  vetoVoteWeight: String
+  isVoteFinalized: Boolean!
+  isFinalState: Boolean!
+  stateTimestamp: DateTime!
+  stateSortRank: Int!
+  isPreVotingState: Boolean!
+  yesVoteOption: ProposalOption
+  yesVoteCount: String
+  noVoteCount: String
+  timeToVoteEnd: Float!
+  voteTimeEnded: Boolean!
+  state: Int!
+  descriptionLink: String
+  draftAt: DateTime!
+  signingOffAt: DateTime
+  startVotingAt: DateTime
+  votingCompletedAt: DateTime
+  votingAt: DateTime
+  estimatedVoteCompletionAt: DateTime
+  closedAt: DateTime
+  executingAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type TokenOwner {
+  accountType: Int!
+  programPk: String!
+  ownerPk: String!
+  realmPk: String!
+  governingTokenMintPk: String!
+  governingTokenOwnerPk: String!
+  governingTokenDespositAmount: String!
+  unrelinquishedVotesCount: Float!
+  totalVotesCount: Float!
+  outstandingProposalCount: Float!
+  governanceDelegatePk: String
+}
+
+type MintMaxVoteWeightSource {
+  type: Float!
+  value: String!
+}
+
+type RealmConfig {
+  councilMintPk: String
+  communityMintMaxVoteWeightSource: MintMaxVoteWeightSource!
+  minCommunityTokensToCreateGovernance: String!
+  useCommunityVoterWeightAddin: Boolean!
+  useMaxCommunityVoterWeightAddin: Boolean!
+}
+
+type Realm {
+  accountType: Int!
+  realmPk: String!
+  programPk: String!
+  name: String!
+  proposals: [Proposal!]
+  governances: [Governance!]
+  members: [TokenOwner!]
+  communityMintPk: String!
+  votingProposalCount: Float!
+  authorityPk: String
+  config: RealmConfig!
+  tokenOwners: [TokenOwner!]!
+}
+
+type AccountMetadata {
+  pubkey: String!
+  isSigner: Boolean!
+  isWritable: Boolean!
+}
+
+type InstructionData {
+  programId: String
+  accounts: [AccountMetadata!]
+}
+
+type ProposalTransaction {
+  accountType: Int!
+  proposalPk: String!
+  programPk: String!
+  instructionIndex: Float!
+  instruction: InstructionData
+  optionIndex: Float!
+  instructions: [InstructionData!]!
+  holdUpTime: Float!
+  executedAt: DateTime
+  executionStatus: Float!
+}
+
+type SignatoryRecord {
+  accountType: Int!
+  proposalPk: String!
+  programPk: String!
+  signatoryPk: String!
+  signedOff: Boolean!
+}
+
+type VoteChoice {
+  rank: Float!
+  weightPercentage: Float!
+}
+
+type Vote {
+  voteType: Float!
+  approveChoices: [VoteChoice!]
+  deny: Boolean
+  veto: Boolean
+}
+
+type VoteWeight {
+  yes: String
+  no: String
+}
+
+type VoteRecord {
+  accountType: Int!
+  proposalPk: String!
+  programPk: String!
+  governingTokenOwnerPk: String!
+  isRelinquished: Boolean!
+  voteWeight: VoteWeight
+  voterWeight: String
+  vote: Vote
+  noVoteWeight: String
+  yesVoteWeight: String
+}
+
+type GovernanceProgram {
+  governanceProgramPk: String!
+  realms: [Realm!]
+  proposals: [Proposal!]
+  governances: [Governance!]
+  proposalTransactions: [ProposalTransaction!]
+  tokenOwners: [TokenOwner!]
+  signatoryRecords: [SignatoryRecord!]
+  voteRecords: [VoteRecord!]
+}
+
+type Query {
+  realms: [Realm!]!
+  realmsV1: [Realm!]!
+  realmsV2: [Realm!]!
+  getRealm(name: String, realmPk: String): Realm
+  proposals: [Proposal!]!
+  proposalsV1: [Proposal!]!
+  getProposalsByRealm(realmPk: String!): [Proposal!]!
+  proposalsV2: [Proposal!]!
+  governancePrograms: [GovernanceProgram!]!
+  getGovernancePrograms(governanceProgramPks: [String!]!): [GovernanceProgram!]
+  tokenOwners: [TokenOwner!]!
+  getTokenOwnersByRealm(realmPk: String!): [TokenOwner!]!
+  tokenOwnersV1: [TokenOwner!]!
+  tokenOwnersV2: [TokenOwner!]!
+  governances: [Governance!]!
+  mintGovernances: [Governance!]!
+  accountGovernances: [Governance!]!
+  programGovernances: [Governance!]!
+  tokenGovernances: [Governance!]!
+  proposalTransactions: [ProposalTransaction!]!
+  signatoryRecords: [SignatoryRecord!]!
+  signatoryRecordsV1: [SignatoryRecord!]!
+  signatoryRecordsV2: [SignatoryRecord!]!
+  voteRecords: [VoteRecord!]!
+  voteRecordsV1: [VoteRecord!]!
+  voteRecordsV2: [VoteRecord!]!
+}

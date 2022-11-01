@@ -10,6 +10,7 @@ import {
   DataLoaderModule,
   DataLoaderService,
 } from '@gilder/graphql-gov-dataloaders';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -46,7 +47,7 @@ import {
       ) => ({
         introspection: configService.get<boolean>('ALLOW_INTROSPECTION'),
         playground: configService.get<boolean>('ALLOW_PLAYGROUND'),
-        autoSchemaFile: true,
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         cache: 'bounded',
         installSubscriptionHandlers: true,
         debug: configService.get<boolean>('DEBUG'),
