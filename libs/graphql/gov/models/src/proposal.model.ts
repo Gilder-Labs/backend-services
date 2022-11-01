@@ -132,10 +132,10 @@ export class Proposal
   @Field(() => ProposalOption, { nullable: true })
   yesVoteOption?: ProposalOption;
 
-  @Field()
+  @Field({ nullable: true })
   yesVoteCount: string;
 
-  @Field()
+  @Field({ nullable: true })
   noVoteCount: string;
 
   @Field()

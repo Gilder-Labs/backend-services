@@ -108,10 +108,10 @@ export class Proposal
   @Column('jsonb', { nullable: true })
   yesVoteOption?: ProposalOption<string>;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   yesVoteCount: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   noVoteCount: string;
 
   @Column('decimal')
