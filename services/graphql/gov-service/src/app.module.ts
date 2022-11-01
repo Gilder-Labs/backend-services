@@ -44,6 +44,8 @@ import {
         configService: ConfigService,
         dataLoaderService: DataLoaderService,
       ) => ({
+        introspection: configService.get<boolean>('ALLOW_INTROSPECTION'),
+        playground: configService.get<boolean>('ALLOW_PLAYGROUND'),
         autoSchemaFile: true,
         cache: 'bounded',
         installSubscriptionHandlers: true,

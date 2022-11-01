@@ -64,10 +64,9 @@ import { EventListenersModule } from './event-listeners';
           port: configService.get<number>('QUEUE_PORT') ?? 6379,
           username: configService.get<string>('QUEUE_USER'),
           password: configService.get<string>('QUEUE_PASS'),
-          tls:
-            configService.get<Environment>('NODE_ENV') === 'production'
-              ? { rejectUnauthorized: false }
-              : undefined,
+          tls: configService.get<boolean>('QUEUE_USE_SSL')
+            ? { rejectUnauthorized: false }
+            : undefined,
         },
       }),
       inject: [ConfigService],
