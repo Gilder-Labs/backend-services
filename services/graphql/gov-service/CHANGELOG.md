@@ -1,4 +1,4 @@
-# @gilder/graphql-gov-service
+# @gilder/gov-graphql-service
 
 ## 1.0.6
 

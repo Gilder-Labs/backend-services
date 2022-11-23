@@ -1,4 +1,4 @@
-# @gilder/seed-service
+# @gilder/gov-seed-service
 
 ## 1.0.4
 
