@@ -565,7 +565,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/connection-manager-module@workspace:*, @gilder/connection-manager-module@workspace:libs/modules/connection-manager":
+"@gilder/connection-manager-module@workspace:*, @gilder/connection-manager-module@workspace:^, @gilder/connection-manager-module@workspace:libs/modules/connection-manager":
   version: 0.0.0-use.local
   resolution: "@gilder/connection-manager-module@workspace:libs/modules/connection-manager"
   dependencies:
@@ -818,12 +818,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/graphql-web-service@workspace:services/graphql/web-service":
+"@gilder/graphql-token-service@workspace:services/graphql/token-service":
   version: 0.0.0-use.local
-  resolution: "@gilder/graphql-web-service@workspace:services/graphql/web-service"
+  resolution: "@gilder/graphql-token-service@workspace:services/graphql/token-service"
   dependencies:
-    "@gilder/graphql-gov-dataloaders": "workspace:*"
-    "@gilder/graphql-gov-resolvers": "workspace:*"
+    "@gilder/connection-manager-module": "workspace:^"
     "@gilder/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
@@ -836,6 +835,8 @@ __metadata:
     "@nestjs/schematics": ^9.0.3
     "@nestjs/testing": ^9.1.2
     "@nestjs/typeorm": ^9.0.1
+    "@solana/spl-token": ^0.3.6
+    "@solana/web3.js": ^1.66.2
     "@types/express": ^4.17.14
     "@types/lodash": ^4.14.185
     "@types/node": ^18.7.19
@@ -1996,6 +1997,19 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.47.4
   checksum: 230c153b886c7dedb09fdd65c4fd71259d37f3c951ab6ea9c099aff875cc595fc9d44c74b4d7ffef59475f7edd7a8a00931bfec8ab2bd3141512ca3f6f828139
+  languageName: node
+  linkType: hard
+
+"@solana/spl-token@npm:^0.3.6":
+  version: 0.3.6
+  resolution: "@solana/spl-token@npm:0.3.6"
+  dependencies:
+    "@solana/buffer-layout": ^4.0.0
+    "@solana/buffer-layout-utils": ^0.2.0
+    buffer: ^6.0.3
+  peerDependencies:
+    "@solana/web3.js": ^1.47.4
+  checksum: e213db12ff6e443d07033898457854c5659189a00fc58f7cfd1b27229fdafd26edb7f1dcdcd21f76e703a8932b465cd6f418268c04f1b00996802f9894c280e7
   languageName: node
   linkType: hard
 

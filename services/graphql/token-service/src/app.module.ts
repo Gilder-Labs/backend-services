@@ -9,6 +9,9 @@ import {
   DataLoaderModule,
   DataLoaderService,
 } from '@gilder/graphql-gov-dataloaders';
+import { SandboxMonitorService } from './sandbox.monitor';
+import { RpcManagerModule } from '@gilder/connection-manager-module';
+import { DEFAULT_CONNECTION, WS_CONNECTION } from './utils/constants';
 
 @Module({
   imports: [
@@ -28,32 +31,25 @@ import {
       },
     }),
     ConfigModule.forRoot({ envFilePath: ['.env.local', '.env'] }),
-    TypeOrmModule.forRootAsync({
+    RpcManagerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) =>
-        getDataConfig(configService),
-    }),
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      imports: [ConfigModule, DataLoaderModule],
-      inject: [ConfigService, DataLoaderService],
-      useFactory: (
-        configService: ConfigService,
-        dataLoaderService: DataLoaderService,
-      ) => ({
-        autoSchemaFile: true,
-        cache: 'bounded',
-        installSubscriptionHandlers: true,
-        debug: configService.get<boolean>('DEBUG'),
-        context: () => ({
-          loaders: dataLoaderService.getLoaders(),
-        }),
-        subscriptions: {
-          'graphql-ws': true,
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const defaultUrls = configService.get<string>('RPC_URLS').split(';');
+        const wsUrls = configService.get<string>('WS_RPC_URLS').split(';');
+        return {
+          [DEFAULT_CONNECTION]: defaultUrls.map((x) => ({
+            rps: 25,
+            uri: x,
+          })),
+          [WS_CONNECTION]: wsUrls.map((x) => ({
+            rps: 25,
+            uri: x,
+          })),
+        };
+      },
     }),
   ],
+  providers: [SandboxMonitorService],
 })
 export class AppModule {}
