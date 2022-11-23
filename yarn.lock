@@ -565,7 +565,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gilder/connection-manager-module@workspace:*, @gilder/connection-manager-module@workspace:libs/modules/connection-manager":
+"@gilder/connection-manager-module@workspace:*, @gilder/connection-manager-module@workspace:^, @gilder/connection-manager-module@workspace:libs/modules/connection-manager":
   version: 0.0.0-use.local
   resolution: "@gilder/connection-manager-module@workspace:libs/modules/connection-manager"
   dependencies:
@@ -597,12 +597,33 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/forum-db-entities@workspace:libs/db/forum-db-entities":
+  version: 0.0.0-use.local
+  resolution: "@gilder/forum-db-entities@workspace:libs/db/forum-db-entities"
+  dependencies:
+    "@gilder/types": "workspace:*"
+    "@solana/web3.js": ^1.66.2
+    "@swc/core": ^1.3.3
+    bn.js: ^5.2.1
+    reflect-metadata: ^0.1.13
+    rollup: ^2.79.1
+    rollup-plugin-swc: ^0.2.1
+    rxjs: ^7.5.7
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+    vite: ^3.2.0
+  peerDependencies:
+    "@solana/web3.js": ^1.63.1
+    bn.js: ^5.21.1
+    typeorm: ^0.3.10
+  languageName: unknown
+  linkType: soft
+
 "@gilder/forum-graphql-service@workspace:services/graphql/forum-service":
   version: 0.0.0-use.local
   resolution: "@gilder/forum-graphql-service@workspace:services/graphql/forum-service"
   dependencies:
-    "@gilder/graphql-gov-dataloaders": "workspace:*"
-    "@gilder/graphql-gov-resolvers": "workspace:*"
+    "@gilder/connection-manager-module": "workspace:^"
     "@gilder/types": "workspace:*"
     "@nestjs/apollo": ^10.1.0
     "@nestjs/cli": ^9.1.3
@@ -615,6 +636,8 @@ __metadata:
     "@nestjs/schematics": ^9.0.3
     "@nestjs/testing": ^9.1.2
     "@nestjs/typeorm": ^9.0.1
+    "@solana/spl-token": ^0.3.6
+    "@solana/web3.js": ^1.66.2
     "@types/express": ^4.17.14
     "@types/lodash": ^4.14.185
     "@types/node": ^18.7.19
@@ -753,59 +776,6 @@ __metadata:
     "@typescript-eslint/parser": ^5.38.0
     bn.js: ^5.2.1
     bull: ^4.10.0
-    cross-env: ^7.0.3
-    eslint: ^8.24.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    lodash: ^4.17.21
-    nestjs-pino: ^3.1.1
-    pg: ^8.8.0
-    pino-http: ^8.2.1
-    pino-pretty: ^9.1.0
-    prettier: ^2.7.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.5.7
-    source-map-support: ^0.5.21
-    throttled-queue: ^2.1.4
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@gilder/gov-seed-service@workspace:services/seeds/gov-service":
-  version: 0.0.0-use.local
-  resolution: "@gilder/gov-seed-service@workspace:services/seeds/gov-service"
-  dependencies:
-    "@gilder/connection-manager-module": "workspace:*"
-    "@gilder/constants": "workspace:*"
-    "@gilder/gov-db-entities": "workspace:*"
-    "@gilder/gov-service-module": "workspace:*"
-    "@gilder/internal-types": "workspace:*"
-    "@gilder/rpc-manager": "workspace:*"
-    "@gilder/types": "workspace:*"
-    "@gilder/utilities": "workspace:*"
-    "@nestjs/cli": ^9.1.3
-    "@nestjs/common": ^9.1.2
-    "@nestjs/config": ^2.2.0
-    "@nestjs/core": ^9.1.2
-    "@nestjs/microservices": ^9.1.2
-    "@nestjs/platform-express": ^9.1.2
-    "@nestjs/schedule": ^2.1.0
-    "@nestjs/schematics": ^9.0.3
-    "@nestjs/testing": ^9.1.2
-    "@nestjs/typeorm": ^9.0.1
-    "@solana/spl-governance": ^0.3.16
-    "@solana/spl-token": ^0.3.5
-    "@solana/spl-token-registry": ^0.2.4574
-    "@solana/web3.js": ^1.66.2
-    "@types/bn.js": ^5.1.1
-    "@types/express": ^4.17.14
-    "@types/lodash": ^4.14.185
-    "@types/node": ^18.7.19
-    "@typescript-eslint/eslint-plugin": ^5.38.0
-    "@typescript-eslint/parser": ^5.38.0
-    bn.js: ^5.2.1
     cross-env: ^7.0.3
     eslint: ^8.24.0
     eslint-config-prettier: ^8.5.0
@@ -975,6 +945,54 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/graphql-token-service@workspace:services/graphql/token-service":
+  version: 0.0.0-use.local
+  resolution: "@gilder/graphql-token-service@workspace:services/graphql/token-service"
+  dependencies:
+    "@gilder/connection-manager-module": "workspace:^"
+    "@gilder/types": "workspace:*"
+    "@nestjs/apollo": ^10.1.0
+    "@nestjs/cli": ^9.1.3
+    "@nestjs/common": ^9.1.2
+    "@nestjs/config": ^2.2.0
+    "@nestjs/core": ^9.1.2
+    "@nestjs/graphql": ^10.1.2
+    "@nestjs/microservices": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@nestjs/schematics": ^9.0.3
+    "@nestjs/testing": ^9.1.2
+    "@nestjs/typeorm": ^9.0.1
+    "@solana/spl-token": ^0.3.6
+    "@solana/web3.js": ^1.66.2
+    "@types/express": ^4.17.14
+    "@types/lodash": ^4.14.185
+    "@types/node": ^18.7.19
+    "@typescript-eslint/eslint-plugin": ^5.38.0
+    "@typescript-eslint/parser": ^5.38.0
+    apollo-server-express: ^3.10.3
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    cross-env: ^7.0.3
+    dataloader: ^2.1.0
+    eslint: ^8.24.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    graphql: ^16.6.0
+    lodash: ^4.17.21
+    nestjs-pino: ^3.1.1
+    pg: ^8.8.0
+    pino-http: ^8.2.1
+    pino-pretty: ^9.1.0
+    prettier: ^2.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.5.7
+    source-map-support: ^0.5.21
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
 "@gilder/internal-types@workspace:*, @gilder/internal-types@workspace:libs/types":
   version: 0.0.0-use.local
   resolution: "@gilder/internal-types@workspace:libs/types"
@@ -1078,6 +1096,59 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gilder/seed-gov-service@workspace:services/seeds/gov-service":
+  version: 0.0.0-use.local
+  resolution: "@gilder/seed-gov-service@workspace:services/seeds/gov-service"
+  dependencies:
+    "@gilder/connection-manager-module": "workspace:*"
+    "@gilder/constants": "workspace:*"
+    "@gilder/gov-db-entities": "workspace:*"
+    "@gilder/gov-service-module": "workspace:*"
+    "@gilder/internal-types": "workspace:*"
+    "@gilder/rpc-manager": "workspace:*"
+    "@gilder/types": "workspace:*"
+    "@gilder/utilities": "workspace:*"
+    "@nestjs/cli": ^9.1.3
+    "@nestjs/common": ^9.1.2
+    "@nestjs/config": ^2.2.0
+    "@nestjs/core": ^9.1.2
+    "@nestjs/microservices": ^9.1.2
+    "@nestjs/platform-express": ^9.1.2
+    "@nestjs/schedule": ^2.1.0
+    "@nestjs/schematics": ^9.0.3
+    "@nestjs/testing": ^9.1.2
+    "@nestjs/typeorm": ^9.0.1
+    "@solana/spl-governance": ^0.3.16
+    "@solana/spl-token": ^0.3.5
+    "@solana/spl-token-registry": ^0.2.4574
+    "@solana/web3.js": ^1.66.2
+    "@types/bn.js": ^5.1.1
+    "@types/express": ^4.17.14
+    "@types/lodash": ^4.14.185
+    "@types/node": ^18.7.19
+    "@typescript-eslint/eslint-plugin": ^5.38.0
+    "@typescript-eslint/parser": ^5.38.0
+    bn.js: ^5.2.1
+    cross-env: ^7.0.3
+    eslint: ^8.24.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    lodash: ^4.17.21
+    nestjs-pino: ^3.1.1
+    pg: ^8.8.0
+    pino-http: ^8.2.1
+    pino-pretty: ^9.1.0
+    prettier: ^2.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.5.7
+    source-map-support: ^0.5.21
+    throttled-queue: ^2.1.4
+    typeorm: ^0.3.10
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
 "@gilder/types@workspace:*, @gilder/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@gilder/types@workspace:packages/types"
@@ -1105,28 +1176,6 @@ __metadata:
     typescript: ^4.8.4
     unplugin-swc: ^1.3.2
     vite: ^3.2.0
-  languageName: unknown
-  linkType: soft
-
-"@gilder/web-db-entities@workspace:libs/db/web-db-entities":
-  version: 0.0.0-use.local
-  resolution: "@gilder/web-db-entities@workspace:libs/db/web-db-entities"
-  dependencies:
-    "@gilder/types": "workspace:*"
-    "@solana/web3.js": ^1.66.2
-    "@swc/core": ^1.3.3
-    bn.js: ^5.2.1
-    reflect-metadata: ^0.1.13
-    rollup: ^2.79.1
-    rollup-plugin-swc: ^0.2.1
-    rxjs: ^7.5.7
-    typeorm: ^0.3.10
-    typescript: ^4.8.4
-    vite: ^3.2.0
-  peerDependencies:
-    "@solana/web3.js": ^1.63.1
-    bn.js: ^5.21.1
-    typeorm: ^0.3.10
   languageName: unknown
   linkType: soft
 
@@ -1996,6 +2045,19 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.47.4
   checksum: 230c153b886c7dedb09fdd65c4fd71259d37f3c951ab6ea9c099aff875cc595fc9d44c74b4d7ffef59475f7edd7a8a00931bfec8ab2bd3141512ca3f6f828139
+  languageName: node
+  linkType: hard
+
+"@solana/spl-token@npm:^0.3.6":
+  version: 0.3.6
+  resolution: "@solana/spl-token@npm:0.3.6"
+  dependencies:
+    "@solana/buffer-layout": ^4.0.0
+    "@solana/buffer-layout-utils": ^0.2.0
+    buffer: ^6.0.3
+  peerDependencies:
+    "@solana/web3.js": ^1.47.4
+  checksum: e213db12ff6e443d07033898457854c5659189a00fc58f7cfd1b27229fdafd26edb7f1dcdcd21f76e703a8932b465cd6f418268c04f1b00996802f9894c280e7
   languageName: node
   linkType: hard
 

@@ -1,4 +1,4 @@
-# @gilder/web-db-entities
+# @gilder/forum-db-entities
 
 ## 1.0.3
 
