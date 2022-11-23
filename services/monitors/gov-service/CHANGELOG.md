@@ -1,4 +1,4 @@
-# @gilder/gov-monitor-service
+# @gilder/monitor-gov-service
 
 ## 1.0.6
 
